@@ -1,0 +1,28 @@
+2022-11-28 14:14:47,419 [1] ERROR Common.LogManager - System.Net.Sockets.SocketException (0x80004005): 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 192.168.1.10:502
+   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   在 Common.Master.connect(String ip, UInt16 port) 位置 D:\work\ec04\EC04\Common\Master.cs:行号 131
+   在 Common.Master..ctor(String ip, UInt16 port) 位置 D:\work\ec04\EC04\Common\Master.cs:行号 111
+   在 Common.RFIDHelper..ctor(String ip, Int32 channelId, Int32 port) 位置 D:\work\ec04\EC04\Common\RFIDHelper.cs:行号 61
+   在 EC04Hotbar.FrmMain..ctor() 位置 D:\work\ec04\EC04\EC04Hotbar\FrmMain.cs:行号 45
+2022-11-28 14:18:28,080 [1] ERROR Common.LogManager - System.Net.Sockets.SocketException (0x80004005): 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 192.168.1.10:502
+   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   在 Common.Master.connect(String ip, UInt16 port) 位置 D:\work\ec04\EC04\Common\Master.cs:行号 131
+   在 Common.Master..ctor(String ip, UInt16 port) 位置 D:\work\ec04\EC04\Common\Master.cs:行号 111
+   在 Common.RFIDHelper..ctor(String ip, Int32 channelId, Int32 port) 位置 D:\work\ec04\EC04\Common\RFIDHelper.cs:行号 61
+   在 EC04Hotbar.FrmMain..ctor() 位置 D:\work\ec04\EC04\EC04Hotbar\FrmMain.cs:行号 44
+2022-11-28 14:19:12,255 [1] ERROR Common.LogManager - System.Net.Sockets.SocketException (0x80004005): 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 192.168.1.10:502
+   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   在 Common.Master.connect(String ip, UInt16 port) 位置 D:\work\ec04\EC04\Common\Master.cs:行号 131
+   在 Common.Master..ctor(String ip, UInt16 port) 位置 D:\work\ec04\EC04\Common\Master.cs:行号 111
+   在 Common.RFIDHelper..ctor(String ip, Int32 channelId, Int32 port) 位置 D:\work\ec04\EC04\Common\RFIDHelper.cs:行号 61
+   在 EC04Hotbar.FrmMain..ctor() 位置 D:\work\ec04\EC04\EC04Hotbar\FrmMain.cs:行号 44
+2022-11-28 14:21:52,709 [1] ERROR Common.LogManager - System.Net.Sockets.SocketException (0x80004005): 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 192.168.1.10:502
+   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   在 Common.Master.connect(String ip, UInt16 port) 位置 D:\work\ec04\EC04\Common\Master.cs:行号 131
+   在 Common.Master..ctor(String ip, UInt16 port) 位置 D:\work\ec04\EC04\Common\Master.cs:行号 111
+   在 Common.RFIDHelper..ctor(String ip, Int32 channelId, Int32 port) 位置 D:\work\ec04\EC04\Common\RFIDHelper.cs:行号 61
+   在 EC04Hotbar.FrmMain..ctor() 位置 D:\work\ec04\EC04\EC04Hotbar\FrmMain.cs:行号 44
