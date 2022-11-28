@@ -10,7 +10,25 @@ namespace Common
 {
     public static class WCFHelper
     {
-        public static ServiceHost CreateServer()
+        public static void CreateServer()
+        {
+            Task.Factory.StartNew(() =>
+            {
+                ServiceHost server = null;
+                while (true)
+                {
+                    if (server == null || server.State != CommunicationState.Opened)
+                    {
+                        server = WCFHelper.BindServer();
+                        if (server.State == CommunicationState.Opened)
+                            LogManager.Info($"WCF服务启动成功：{server.BaseAddresses[0].OriginalString}");
+                    }
+                    Task.Delay(1000).Wait();
+                }
+            });
+        }
+
+        private static ServiceHost BindServer()
         {
             CableSqliteDal.CreateTable();
 

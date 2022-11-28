@@ -24,6 +24,10 @@ namespace EC04Hotbar
             {
                 running = !mutex.WaitOne(0, false);            //这一句有可能会报错，所以要Try起来
                 DataContent.LoadConfig();
+                if (DataContent.SystemConfig.ScannerCode <= 0)
+                {
+                    WCFHelper.CreateServer();
+                }
             }
             catch (Exception ex)
             {

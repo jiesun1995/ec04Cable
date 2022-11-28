@@ -98,7 +98,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(777, 54);
             this.label1.TabIndex = 4;
-            this.label1.Text = "H/B 焊接模组";
+            this.label1.Text = "铁壳熔接焊";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // btnLogin
@@ -244,6 +244,7 @@
             this.columnHeader2,
             this.columnHeader3});
             this.lvLogs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvLogs.FullRowSelect = true;
             this.lvLogs.HideSelection = false;
             this.lvLogs.Location = new System.Drawing.Point(3, 21);
             this.lvLogs.Margin = new System.Windows.Forms.Padding(4);

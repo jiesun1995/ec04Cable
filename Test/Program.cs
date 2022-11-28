@@ -19,20 +19,7 @@ namespace Test
             LogManager.Init(null);
             var cancellationTokenSource = new CancellationTokenSource();
             CancellationToken cancellationToken = cancellationTokenSource.Token;
-            Task.Factory.StartNew(() =>
-            {
-                ServiceHost server =null;
-                while(true)
-                {
-                    if(server == null|| server.State != CommunicationState.Opened )
-                    {
-                        server = WCFHelper.CreateServer();
-                        if(server.State == CommunicationState.Opened)
-                            Console.WriteLine($"wcf服务启动成功：{server.BaseAddresses[0].OriginalString}");
-                    }
-                    Task.Delay(1000).Wait();
-                }
-            });
+            WCFHelper.CreateServer();
 
             Task.Delay(1000).Wait();
 

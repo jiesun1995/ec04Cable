@@ -98,7 +98,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(777, 54);
             this.label1.TabIndex = 4;
-            this.label1.Text = "低压成型站";
+            this.label1.Text = "编织喷胶模组";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // btnLogin

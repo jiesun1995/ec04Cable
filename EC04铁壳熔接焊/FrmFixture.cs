@@ -18,7 +18,7 @@ namespace EC04铁壳熔接焊
         private string _cable2 = string.Empty;
         private Func<string, string, string, bool> _codeCallBack;
 
-        public FrmFixture( Func<string, string, string, bool>  codeCallBack)
+        public FrmFixture(Func<string, string, string, bool>  codeCallBack)
         {
             _codeCallBack = codeCallBack;
             InitializeComponent();
@@ -66,32 +66,38 @@ namespace EC04铁壳熔接焊
         }
         private void SaveData()
         {
-            if (string.IsNullOrWhiteSpace(tbxFixture.Text))
+            Task.Factory.StartNew(() =>
             {
-                tbxFixture.Focus();
-            }
-            else if (string.IsNullOrWhiteSpace(tbxCable1.Text))
-            {
-                tbxCable1.Focus();
-            }
-            else if (string.IsNullOrWhiteSpace(tbxCable2.Text))
-            {
-                tbxCable2.Focus();
-            }
-            else if (!string.IsNullOrWhiteSpace(tbxCable1.Text) && !string.IsNullOrWhiteSpace(tbxCable2.Text) && !string.IsNullOrWhiteSpace(tbxFixture.Text))
-            {
-                var result = _codeCallBack(tbxFixture.Text, tbxCable1.Text, tbxCable2.Text);
-                if (result)
+                Invoke((EventHandler)delegate
                 {
-                    groupBox1.BackColor = System.Drawing.Color.Green;
-                }
-                else
-                {
-                    groupBox1.BackColor = System.Drawing.Color.Red;
-                }
-                Task.Delay(500).Wait();
-                ClearUI();
-            }
+                    if (string.IsNullOrWhiteSpace(tbxFixture.Text))
+                    {
+                        tbxFixture.Focus();
+                    }
+                    else if (string.IsNullOrWhiteSpace(tbxCable1.Text))
+                    {
+                        tbxCable1.Focus();
+                    }
+                    else if (string.IsNullOrWhiteSpace(tbxCable2.Text))
+                    {
+                        tbxCable2.Focus();
+                    }
+                    else if (!string.IsNullOrWhiteSpace(tbxCable1.Text) && !string.IsNullOrWhiteSpace(tbxCable2.Text) && !string.IsNullOrWhiteSpace(tbxFixture.Text))
+                    {
+                        var result = _codeCallBack(tbxFixture.Text, tbxCable1.Text, tbxCable2.Text);
+                        if (result)
+                        {
+                            groupBox1.BackColor = System.Drawing.Color.Green;
+                        }
+                        else
+                        {
+                            groupBox1.BackColor = System.Drawing.Color.Red;
+                        }
+                        Task.Delay(500).Wait();
+                        ClearUI();
+                    }
+                });
+            });
         }
     }
 }

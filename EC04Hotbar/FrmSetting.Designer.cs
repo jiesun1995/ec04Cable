@@ -29,6 +29,17 @@
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.gbxWCFClient = new System.Windows.Forms.GroupBox();
+            this.tbxWCFClinetPort = new System.Windows.Forms.TextBox();
+            this.label32 = new System.Windows.Forms.Label();
+            this.tbxWCFClinetIP = new System.Windows.Forms.TextBox();
+            this.label33 = new System.Windows.Forms.Label();
+            this.gbxWCFServer = new System.Windows.Forms.GroupBox();
+            this.tbxWCFServerPort = new System.Windows.Forms.TextBox();
+            this.label24 = new System.Windows.Forms.Label();
+            this.tbxWCFServerIP = new System.Windows.Forms.TextBox();
+            this.label21 = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.tbxPLCPort = new System.Windows.Forms.TextBox();
             this.label26 = new System.Windows.Forms.Label();
@@ -79,6 +90,9 @@
             this.tbxIP1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.label31 = new System.Windows.Forms.Label();
+            this.nudScannerCode = new System.Windows.Forms.NumericUpDown();
+            this.label30 = new System.Windows.Forms.Label();
             this.tbxCSVPath = new System.Windows.Forms.TextBox();
             this.label22 = new System.Windows.Forms.Label();
             this.tbxTestStation = new System.Windows.Forms.TextBox();
@@ -90,32 +104,18 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.tbxWCFServerPort = new System.Windows.Forms.TextBox();
-            this.label21 = new System.Windows.Forms.Label();
-            this.tbxWCFServerIP = new System.Windows.Forms.TextBox();
-            this.label24 = new System.Windows.Forms.Label();
-            this.label30 = new System.Windows.Forms.Label();
-            this.nudScannerCode = new System.Windows.Forms.NumericUpDown();
-            this.label31 = new System.Windows.Forms.Label();
-            this.gbxWCFServer = new System.Windows.Forms.GroupBox();
-            this.gbxWCFClient = new System.Windows.Forms.GroupBox();
-            this.tbxWCFClinetPort = new System.Windows.Forms.TextBox();
-            this.label32 = new System.Windows.Forms.Label();
-            this.tbxWCFClinetIP = new System.Windows.Forms.TextBox();
-            this.label33 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
+            this.groupBox7.SuspendLayout();
+            this.gbxWCFClient.SuspendLayout();
+            this.gbxWCFServer.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox5.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.groupBox7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudScannerCode)).BeginInit();
-            this.gbxWCFServer.SuspendLayout();
-            this.gbxWCFClient.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -142,6 +142,110 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1337, 726);
             this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.gbxWCFClient);
+            this.groupBox7.Controls.Add(this.gbxWCFServer);
+            this.groupBox7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox7.Location = new System.Drawing.Point(671, 275);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(328, 448);
+            this.groupBox7.TabIndex = 12;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "WCF配置";
+            // 
+            // gbxWCFClient
+            // 
+            this.gbxWCFClient.Controls.Add(this.tbxWCFClinetPort);
+            this.gbxWCFClient.Controls.Add(this.label32);
+            this.gbxWCFClient.Controls.Add(this.tbxWCFClinetIP);
+            this.gbxWCFClient.Controls.Add(this.label33);
+            this.gbxWCFClient.Dock = System.Windows.Forms.DockStyle.Top;
+            this.gbxWCFClient.Location = new System.Drawing.Point(3, 121);
+            this.gbxWCFClient.Name = "gbxWCFClient";
+            this.gbxWCFClient.Size = new System.Drawing.Size(322, 100);
+            this.gbxWCFClient.TabIndex = 19;
+            this.gbxWCFClient.TabStop = false;
+            this.gbxWCFClient.Text = "WCF客户端配置";
+            // 
+            // tbxWCFClinetPort
+            // 
+            this.tbxWCFClinetPort.Location = new System.Drawing.Point(134, 59);
+            this.tbxWCFClinetPort.Name = "tbxWCFClinetPort";
+            this.tbxWCFClinetPort.Size = new System.Drawing.Size(184, 25);
+            this.tbxWCFClinetPort.TabIndex = 13;
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(2, 22);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(111, 15);
+            this.label32.TabIndex = 10;
+            this.label32.Text = "WCFClinet IP:";
+            // 
+            // tbxWCFClinetIP
+            // 
+            this.tbxWCFClinetIP.Location = new System.Drawing.Point(134, 19);
+            this.tbxWCFClinetIP.Name = "tbxWCFClinetIP";
+            this.tbxWCFClinetIP.Size = new System.Drawing.Size(184, 25);
+            this.tbxWCFClinetIP.TabIndex = 11;
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(2, 62);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(127, 15);
+            this.label33.TabIndex = 12;
+            this.label33.Text = "WCFClinet Port:";
+            // 
+            // gbxWCFServer
+            // 
+            this.gbxWCFServer.Controls.Add(this.tbxWCFServerPort);
+            this.gbxWCFServer.Controls.Add(this.label24);
+            this.gbxWCFServer.Controls.Add(this.tbxWCFServerIP);
+            this.gbxWCFServer.Controls.Add(this.label21);
+            this.gbxWCFServer.Dock = System.Windows.Forms.DockStyle.Top;
+            this.gbxWCFServer.Location = new System.Drawing.Point(3, 21);
+            this.gbxWCFServer.Name = "gbxWCFServer";
+            this.gbxWCFServer.Size = new System.Drawing.Size(322, 100);
+            this.gbxWCFServer.TabIndex = 18;
+            this.gbxWCFServer.TabStop = false;
+            this.gbxWCFServer.Text = "WCF服务端配置";
+            // 
+            // tbxWCFServerPort
+            // 
+            this.tbxWCFServerPort.Location = new System.Drawing.Point(134, 59);
+            this.tbxWCFServerPort.Name = "tbxWCFServerPort";
+            this.tbxWCFServerPort.Size = new System.Drawing.Size(184, 25);
+            this.tbxWCFServerPort.TabIndex = 13;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(2, 22);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(111, 15);
+            this.label24.TabIndex = 10;
+            this.label24.Text = "WCFServer IP:";
+            // 
+            // tbxWCFServerIP
+            // 
+            this.tbxWCFServerIP.Location = new System.Drawing.Point(134, 19);
+            this.tbxWCFServerIP.Name = "tbxWCFServerIP";
+            this.tbxWCFServerIP.Size = new System.Drawing.Size(184, 25);
+            this.tbxWCFServerIP.TabIndex = 11;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(2, 62);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(127, 15);
+            this.label21.TabIndex = 12;
+            this.label21.Text = "WCFServer Port:";
             // 
             // groupBox6
             // 
@@ -610,6 +714,44 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "站点配置";
             // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Font = new System.Drawing.Font("宋体", 6F);
+            this.label31.ForeColor = System.Drawing.Color.Brown;
+            this.label31.Location = new System.Drawing.Point(135, 251);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(150, 10);
+            this.label31.TabIndex = 20;
+            this.label31.Text = "为0时代表服务端，监控流道信号";
+            // 
+            // nudScannerCode
+            // 
+            this.nudScannerCode.Location = new System.Drawing.Point(138, 207);
+            this.nudScannerCode.Maximum = new decimal(new int[] {
+            4,
+            0,
+            0,
+            0});
+            this.nudScannerCode.Name = "nudScannerCode";
+            this.nudScannerCode.Size = new System.Drawing.Size(184, 25);
+            this.nudScannerCode.TabIndex = 19;
+            this.nudScannerCode.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudScannerCode.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(9, 209);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(97, 15);
+            this.label30.TabIndex = 18;
+            this.label30.Text = "人工扫码位：";
+            // 
             // tbxCSVPath
             // 
             this.tbxCSVPath.Location = new System.Drawing.Point(138, 166);
@@ -706,148 +848,6 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // groupBox7
-            // 
-            this.groupBox7.Controls.Add(this.gbxWCFClient);
-            this.groupBox7.Controls.Add(this.gbxWCFServer);
-            this.groupBox7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox7.Location = new System.Drawing.Point(671, 275);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(328, 448);
-            this.groupBox7.TabIndex = 12;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "WCF服务配置";
-            // 
-            // tbxWCFServerPort
-            // 
-            this.tbxWCFServerPort.Location = new System.Drawing.Point(134, 59);
-            this.tbxWCFServerPort.Name = "tbxWCFServerPort";
-            this.tbxWCFServerPort.Size = new System.Drawing.Size(184, 25);
-            this.tbxWCFServerPort.TabIndex = 13;
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(2, 62);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(127, 15);
-            this.label21.TabIndex = 12;
-            this.label21.Text = "WCFServer Port:";
-            // 
-            // tbxWCFServerIP
-            // 
-            this.tbxWCFServerIP.Location = new System.Drawing.Point(134, 19);
-            this.tbxWCFServerIP.Name = "tbxWCFServerIP";
-            this.tbxWCFServerIP.Size = new System.Drawing.Size(184, 25);
-            this.tbxWCFServerIP.TabIndex = 11;
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(2, 22);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(111, 15);
-            this.label24.TabIndex = 10;
-            this.label24.Text = "WCFServer IP:";
-            // 
-            // label30
-            // 
-            this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(9, 209);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(97, 15);
-            this.label30.TabIndex = 18;
-            this.label30.Text = "人工扫码位：";
-            // 
-            // nudScannerCode
-            // 
-            this.nudScannerCode.Location = new System.Drawing.Point(138, 207);
-            this.nudScannerCode.Maximum = new decimal(new int[] {
-            4,
-            0,
-            0,
-            0});
-            this.nudScannerCode.Name = "nudScannerCode";
-            this.nudScannerCode.Size = new System.Drawing.Size(184, 25);
-            this.nudScannerCode.TabIndex = 19;
-            this.nudScannerCode.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudScannerCode.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
-            // 
-            // label31
-            // 
-            this.label31.AutoSize = true;
-            this.label31.Font = new System.Drawing.Font("宋体", 5F);
-            this.label31.ForeColor = System.Drawing.Color.Brown;
-            this.label31.Location = new System.Drawing.Point(135, 251);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(136, 9);
-            this.label31.TabIndex = 20;
-            this.label31.Text = "为0时代表服务端，监控流道信号";
-            // 
-            // gbxWCFServer
-            // 
-            this.gbxWCFServer.Controls.Add(this.tbxWCFServerPort);
-            this.gbxWCFServer.Controls.Add(this.label24);
-            this.gbxWCFServer.Controls.Add(this.tbxWCFServerIP);
-            this.gbxWCFServer.Controls.Add(this.label21);
-            this.gbxWCFServer.Dock = System.Windows.Forms.DockStyle.Top;
-            this.gbxWCFServer.Location = new System.Drawing.Point(3, 21);
-            this.gbxWCFServer.Name = "gbxWCFServer";
-            this.gbxWCFServer.Size = new System.Drawing.Size(322, 100);
-            this.gbxWCFServer.TabIndex = 18;
-            this.gbxWCFServer.TabStop = false;
-            this.gbxWCFServer.Text = "WCF服务端配置";
-            // 
-            // gbxWCFClient
-            // 
-            this.gbxWCFClient.Controls.Add(this.tbxWCFClinetPort);
-            this.gbxWCFClient.Controls.Add(this.label32);
-            this.gbxWCFClient.Controls.Add(this.tbxWCFClinetIP);
-            this.gbxWCFClient.Controls.Add(this.label33);
-            this.gbxWCFClient.Dock = System.Windows.Forms.DockStyle.Top;
-            this.gbxWCFClient.Location = new System.Drawing.Point(3, 121);
-            this.gbxWCFClient.Name = "gbxWCFClient";
-            this.gbxWCFClient.Size = new System.Drawing.Size(322, 100);
-            this.gbxWCFClient.TabIndex = 19;
-            this.gbxWCFClient.TabStop = false;
-            this.gbxWCFClient.Text = "WCF客户端配置";
-            // 
-            // tbxWCFClinetPort
-            // 
-            this.tbxWCFClinetPort.Location = new System.Drawing.Point(134, 59);
-            this.tbxWCFClinetPort.Name = "tbxWCFClinetPort";
-            this.tbxWCFClinetPort.Size = new System.Drawing.Size(184, 25);
-            this.tbxWCFClinetPort.TabIndex = 13;
-            // 
-            // label32
-            // 
-            this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(2, 22);
-            this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(111, 15);
-            this.label32.TabIndex = 10;
-            this.label32.Text = "WCFClinet IP:";
-            // 
-            // tbxWCFClinetIP
-            // 
-            this.tbxWCFClinetIP.Location = new System.Drawing.Point(134, 19);
-            this.tbxWCFClinetIP.Name = "tbxWCFClinetIP";
-            this.tbxWCFClinetIP.Size = new System.Drawing.Size(184, 25);
-            this.tbxWCFClinetIP.TabIndex = 11;
-            // 
-            // label33
-            // 
-            this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(2, 62);
-            this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(127, 15);
-            this.label33.TabIndex = 12;
-            this.label33.Text = "WCFClinet Port:";
-            // 
             // FrmSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -858,6 +858,11 @@
             this.Text = "配置设置";
             this.Load += new System.EventHandler(this.FrmSetting_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.groupBox7.ResumeLayout(false);
+            this.gbxWCFClient.ResumeLayout(false);
+            this.gbxWCFClient.PerformLayout();
+            this.gbxWCFServer.ResumeLayout(false);
+            this.gbxWCFServer.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
             this.groupBox4.ResumeLayout(false);
@@ -870,13 +875,8 @@
             this.groupBox1.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.groupBox7.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.nudScannerCode)).EndInit();
-            this.gbxWCFServer.ResumeLayout(false);
-            this.gbxWCFServer.PerformLayout();
-            this.gbxWCFClient.ResumeLayout(false);
-            this.gbxWCFClient.PerformLayout();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

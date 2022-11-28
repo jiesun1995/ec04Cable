@@ -22,6 +22,7 @@ namespace EC04InputStation
 
         private void FrmSetting_Load(object sender, EventArgs e)
         {
+            
             tbxIP1.Text = _systemConfig.RFIDConfigs[0].IP;
             tbxChannel1.Text = _systemConfig.RFIDConfigs[0].Channel.ToString();
             tbxPort1.Text = _systemConfig.RFIDConfigs[0].Port.ToString();

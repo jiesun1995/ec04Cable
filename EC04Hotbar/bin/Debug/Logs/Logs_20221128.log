@@ -26,3 +26,83 @@
    在 Common.Master..ctor(String ip, UInt16 port) 位置 D:\work\ec04\EC04\Common\Master.cs:行号 111
    在 Common.RFIDHelper..ctor(String ip, Int32 channelId, Int32 port) 位置 D:\work\ec04\EC04\Common\RFIDHelper.cs:行号 61
    在 EC04Hotbar.FrmMain..ctor() 位置 D:\work\ec04\EC04\EC04Hotbar\FrmMain.cs:行号 44
+2022-11-28 15:46:23,640 [1] FATAL Common.LogManager - System.IO.FileNotFoundException: 未能加载文件或程序集“Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed”或它的某一个依赖项。系统找不到指定的文件。
+文件名:“Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed”
+   在 Common.DataContent.LoadConfig()
+   在 EC04Hotbar.Program.Main() 位置 D:\work\ec04\EC04\EC04Hotbar\Program.cs:行号 26
+
+=== 预绑定状态信息 ===
+日志: DisplayName = Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed
+ (Fully-specified)
+日志: Appbase = file:///D:/work/ec04/EC04/EC04Hotbar/bin/Debug/
+日志: 初始 PrivatePath = NULL
+调用程序集: Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null。
+===
+日志: 此绑定从 default 加载上下文开始。
+日志: 正在使用应用程序配置文件: D:\work\ec04\EC04\EC04Hotbar\bin\Debug\EC04Hotbar.exe.Config
+日志: 使用主机配置文件: 
+日志: 使用 C:\Windows\Microsoft.NET\Framework\v4.0.30319\config\machine.config 的计算机配置文件。
+日志: 在应用程序配置文件中找到重定向: 4.5.0.0 已重定向到 4.5.0.0。
+日志: 策略后引用: Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed
+日志: 尝试下载新的 URL file:///D:/work/ec04/EC04/EC04Hotbar/bin/Debug/Newtonsoft.Json.DLL。
+日志: 尝试下载新的 URL file:///D:/work/ec04/EC04/EC04Hotbar/bin/Debug/Newtonsoft.Json/Newtonsoft.Json.DLL。
+日志: 尝试下载新的 URL file:///D:/work/ec04/EC04/EC04Hotbar/bin/Debug/Newtonsoft.Json.EXE。
+日志: 尝试下载新的 URL file:///D:/work/ec04/EC04/EC04Hotbar/bin/Debug/Newtonsoft.Json/Newtonsoft.Json.EXE。
+
+2022-11-28 15:47:05,482 [1] FATAL Common.LogManager - System.IO.FileNotFoundException: 未能加载文件或程序集“Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed”或它的某一个依赖项。系统找不到指定的文件。
+文件名:“Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed”
+   在 Common.DataContent.LoadConfig()
+   在 EC04Hotbar.Program.Main() 位置 D:\work\ec04\EC04\EC04Hotbar\Program.cs:行号 26
+
+=== 预绑定状态信息 ===
+日志: DisplayName = Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed
+ (Fully-specified)
+日志: Appbase = file:///D:/work/ec04/EC04/EC04Hotbar/bin/Debug/
+日志: 初始 PrivatePath = NULL
+调用程序集: Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null。
+===
+日志: 此绑定从 default 加载上下文开始。
+日志: 正在使用应用程序配置文件: D:\work\ec04\EC04\EC04Hotbar\bin\Debug\EC04Hotbar.exe.Config
+日志: 使用主机配置文件: 
+日志: 使用 C:\Windows\Microsoft.NET\Framework\v4.0.30319\config\machine.config 的计算机配置文件。
+日志: 在应用程序配置文件中找到重定向: 4.5.0.0 已重定向到 4.5.0.0。
+日志: 策略后引用: Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed
+日志: 尝试下载新的 URL file:///D:/work/ec04/EC04/EC04Hotbar/bin/Debug/Newtonsoft.Json.DLL。
+日志: 尝试下载新的 URL file:///D:/work/ec04/EC04/EC04Hotbar/bin/Debug/Newtonsoft.Json/Newtonsoft.Json.DLL。
+日志: 尝试下载新的 URL file:///D:/work/ec04/EC04/EC04Hotbar/bin/Debug/Newtonsoft.Json.EXE。
+日志: 尝试下载新的 URL file:///D:/work/ec04/EC04/EC04Hotbar/bin/Debug/Newtonsoft.Json/Newtonsoft.Json.EXE。
+
+2022-11-28 15:47:59,867 [1] FATAL Common.LogManager - System.IO.FileNotFoundException: 未能加载文件或程序集“Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed”或它的某一个依赖项。系统找不到指定的文件。
+文件名:“Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed”
+   在 Common.DataContent.LoadConfig()
+   在 EC04Hotbar.Program.Main() 位置 D:\work\ec04\EC04\EC04Hotbar\Program.cs:行号 26
+
+=== 预绑定状态信息 ===
+日志: DisplayName = Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed
+ (Fully-specified)
+日志: Appbase = file:///D:/work/ec04/EC04/EC04Hotbar/bin/Debug/
+日志: 初始 PrivatePath = NULL
+调用程序集: Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null。
+===
+日志: 此绑定从 default 加载上下文开始。
+日志: 正在使用应用程序配置文件: D:\work\ec04\EC04\EC04Hotbar\bin\Debug\EC04Hotbar.exe.Config
+日志: 使用主机配置文件: 
+日志: 使用 C:\Windows\Microsoft.NET\Framework\v4.0.30319\config\machine.config 的计算机配置文件。
+日志: 在应用程序配置文件中找到重定向: 4.5.0.0 已重定向到 4.5.0.0。
+日志: 策略后引用: Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed
+日志: 尝试下载新的 URL file:///D:/work/ec04/EC04/EC04Hotbar/bin/Debug/Newtonsoft.Json.DLL。
+日志: 尝试下载新的 URL file:///D:/work/ec04/EC04/EC04Hotbar/bin/Debug/Newtonsoft.Json/Newtonsoft.Json.DLL。
+日志: 尝试下载新的 URL file:///D:/work/ec04/EC04/EC04Hotbar/bin/Debug/Newtonsoft.Json.EXE。
+日志: 尝试下载新的 URL file:///D:/work/ec04/EC04/EC04Hotbar/bin/Debug/Newtonsoft.Json/Newtonsoft.Json.EXE。
+
+2022-11-28 16:09:55,939 [1] ERROR Common.LogManager - System.Net.Sockets.SocketException (0x80004005): 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 192.168.1.10:502
+   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   在 System.Net.Sockets.Socket.Connect(EndPoint remoteEP)
+   在 Common.Master.connect(String ip, UInt16 port) 位置 D:\work\ec04\EC04\Common\Master.cs:行号 131
+   在 Common.Master..ctor(String ip, UInt16 port) 位置 D:\work\ec04\EC04\Common\Master.cs:行号 111
+   在 Common.RFIDHelper..ctor(String ip, Int32 channelId, Int32 port) 位置 D:\work\ec04\EC04\Common\RFIDHelper.cs:行号 61
+   在 EC04Hotbar.FrmMain..ctor() 位置 D:\work\ec04\EC04\EC04Hotbar\FrmMain.cs:行号 44
+2022-11-28 16:21:51,897 [3] INFO  Common.LogManager - WCF服务启动成功：http://0.0.0.0:4000
+2022-11-28 16:23:50,573 [3] INFO  Common.LogManager - WCF服务启动成功：http://0.0.0.0:4000
+2022-11-28 16:26:44,860 [3] INFO  Common.LogManager - WCF服务启动成功：http://0.0.0.0:4000
+2022-11-28 16:45:30,191 [3] INFO  Common.LogManager - WCF服务启动成功：http://0.0.0.0:4000
