@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
@@ -39,7 +40,7 @@
             this.tslSysTime = new System.Windows.Forms.ToolStripStatusLabel();
             this.tslRunTime = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel5 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tslPLCStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -48,7 +49,7 @@
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.timer1 = new System.Windows.Forms.Timer();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -158,7 +159,7 @@
             this.tslSysTime,
             this.tslRunTime,
             this.toolStripStatusLabel5,
-            this.toolStripStatusLabel2});
+            this.tslPLCStatus});
             this.statusStrip1.Location = new System.Drawing.Point(0, 5);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
@@ -187,12 +188,12 @@
             this.toolStripStatusLabel5.Size = new System.Drawing.Size(73, 24);
             this.toolStripStatusLabel5.Text = "扫码器：";
             // 
-            // toolStripStatusLabel2
+            // tslPLCStatus
             // 
-            this.toolStripStatusLabel2.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
-            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(55, 24);
-            this.toolStripStatusLabel2.Text = "PLC：";
+            this.tslPLCStatus.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+            this.tslPLCStatus.Name = "tslPLCStatus";
+            this.tslPLCStatus.Size = new System.Drawing.Size(55, 24);
+            this.tslPLCStatus.Text = "PLC：";
             // 
             // tabControl1
             // 
@@ -304,7 +305,7 @@
         private System.Windows.Forms.ToolStripStatusLabel tslSysTime;
         private System.Windows.Forms.ToolStripStatusLabel tslRunTime;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel5;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
+        private System.Windows.Forms.ToolStripStatusLabel tslPLCStatus;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TabControl tabControl1;

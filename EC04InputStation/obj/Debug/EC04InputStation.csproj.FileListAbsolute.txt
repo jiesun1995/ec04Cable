@@ -31,7 +31,6 @@ D:\work\ec04\EC04\EC04InputStation\bin\Debug\Dapper.xml
 D:\work\ec04\EC04\EC04InputStation\obj\Debug\EC04InputStation.csproj.AssemblyReference.cache
 D:\work\ec04\EC04\EC04InputStation\obj\Debug\EC04InputStation.FrmMain.resources
 D:\work\ec04\EC04\EC04InputStation\obj\Debug\EC04InputStation.FrmRFIDInputCable.resources
-D:\work\ec04\EC04\EC04InputStation\obj\Debug\EC04InputStation.FrmSetting.resources
 D:\work\ec04\EC04\EC04InputStation\obj\Debug\EC04InputStation.Properties.Resources.resources
 D:\work\ec04\EC04\EC04InputStation\obj\Debug\EC04InputStation.csproj.GenerateResource.cache
 D:\work\ec04\EC04\EC04InputStation\obj\Debug\EC04InputStation.csproj.CoreCompileInputs.cache

@@ -103,7 +103,6 @@ namespace Common
                 var fixtures = Cables.GroupBy(x => x.FAI1_A).Select(x => x.Key);
                 foreach (var fixture in fixtures)
                 {
-                    //connection.q
                     var cables = QueryByFixture(fixture);
                     foreach (var cable in cables)
                     {
@@ -131,19 +130,13 @@ namespace Common
                     using (SQLiteConnection connection = new SQLiteConnection(connectionString))
                     {
                         connection.Delete<Cable>(cable);
+                        CableHistroy cableHistroy = new CableHistroy(cable);
+                        connection.Insert<CableHistroy>(cableHistroy);
                     }
                 }
                 catch (Exception ex)
                 {
                     LogManager.Error(ex);
-                }
-                finally
-                {
-                    using (SQLiteConnection connection = new SQLiteConnection(connectionString))
-                    {
-                        CableHistroy cableHistroy = new CableHistroy(cable);
-                        connection.Insert<CableHistroy>(cableHistroy);
-                    }
                 }
             }
         }

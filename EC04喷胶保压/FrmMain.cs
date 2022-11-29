@@ -1,5 +1,6 @@
 ﻿using Common;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,88 +16,161 @@ namespace EC04喷胶保压
     public partial class FrmMain : Form
     {
         private Stopwatch _stopwatch ;
-        private static int _peopleScannerCodeCount = 1;
+        private readonly InovanceHelper _inovanceHelper;
+        private readonly Common.IFixtureCableBindService _fixtureCableBindService;
+        private ConcurrentDictionary<int, string> vals = new ConcurrentDictionary<int, string>();
+        private readonly RFIDHelper _rfidHelper1;
+        private readonly RFIDHelper _rfidHelper1P;
+        private readonly RFIDHelper _rfidHelper2;
+        private readonly RFIDHelper _rfidHelper2P;
         public FrmMain()
         {
             _stopwatch = new Stopwatch();
             _stopwatch.Start();
             InitializeComponent();
             timer1.Start();
-            LogManager.Init(lvLogs);
+            
+            try
+            {
+                _inovanceHelper = new InovanceHelper(DataContent.SystemConfig.PLCIp, DataContent.SystemConfig.PLCPort);
+                LogManager.Init(lvLogs);
+                _fixtureCableBindService = WCFHelper.CreateClient();
+                vals.TryAdd(0, string.Empty);
+                vals.TryAdd(1, string.Empty);
+                vals.TryAdd(2, string.Empty);
+                vals.TryAdd(3, string.Empty);
+
+                _rfidHelper1 = new RFIDHelper(DataContent.SystemConfig.RFIDConfigs[0].IP, DataContent.SystemConfig.RFIDConfigs[0].Channel, DataContent.SystemConfig.RFIDConfigs[0].Port);
+                _rfidHelper1.DataLength_Ch0 = DataContent.SystemConfig.RFIDConfigs[0].DataLength;
+                _rfidHelper1.StartAddress_Ch0 = DataContent.SystemConfig.RFIDConfigs[0].StartAddress;
+
+                _rfidHelper1.ReadCallback = (channel, content) =>
+                {
+                    if (DataContent.SystemConfig.RFIDConfigs[0].Channel == channel)
+                    {
+                        vals.TryUpdate(channel, content, content);
+                        DataSaveRunner1();
+                    }
+                };
+
+                _rfidHelper1P = new RFIDHelper(DataContent.SystemConfig.RFIDConfigs[1].IP, DataContent.SystemConfig.RFIDConfigs[1].Channel, DataContent.SystemConfig.RFIDConfigs[1].Port);
+                _rfidHelper1P.DataLength_Ch1 = DataContent.SystemConfig.RFIDConfigs[1].DataLength;
+                _rfidHelper1P.StartAddress_Ch1 = DataContent.SystemConfig.RFIDConfigs[1].StartAddress;
+
+                _rfidHelper1P.ReadCallback = (channel, content) =>
+                {
+                    if (DataContent.SystemConfig.RFIDConfigs[1].Channel == channel)
+                    {
+                        vals.TryUpdate(channel, content, content);
+                        DataSaveRunner1();
+                    }
+                };
+
+                _rfidHelper2 = new RFIDHelper(DataContent.SystemConfig.RFIDConfigs[2].IP, DataContent.SystemConfig.RFIDConfigs[2].Channel, DataContent.SystemConfig.RFIDConfigs[2].Port);
+                _rfidHelper2.DataLength_Ch2 = DataContent.SystemConfig.RFIDConfigs[2].DataLength;
+                _rfidHelper2.StartAddress_Ch2 = DataContent.SystemConfig.RFIDConfigs[2].StartAddress;
+                _rfidHelper1P.ReadCallback = (channel, content) =>
+                {
+                    if (DataContent.SystemConfig.RFIDConfigs[2].Channel == channel)
+                    {
+                        vals.TryUpdate(channel, content, content);
+                        DataSaveRunner2();
+                    }
+                };
+
+                _rfidHelper2P = new RFIDHelper(DataContent.SystemConfig.RFIDConfigs[3].IP, DataContent.SystemConfig.RFIDConfigs[3].Channel, DataContent.SystemConfig.RFIDConfigs[3].Port);
+                _rfidHelper2P.DataLength_Ch3 = DataContent.SystemConfig.RFIDConfigs[3].DataLength;
+                _rfidHelper2P.StartAddress_Ch3 = DataContent.SystemConfig.RFIDConfigs[3].StartAddress;
+                _rfidHelper1P.ReadCallback = (channel, content) =>
+                {
+                    if (DataContent.SystemConfig.RFIDConfigs[3].Channel == channel)
+                    {
+                        vals.TryUpdate(channel, content, content);
+                        DataSaveRunner2();
+                    }
+                };
+            }
+            catch (Exception ex)
+            {
+                LogManager.Error(ex);
+            }
+        }
+
+        public void DataSaveRunner1()
+        {
+            vals.TryGetValue(0, out string sn);
+            vals.TryGetValue(1, out string fixture);
+            if (!string.IsNullOrEmpty(sn) && !string.IsNullOrEmpty(fixture))
+            {
+                var cable = new Cable
+                {
+                    Sn = sn,
+                    Start_time = DateTime.Now,
+                    Test_station = DataContent.SystemConfig.TestStation,
+                    FAI1_A = fixture,
+                    FixtureID = fixture,
+                    Model = DataContent.SystemConfig.Model,
+                };
+                _fixtureCableBindService.FixtureCableBind(new List<Cable> { cable });
+                _inovanceHelper.WriteAddressByD(11, 3);
+            }
+        }
+        public void DataSaveRunner2()
+        {
+            vals.TryGetValue(2, out string val);
+            vals.TryGetValue(3, out string valP);
+            if (!string.IsNullOrEmpty(val) && !string.IsNullOrEmpty(valP))
+            {
+                _fixtureCableBindService.FixtureBind(val, valP);
+                _inovanceHelper.WriteAddressByD(13, 3);
+            }
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
             tslSysTime.Text = $"系统时间:{DateTime.Now.ToString("yyyyMMdd HH:mm:ss")}";
             tslRunTime.Text = $"运行时间:{_stopwatch.Elapsed}";
+            if (_inovanceHelper == null)
+            {
+                tslPLCStatus.Text = $"PLC: 连接失败";
+                tslPLCStatus.BackColor = Color.Red;
+            }
+            else
+            {
+                tslPLCStatus.Text = $"PLC:{(_inovanceHelper.IsConnect ? "已连接" : "连接失败")}";
+                tslPLCStatus.BackColor = _inovanceHelper.IsConnect ? Color.Green : Color.Red;
+            }
         }
 
         private void FrmMain_Load(object sender, EventArgs e)
         {
             tabPage1.Controls.Clear();
-            var zhanbi = 1.00 / _peopleScannerCodeCount;
-            ///动态加载人工扫码位显示界面
-            for (int i = 0; i < _peopleScannerCodeCount; i++)
+            Task.Factory.StartNew(async () =>
             {
-                Form frmcode;
-                frmcode = new FrmFixture((fixture, cable1, cable2) => { return ScannerCodeByPeopleSaveCSV(fixture, new List<string> { cable1, cable2 }); });
-                frmcode.TopLevel = false;
-                frmcode.Dock = DockStyle.None;
-                frmcode.Width = tabPage1.Width;
-                frmcode.FormBorderStyle = FormBorderStyle.None;
-
-                frmcode.Height = Convert.ToInt32(tabPage1.Height * zhanbi);
-                var y = Convert.ToInt32(tabPage1.Height * zhanbi * i);
-                frmcode.Location = new Point(0, y);
-                tabPage1.Controls.Add(frmcode);
-                frmcode.Show();
-            }
-        }
-        private bool ScannerCodeByPeopleSaveCSV(string fixture, List<string> newCables)
-        {
-            try
-            {
-                for (int i = 0; i < newCables.Count; i++)
+                while (true)
                 {
-                    var cable = newCables[i];
-                    var dt = new DataTable();
-                    dt.Columns.Add(new DataColumn("SN"));
-                    dt.Columns.Add(new DataColumn("model"));
-                    dt.Columns.Add(new DataColumn("fixtureID"));
-                    dt.Columns.Add(new DataColumn("test_station"));
-                    dt.Columns.Add(new DataColumn("start_time"));
-                    dt.Columns.Add(new DataColumn("finish_time"));
-                    dt.Columns.Add(new DataColumn("status"));
-                    dt.Columns.Add(new DataColumn("error_code"));
-                    dt.Columns.Add(new DataColumn("FAI1_A"));
-                    dt.Columns.Add(new DataColumn("FAI1_B"));
-                    dt.Columns.Add(new DataColumn("FAI1_C"));
-                    dt.Columns.Add(new DataColumn("FAI1_D"));
-                    dt.Columns.Add(new DataColumn("FAI1_E"));
-                    dt.Columns.Add(new DataColumn("FAI1_F"));
-                    dt.Columns.Add(new DataColumn("FAI1_G"));
-                    dt.Columns.Add(new DataColumn("FAI1_H"));
-                    dt.Columns.Add(new DataColumn("Station"));
-                    var row = dt.NewRow();
-                    row[0] = cable;
-                    row[1] = DataContent.SystemConfig.Model;
-                    row[2] = DataContent.SystemConfig.FixtureID;
-                    row[3] = DataContent.SystemConfig.TestStation;
-                    row[4] = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                    row[5] = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                    row[6] = "PASS";
-                    row[8] = fixture;
-                    row[15] = i + 1;
-                    dt.Rows.Add(row);
-                    CSVHelper.SaveCSV(dt, DataContent.SystemConfig.CSVPath + "//" + Guid.NewGuid() + ".csv");
+                    if (_inovanceHelper == null || _inovanceHelper.IsConnect) { await Task.Delay(1000); continue; }
+                    if (_inovanceHelper.ReadAddressByD(11) == 1)
+                    {
+                        _rfidHelper1.Read(DataContent.SystemConfig.RFIDConfigs[0].Channel);
+                        _rfidHelper1P.Read(DataContent.SystemConfig.RFIDConfigs[1].Channel);
+                    }
+                    await Task.Delay(100);
                 }
-            }
-            catch (Exception ex)
+            }, TaskCreationOptions.LongRunning);
+            Task.Factory.StartNew(async() =>
             {
-                LogManager.Error(ex);
-                return false;
-            }
-            return true;
+                while (true)
+                {
+                    if (_inovanceHelper == null || _inovanceHelper.IsConnect) { await Task.Delay(1000); continue; }
+                    if (_inovanceHelper.ReadAddressByD(13) == 1)
+                    {
+                        _rfidHelper2.Read(DataContent.SystemConfig.RFIDConfigs[2].Channel);
+                        _rfidHelper2P.Read(DataContent.SystemConfig.RFIDConfigs[3].Channel);
+                    }
+                    await Task.Delay(100);
+                }
+            }, TaskCreationOptions.LongRunning);
         }
 
         private void button1_Click(object sender, EventArgs e)

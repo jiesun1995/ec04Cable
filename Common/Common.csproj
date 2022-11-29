@@ -101,6 +101,7 @@
       <DependentUpon>FrmSetting.cs</DependentUpon>
     </Compile>
     <Compile Include="IFixtureCableBind.cs" />
+    <Compile Include="InovanceHelper.cs" />
     <Compile Include="JsonHelper.cs" />
     <Compile Include="LogManager.cs" />
     <Compile Include="Master.cs" />

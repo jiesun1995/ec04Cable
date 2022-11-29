@@ -19,7 +19,7 @@ namespace EC04Hotbar
         private Stopwatch _stopwatch ;
         private IFixtureCableBindService _fixtureCableBindService;
         private readonly OMRHelper _omrHelper;
-        ConcurrentDictionary<int, string> vals = new ConcurrentDictionary<int, string>();
+        private ConcurrentDictionary<int, string> vals = new ConcurrentDictionary<int, string>();
         private readonly RFIDHelper _rfidHelper1;
         private readonly RFIDHelper _rfidHelper1P;
         private readonly RFIDHelper _rfidHelper2;
