@@ -52,7 +52,7 @@ namespace Common
         {
             string uri = $"http://{DataContent.SystemConfig.WCFClinetIp}:{DataContent.SystemConfig.WCFClinetPort}/BindService";
             ChannelFactory<IFixtureCableBindService> factory = new ChannelFactory<IFixtureCableBindService>(new BasicHttpBinding(),
-                                                                                    new EndpointAddress("http://127.0.0.1:1920/BindService"));
+                                                                                    new EndpointAddress(uri));
             
             var client = factory.CreateChannel();
 

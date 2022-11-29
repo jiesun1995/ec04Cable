@@ -21,3 +21,6 @@ D:\work\ec04\EC04\EC04编织喷胶\obj\Debug\EC04编织喷胶.csproj.CoreCompile
 D:\work\ec04\EC04\EC04编织喷胶\obj\Debug\EC04编织喷胶.csproj.CopyComplete
 D:\work\ec04\EC04\EC04编织喷胶\obj\Debug\EC04编织喷胶.exe
 D:\work\ec04\EC04\EC04编织喷胶\obj\Debug\EC04编织喷胶.pdb
+D:\work\ec04\EC04\EC04编织喷胶\bin\Debug\Newtonsoft.Json.dll
+D:\work\ec04\EC04\EC04编织喷胶\bin\Debug\Newtonsoft.Json.pdb
+D:\work\ec04\EC04\EC04编织喷胶\bin\Debug\Newtonsoft.Json.xml

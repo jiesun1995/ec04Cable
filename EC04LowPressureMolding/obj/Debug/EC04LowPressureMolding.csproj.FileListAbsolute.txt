@@ -21,3 +21,6 @@ D:\work\ec04\EC04\EC04LowPressureMolding\obj\Debug\EC04LowPressureMolding.csproj
 D:\work\ec04\EC04\EC04LowPressureMolding\obj\Debug\EC04LowPressureMolding.csproj.CopyComplete
 D:\work\ec04\EC04\EC04LowPressureMolding\obj\Debug\EC04LowPressureMolding.exe
 D:\work\ec04\EC04\EC04LowPressureMolding\obj\Debug\EC04LowPressureMolding.pdb
+D:\work\ec04\EC04\EC04LowPressureMolding\bin\Debug\Newtonsoft.Json.dll
+D:\work\ec04\EC04\EC04LowPressureMolding\bin\Debug\Newtonsoft.Json.pdb
+D:\work\ec04\EC04\EC04LowPressureMolding\bin\Debug\Newtonsoft.Json.xml

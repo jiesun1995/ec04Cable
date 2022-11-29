@@ -21,3 +21,6 @@ D:\work\ec04\EC04\EC04喷胶保压\obj\Debug\EC04喷胶保压.csproj.CoreCompile
 D:\work\ec04\EC04\EC04喷胶保压\obj\Debug\EC04喷胶保压.csproj.CopyComplete
 D:\work\ec04\EC04\EC04喷胶保压\obj\Debug\EC04喷胶保压.exe
 D:\work\ec04\EC04\EC04喷胶保压\obj\Debug\EC04喷胶保压.pdb
+D:\work\ec04\EC04\EC04喷胶保压\bin\Debug\Newtonsoft.Json.dll
+D:\work\ec04\EC04\EC04喷胶保压\bin\Debug\Newtonsoft.Json.pdb
+D:\work\ec04\EC04\EC04喷胶保压\bin\Debug\Newtonsoft.Json.xml

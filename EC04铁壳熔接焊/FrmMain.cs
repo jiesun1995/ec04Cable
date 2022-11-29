@@ -18,7 +18,6 @@ namespace EC04铁壳熔接焊
     {
         private Stopwatch _stopwatch ;
         private IFixtureCableBindService _fixtureCableBindService;
-        private readonly OMRHelper _omrHelper;
         ConcurrentDictionary<int, string> vals = new ConcurrentDictionary<int, string>();
         private readonly RFIDHelper _rfidHelper1;
         private readonly RFIDHelper _rfidHelper1P;
@@ -39,57 +38,6 @@ namespace EC04铁壳熔接焊
             {
                 LogManager.Init(lvLogs);
                 _fixtureCableBindService = WCFHelper.CreateClient();
-                _omrHelper = new OMRHelper(DataContent.SystemConfig.PLCIp, DataContent.SystemConfig.PLCPort);
-
-                _rfidHelper1 = new RFIDHelper(DataContent.SystemConfig.RFIDConfigs[0].IP, DataContent.SystemConfig.RFIDConfigs[0].Channel, DataContent.SystemConfig.RFIDConfigs[0].Port);
-                _rfidHelper1.DataLength_Ch0 = DataContent.SystemConfig.RFIDConfigs[0].DataLength;
-                _rfidHelper1.StartAddress_Ch0 = DataContent.SystemConfig.RFIDConfigs[0].StartAddress;
-
-                _rfidHelper1.ReadCallback = (channel, content) =>
-                {
-                    if(DataContent.SystemConfig.RFIDConfigs[0].Channel == channel)
-                    {
-                        vals.TryUpdate(channel, content,content);
-                        DataSaveRunner1();
-                    }
-                };
-
-                _rfidHelper1P = new RFIDHelper(DataContent.SystemConfig.RFIDConfigs[1].IP, DataContent.SystemConfig.RFIDConfigs[1].Channel, DataContent.SystemConfig.RFIDConfigs[1].Port);
-                _rfidHelper1P.DataLength_Ch1 = DataContent.SystemConfig.RFIDConfigs[1].DataLength;
-                _rfidHelper1P.StartAddress_Ch1 = DataContent.SystemConfig.RFIDConfigs[1].StartAddress;
-
-                _rfidHelper1P.ReadCallback = (channel, content) =>
-                {
-                    if (DataContent.SystemConfig.RFIDConfigs[1].Channel == channel)
-                    {
-                        vals.TryUpdate(channel, content, content);
-                        DataSaveRunner1();
-                    }
-                };
-
-                _rfidHelper2 = new RFIDHelper(DataContent.SystemConfig.RFIDConfigs[2].IP, DataContent.SystemConfig.RFIDConfigs[2].Channel, DataContent.SystemConfig.RFIDConfigs[2].Port);
-                _rfidHelper2.DataLength_Ch2 = DataContent.SystemConfig.RFIDConfigs[2].DataLength;
-                _rfidHelper2.StartAddress_Ch2 = DataContent.SystemConfig.RFIDConfigs[2].StartAddress;
-                _rfidHelper1P.ReadCallback = (channel, content) =>
-                {
-                    if (DataContent.SystemConfig.RFIDConfigs[2].Channel == channel)
-                    {
-                        vals.TryUpdate(channel, content, content);
-                        DataSaveRunner2();
-                    }
-                };
-
-                _rfidHelper2P = new RFIDHelper(DataContent.SystemConfig.RFIDConfigs[3].IP, DataContent.SystemConfig.RFIDConfigs[3].Channel, DataContent.SystemConfig.RFIDConfigs[3].Port);
-                _rfidHelper2P.DataLength_Ch3 = DataContent.SystemConfig.RFIDConfigs[3].DataLength;
-                _rfidHelper2P.StartAddress_Ch3 = DataContent.SystemConfig.RFIDConfigs[3].StartAddress;
-                _rfidHelper1P.ReadCallback = (channel, content) =>
-                {
-                    if (DataContent.SystemConfig.RFIDConfigs[3].Channel == channel)
-                    {
-                        vals.TryUpdate(channel, content, content);
-                        DataSaveRunner2();
-                    }
-                };
             }
             catch (Exception ex)
             {
@@ -97,41 +45,11 @@ namespace EC04铁壳熔接焊
             }
         }
 
-        public void DataSaveRunner1()
-        {
-            vals.TryGetValue(0, out string val);
-            vals.TryGetValue(1, out string valP);
-            if (!string.IsNullOrEmpty(val) && !string.IsNullOrEmpty(valP))
-            {
-                _fixtureCableBindService.FixtureBind(val, valP);
-                _omrHelper.Write("D11", 3);
-            }
-        }
-        public void DataSaveRunner2()
-        {
-            vals.TryGetValue(2, out string val);
-            vals.TryGetValue(3, out string valP);
-            if (!string.IsNullOrEmpty(val) && !string.IsNullOrEmpty(valP))
-            {
-                _fixtureCableBindService.FixtureBind(val, valP);
-                _omrHelper.Write("D13", 3);
-            }
-        }
-
         private void timer1_Tick(object sender, EventArgs e)
         {
             tslSysTime.Text = $"系统时间:{DateTime.Now.ToString("yyyyMMdd HH:mm:ss")}";
             tslRunTime.Text = $"运行时间:{_stopwatch.Elapsed}";
-            if (_omrHelper == null)
-            {
-                tslPLCStatus.Text = $"PLC: 连接失败";
-                tslPLCStatus.BackColor = Color.Red;
-            }
-            else
-            {
-                tslPLCStatus.Text = $"PLC:{(_omrHelper.IsConnect ? "已连接" : "连接失败")}";
-                tslPLCStatus.BackColor = _omrHelper.IsConnect ? Color.Green : Color.Red;
-            }
+
             
         }
 
@@ -142,48 +60,42 @@ namespace EC04铁壳熔接焊
             ///动态加载人工扫码位显示界面
             for (int i = 0; i < DataContent.SystemConfig.ScannerCode; i++)
             {
-                Form frmcode;
-                frmcode = new FrmFixture((fixture, cable1, cable2) => ScannerCodeByPeople(fixture, new List<string> { cable1, cable2 }));
-                frmcode.TopLevel = false;
-                frmcode.Dock = DockStyle.None;
-                frmcode.Width = tabPage1.Width;
-                frmcode.FormBorderStyle = FormBorderStyle.None;
+                try
+                {
+                    var rfidHelperL = new RFIDHelper(DataContent.SystemConfig.RFIDConfigs[0].IP, DataContent.SystemConfig.RFIDConfigs[0].Channel, DataContent.SystemConfig.RFIDConfigs[0].Port);
+                rfidHelperL.DataLength_Ch0 = DataContent.SystemConfig.RFIDConfigs[0].DataLength;
+                rfidHelperL.StartAddress_Ch0 = DataContent.SystemConfig.RFIDConfigs[0].StartAddress;
 
-                frmcode.Height = Convert.ToInt32(tabPage1.Height * zhanbi);
-                var y = Convert.ToInt32(tabPage1.Height * zhanbi * i);
-                frmcode.Location = new Point(0, y);
-                tabPage1.Controls.Add(frmcode);
-                frmcode.Show();
+                var rfidHelperR = new RFIDHelper(DataContent.SystemConfig.RFIDConfigs[1].IP, DataContent.SystemConfig.RFIDConfigs[1].Channel, DataContent.SystemConfig.RFIDConfigs[1].Port);
+                rfidHelperR.DataLength_Ch1 = DataContent.SystemConfig.RFIDConfigs[1].DataLength;
+                rfidHelperR.StartAddress_Ch1 = DataContent.SystemConfig.RFIDConfigs[1].StartAddress;
+
+                var rfidHelperCable = new RFIDHelper(DataContent.SystemConfig.RFIDConfigs[2].IP, DataContent.SystemConfig.RFIDConfigs[2].Channel, DataContent.SystemConfig.RFIDConfigs[2].Port);
+                rfidHelperCable.DataLength_Ch2 = DataContent.SystemConfig.RFIDConfigs[2].DataLength;
+                rfidHelperCable.StartAddress_Ch2 = DataContent.SystemConfig.RFIDConfigs[2].StartAddress;
+
+                
+                    Form frmcode;
+                    frmcode = new FrmFixture(rfidHelperL, rfidHelperR, rfidHelperCable,
+                        DataContent.SystemConfig.RFIDConfigs[0].Channel, DataContent.SystemConfig.RFIDConfigs[1].Channel, DataContent.SystemConfig.RFIDConfigs[2].Channel,
+                        (fixture, cable1, cable2) => ScannerCodeByPeople(fixture, new List<string> { cable1, cable2 }));
+                    frmcode.TopLevel = false;
+                    frmcode.Dock = DockStyle.None;
+                    frmcode.Width = tabPage1.Width;
+                    frmcode.FormBorderStyle = FormBorderStyle.None;
+
+                    frmcode.Height = Convert.ToInt32(tabPage1.Height * zhanbi);
+                    var y = Convert.ToInt32(tabPage1.Height * zhanbi * i);
+                    frmcode.Location = new Point(0, y);
+                    tabPage1.Controls.Add(frmcode);
+                    frmcode.Show();
+                }
+                catch (Exception ex )
+                {
+                    LogManager.Error(ex);
+                }
             }
 
-            Task.Factory.StartNew(() =>
-            {
-                if (DataContent.SystemConfig.ScannerCode > 0)
-                    return;
-                while (true)
-                {
-                    if(_omrHelper.Read("D11") == 1)
-                    {
-                        _rfidHelper1.Read(DataContent.SystemConfig.RFIDConfigs[0].Channel);
-                        _rfidHelper1P.Read(DataContent.SystemConfig.RFIDConfigs[1].Channel);
-                    }
-                    Task.Delay(100).Wait();
-                }
-            },TaskCreationOptions.LongRunning);
-            Task.Factory.StartNew(() =>
-            {
-                if (DataContent.SystemConfig.ScannerCode > 0)
-                    return;
-                while (true)
-                {
-                    if (_omrHelper.Read("D13") == 1)
-                    {
-                        _rfidHelper2.Read(DataContent.SystemConfig.RFIDConfigs[2].Channel);
-                        _rfidHelper2P.Read(DataContent.SystemConfig.RFIDConfigs[3].Channel);
-                    }
-                    Task.Delay(100).Wait();
-                }
-            }, TaskCreationOptions.LongRunning);
         }
 
         private bool ScannerCodeByPeople(string fixture, List<string> list)
@@ -199,7 +111,6 @@ namespace EC04铁壳熔接焊
                     FAI1_A=fixture,
                     FixtureID=fixture,
                     Model=DataContent.SystemConfig.Model,
-                    
                 };
                 cables.Add(cable);
             }

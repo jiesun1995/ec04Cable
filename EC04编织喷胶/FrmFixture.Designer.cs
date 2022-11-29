@@ -44,6 +44,7 @@
             // 
             this.groupBox1.Controls.Add(this.tableLayoutPanel1);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox1.Enabled = false;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(1055, 154);
@@ -111,7 +112,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(98, 43);
             this.label2.TabIndex = 2;
-            this.label2.Text = "线材：";
+            this.label2.Text = "治具右：";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label1
@@ -122,7 +123,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(98, 43);
             this.label1.TabIndex = 0;
-            this.label1.Text = "子治具：";
+            this.label1.Text = "治具左：";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tbxFixture

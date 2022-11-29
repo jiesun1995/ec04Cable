@@ -16,3 +16,6 @@ D:\work\ec04\EC04\Test\obj\Debug\Test.csproj.CoreCompileInputs.cache
 D:\work\ec04\EC04\Test\obj\Debug\Test.csproj.CopyComplete
 D:\work\ec04\EC04\Test\obj\Debug\Test.exe
 D:\work\ec04\EC04\Test\obj\Debug\Test.pdb
+D:\work\ec04\EC04\Test\bin\Debug\Newtonsoft.Json.dll
+D:\work\ec04\EC04\Test\bin\Debug\Newtonsoft.Json.pdb
+D:\work\ec04\EC04\Test\bin\Debug\Newtonsoft.Json.xml

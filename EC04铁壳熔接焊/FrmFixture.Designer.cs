@@ -30,12 +30,12 @@
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.tbxCable2 = new System.Windows.Forms.TextBox();
+            this.tbxCable = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.tbxCable1 = new System.Windows.Forms.TextBox();
+            this.tbxFixtureR = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.tbxFixture = new System.Windows.Forms.TextBox();
+            this.tbxFixtureL = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -44,6 +44,7 @@
             // 
             this.groupBox1.Controls.Add(this.tableLayoutPanel1);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox1.Enabled = false;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(1055, 154);
@@ -56,12 +57,12 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 90F));
-            this.tableLayoutPanel1.Controls.Add(this.tbxCable2, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.tbxCable, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.tbxCable1, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.tbxFixtureR, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.label2, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.tbxFixture, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.tbxFixtureL, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 21);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -72,15 +73,14 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1049, 130);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
-            // tbxCable2
+            // tbxCable
             // 
-            this.tbxCable2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbxCable2.Font = new System.Drawing.Font("宋体", 14F);
-            this.tbxCable2.Location = new System.Drawing.Point(107, 89);
-            this.tbxCable2.Name = "tbxCable2";
-            this.tbxCable2.Size = new System.Drawing.Size(939, 34);
-            this.tbxCable2.TabIndex = 6;
-            this.tbxCable2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbxCable2_KeyDown);
+            this.tbxCable.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbxCable.Font = new System.Drawing.Font("宋体", 14F);
+            this.tbxCable.Location = new System.Drawing.Point(107, 89);
+            this.tbxCable.Name = "tbxCable";
+            this.tbxCable.Size = new System.Drawing.Size(939, 34);
+            this.tbxCable.TabIndex = 6;
             // 
             // label3
             // 
@@ -93,15 +93,14 @@
             this.label3.Text = "线材：";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // tbxCable1
+            // tbxFixtureR
             // 
-            this.tbxCable1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbxCable1.Font = new System.Drawing.Font("宋体", 14F);
-            this.tbxCable1.Location = new System.Drawing.Point(107, 46);
-            this.tbxCable1.Name = "tbxCable1";
-            this.tbxCable1.Size = new System.Drawing.Size(939, 34);
-            this.tbxCable1.TabIndex = 3;
-            this.tbxCable1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbxCable1_KeyDown);
+            this.tbxFixtureR.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbxFixtureR.Font = new System.Drawing.Font("宋体", 14F);
+            this.tbxFixtureR.Location = new System.Drawing.Point(107, 46);
+            this.tbxFixtureR.Name = "tbxFixtureR";
+            this.tbxFixtureR.Size = new System.Drawing.Size(939, 34);
+            this.tbxFixtureR.TabIndex = 3;
             // 
             // label2
             // 
@@ -111,7 +110,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(98, 43);
             this.label2.TabIndex = 2;
-            this.label2.Text = "线材：";
+            this.label2.Text = "治具右：";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label1
@@ -122,18 +121,17 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(98, 43);
             this.label1.TabIndex = 0;
-            this.label1.Text = "子治具：";
+            this.label1.Text = "治具左：";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // tbxFixture
+            // tbxFixtureL
             // 
-            this.tbxFixture.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbxFixture.Font = new System.Drawing.Font("宋体", 14F);
-            this.tbxFixture.Location = new System.Drawing.Point(107, 3);
-            this.tbxFixture.Name = "tbxFixture";
-            this.tbxFixture.Size = new System.Drawing.Size(939, 34);
-            this.tbxFixture.TabIndex = 1;
-            this.tbxFixture.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbxFixture_KeyDown);
+            this.tbxFixtureL.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbxFixtureL.Font = new System.Drawing.Font("宋体", 14F);
+            this.tbxFixtureL.Location = new System.Drawing.Point(107, 3);
+            this.tbxFixtureL.Name = "tbxFixtureL";
+            this.tbxFixtureL.Size = new System.Drawing.Size(939, 34);
+            this.tbxFixtureL.TabIndex = 1;
             // 
             // FrmFixture
             // 
@@ -156,10 +154,10 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox tbxFixture;
-        private System.Windows.Forms.TextBox tbxCable2;
+        private System.Windows.Forms.TextBox tbxFixtureL;
+        private System.Windows.Forms.TextBox tbxCable;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox tbxCable1;
+        private System.Windows.Forms.TextBox tbxFixtureR;
         private System.Windows.Forms.Label label2;
     }
 }

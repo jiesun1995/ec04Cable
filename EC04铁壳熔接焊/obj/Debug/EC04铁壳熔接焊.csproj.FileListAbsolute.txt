@@ -21,3 +21,6 @@ D:\work\ec04\EC04\EC04铁壳熔接焊\obj\Debug\EC04铁壳熔接焊.csproj.CoreC
 D:\work\ec04\EC04\EC04铁壳熔接焊\obj\Debug\EC04铁壳熔接焊.csproj.CopyComplete
 D:\work\ec04\EC04\EC04铁壳熔接焊\obj\Debug\EC04铁壳熔接焊.exe
 D:\work\ec04\EC04\EC04铁壳熔接焊\obj\Debug\EC04铁壳熔接焊.pdb
+D:\work\ec04\EC04\EC04铁壳熔接焊\bin\Debug\Newtonsoft.Json.dll
+D:\work\ec04\EC04\EC04铁壳熔接焊\bin\Debug\Newtonsoft.Json.pdb
+D:\work\ec04\EC04\EC04铁壳熔接焊\bin\Debug\Newtonsoft.Json.xml
