@@ -23,3 +23,6 @@ D:\work\ec04\EC04\EC04喷胶保压\obj\Debug\EC04喷胶保压.pdb
 D:\work\ec04\EC04\EC04喷胶保压\bin\Debug\Newtonsoft.Json.dll
 D:\work\ec04\EC04\EC04喷胶保压\bin\Debug\Newtonsoft.Json.pdb
 D:\work\ec04\EC04\EC04喷胶保压\bin\Debug\Newtonsoft.Json.xml
+D:\work\ec04\EC04\EC04喷胶保压\bin\Debug\ModbusTcpAPI.dll
+D:\work\ec04\EC04\EC04喷胶保压\bin\Debug\StandardModbusApi.dll
+D:\work\ec04\EC04\EC04喷胶保压\bin\Debug\stdole.dll

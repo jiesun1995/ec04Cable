@@ -59,10 +59,17 @@ namespace Common
                 }
                 catch (Exception ex)
                 {
-                    Invoke((EventHandler)delegate
+                    try
                     {
-                        lblContent.Text = ex.Message;
-                    });
+                        Invoke((EventHandler)delegate
+                                   {
+                                       lblContent.Text = ex.Message;
+                                   });
+                    }
+                    catch (Exception exception)
+                    {
+                        LogManager.Error(exception);
+                    }
                 }
                 finally
                 {

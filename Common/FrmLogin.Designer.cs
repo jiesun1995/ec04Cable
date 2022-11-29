@@ -226,6 +226,7 @@
             this.Controls.Add(this.tabControl1);
             this.Name = "FrmLogin";
             this.Text = "权限登陆";
+            this.Activated += new System.EventHandler(this.FrmLogin_Activated);
             this.Load += new System.EventHandler(this.FrmLogin_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);

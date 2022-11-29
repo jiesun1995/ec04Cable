@@ -19,7 +19,7 @@ namespace Common
 
         private void FrmLogin_Load(object sender, EventArgs e)
         {
-            tbxPassword.Focus();
+            
             lblTip.Text = string.Empty;
             lblUpdateTip.Text = string.Empty;   
         }
@@ -66,6 +66,11 @@ namespace Common
                 lblUpdateTip.Text = "输入密码有误";
                 lblUpdateTip.ForeColor = Color.Red;
             }
+        }
+
+        private void FrmLogin_Activated(object sender, EventArgs e)
+        {
+            tbxPassword.Focus();
         }
     }
 }

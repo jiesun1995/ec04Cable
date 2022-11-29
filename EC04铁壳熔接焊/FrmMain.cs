@@ -80,7 +80,7 @@ namespace EC04铁壳熔接焊
                         DataContent.SystemConfig.RFIDConfigs[0].Channel, DataContent.SystemConfig.RFIDConfigs[1].Channel, DataContent.SystemConfig.RFIDConfigs[2].Channel,
                         (fixtureL, fixtureR, cable) => ScannerCodeByPeopleSaveCSV(fixtureL, fixtureR, cable));
                     frmcode.TopLevel = false;
-                    frmcode.Dock = DockStyle.None;
+                    frmcode.Dock = DockStyle.Top;
                     frmcode.Width = tabPage1.Width;
                     frmcode.FormBorderStyle = FormBorderStyle.None;
 

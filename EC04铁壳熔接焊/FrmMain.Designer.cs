@@ -110,7 +110,7 @@
             this.btnLogin.Margin = new System.Windows.Forms.Padding(4);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(177, 54);
-            this.btnLogin.TabIndex = 3;
+            this.btnLogin.TabIndex = 1;
             this.btnLogin.Text = "权限登陆";
             this.btnLogin.UseVisualStyleBackColor = true;
             this.btnLogin.Click += new System.EventHandler(this.button2_Click);
@@ -139,7 +139,7 @@
             this.btnLogo.Margin = new System.Windows.Forms.Padding(4);
             this.btnLogo.Name = "btnLogo";
             this.btnLogo.Size = new System.Drawing.Size(177, 54);
-            this.btnLogo.TabIndex = 1;
+            this.btnLogo.TabIndex = 10;
             this.btnLogo.UseVisualStyleBackColor = true;
             // 
             // panel2

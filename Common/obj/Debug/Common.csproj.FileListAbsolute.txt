@@ -20,3 +20,6 @@ D:\work\ec04\EC04\Common\bin\Debug\Newtonsoft.Json.xml
 D:\work\ec04\EC04\Common\bin\Debug\Newtonsoft.Json.pdb
 D:\work\ec04\EC04\Common\obj\Debug\Common.FrmSetting.resources
 D:\work\ec04\EC04\Common\obj\Debug\Common.FrmRFIDSetting.resources
+D:\work\ec04\EC04\Common\bin\Debug\ModbusTcpAPI.dll
+D:\work\ec04\EC04\Common\bin\Debug\StandardModbusApi.dll
+D:\work\ec04\EC04\Common\bin\Debug\stdole.dll

@@ -46,7 +46,7 @@ namespace EC04InputStation
                     frmcode = new FrmRFIDInputCable(DataContent.SystemConfig.RFIDConfigs[i].Channel, RFIDHelper, mesService);
 
                     frmcode.TopLevel = false;
-                    frmcode.Dock = DockStyle.None;
+                    frmcode.Dock = DockStyle.Top;
                     frmcode.Width = tabPage1.Width;
                     frmcode.FormBorderStyle = FormBorderStyle.None;
 

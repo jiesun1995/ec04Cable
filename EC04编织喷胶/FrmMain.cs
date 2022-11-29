@@ -56,7 +56,7 @@ namespace EC04编织喷胶
                             DataContent.SystemConfig.RFIDConfigs[i * 2].Channel, DataContent.SystemConfig.RFIDConfigs[i * 2 + 1].Channel,
                         (fixture, cable) => { return ScannerCodeByPeopleSaveCSV(fixture, new List<string> { cable }); });
                     frmcode.TopLevel = false;
-                    frmcode.Dock = DockStyle.None;
+                    frmcode.Dock = DockStyle.Top;
                     frmcode.Width = tabPage1.Width;
                     frmcode.FormBorderStyle = FormBorderStyle.None;
 

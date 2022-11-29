@@ -147,7 +147,7 @@ namespace EC04Hotbar
                 Form frmcode;
                 frmcode = new FrmFixture((fixture, cable1, cable2) => ScannerCodeByPeople(fixture, new List<string> { cable1, cable2 }));
                 frmcode.TopLevel = false;
-                frmcode.Dock = DockStyle.None;
+                frmcode.Dock = DockStyle.Top;
                 frmcode.Width = tabPage1.Width;
                 frmcode.FormBorderStyle = FormBorderStyle.None;
 

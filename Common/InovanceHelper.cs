@@ -143,6 +143,7 @@ namespace Common
             int nNetId = 0;
 
             int nRet = H5u_Read_Soft_Elem_Int32(SoftElemType.REGI_H5U_D, nStartAddr, nCount, pValue, nNetId);
+            _isConnect = nRet == 1;
             long fValue = pValue[0];
             value = Convert.ToInt32(fValue);
             return value;

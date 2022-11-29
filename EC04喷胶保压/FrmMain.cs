@@ -149,7 +149,7 @@ namespace EC04喷胶保压
             {
                 while (true)
                 {
-                    if (_inovanceHelper == null || _inovanceHelper.IsConnect) { await Task.Delay(1000); continue; }
+                    if (_inovanceHelper == null) { await Task.Delay(1000); continue; }
                     if (_inovanceHelper.ReadAddressByD(11) == 1)
                     {
                         _rfidHelper1.Read(DataContent.SystemConfig.RFIDConfigs[0].Channel);
@@ -162,7 +162,7 @@ namespace EC04喷胶保压
             {
                 while (true)
                 {
-                    if (_inovanceHelper == null || _inovanceHelper.IsConnect) { await Task.Delay(1000); continue; }
+                    if (_inovanceHelper == null) { await Task.Delay(1000); continue; }
                     if (_inovanceHelper.ReadAddressByD(13) == 1)
                     {
                         _rfidHelper2.Read(DataContent.SystemConfig.RFIDConfigs[2].Channel);
