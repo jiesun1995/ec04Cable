@@ -103,7 +103,14 @@ namespace EC04喷胶保压
         {
             if (DataContent.User == "管理员")
             {
-                FrmSetting frmSetting = new FrmSetting();
+                Common.FrmSetting frmSetting = new Common.FrmSetting((gbxRFID1, gbxRFID2, gbxRFID3, gbxRFID4, gbxStation, gbxPLC, gbxWCF) =>
+                {
+                    gbxRFID1.Text = "线材RFID";
+                    gbxRFID2.Text = "载具RFID";
+                    gbxRFID3.Text = "载具RFID";
+                    gbxRFID4.Text = "保压块RFID";
+                    gbxWCF.Visible = false;
+                });
                 frmSetting.ShowDialog();
             }
             else

@@ -14,7 +14,6 @@ D:\work\ec04\EC04\EC04Hotbar\bin\Debug\Dapper.xml
 D:\work\ec04\EC04\EC04Hotbar\obj\Debug\EC04Hotbar.csproj.AssemblyReference.cache
 D:\work\ec04\EC04\EC04Hotbar\obj\Debug\EC04Hotbar.FrmFixture.resources
 D:\work\ec04\EC04\EC04Hotbar\obj\Debug\EC04Hotbar.FrmMain.resources
-D:\work\ec04\EC04\EC04Hotbar\obj\Debug\EC04Hotbar.FrmSetting.resources
 D:\work\ec04\EC04\EC04Hotbar\obj\Debug\EC04Hotbar.Properties.Resources.resources
 D:\work\ec04\EC04\EC04Hotbar\obj\Debug\EC04Hotbar.csproj.GenerateResource.cache
 D:\work\ec04\EC04\EC04Hotbar\obj\Debug\EC04Hotbar.csproj.CoreCompileInputs.cache

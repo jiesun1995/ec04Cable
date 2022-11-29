@@ -88,6 +88,18 @@
     <Compile Include="FrmLogin.Designer.cs">
       <DependentUpon>FrmLogin.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmRFIDSetting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmRFIDSetting.Designer.cs">
+      <DependentUpon>FrmRFIDSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmSetting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmSetting.Designer.cs">
+      <DependentUpon>FrmSetting.cs</DependentUpon>
+    </Compile>
     <Compile Include="IFixtureCableBind.cs" />
     <Compile Include="JsonHelper.cs" />
     <Compile Include="LogManager.cs" />
@@ -102,6 +114,12 @@
   <ItemGroup>
     <EmbeddedResource Include="FrmLogin.resx">
       <DependentUpon>FrmLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmRFIDSetting.resx">
+      <DependentUpon>FrmRFIDSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmSetting.resx">
+      <DependentUpon>FrmSetting.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

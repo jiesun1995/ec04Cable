@@ -103,7 +103,15 @@ namespace EC04LowPressureMolding
         {
             if (DataContent.User == "管理员")
             {
-                FrmSetting frmSetting = new FrmSetting();
+                Common.FrmSetting frmSetting = new Common.FrmSetting((gbxRFID1, gbxRFID2, gbxRFID3, gbxRFID4, gbxStation, gbxPLC, gbxWCF) =>
+                {
+                    gbxRFID1.Visible = false;
+                    gbxRFID2.Visible = false;
+                    gbxRFID3.Visible = false;
+                    gbxRFID4.Visible = false;
+                    gbxPLC.Visible = false;
+                    gbxWCF.Visible = false;
+                });
                 frmSetting.ShowDialog();
             }
             else

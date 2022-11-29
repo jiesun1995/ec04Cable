@@ -73,6 +73,8 @@ namespace Common
 
         public void Yolo_Closed()
         {
+            if (luxmaster != null)
+                luxmaster.disconnect();
             ReadCallback = null;
             ChannelStateCallback = null;
         }

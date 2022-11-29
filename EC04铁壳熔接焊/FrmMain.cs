@@ -129,7 +129,14 @@ namespace EC04铁壳熔接焊
         {
             if (DataContent.User == "管理员")
             {
-                FrmSetting frmSetting = new FrmSetting();
+                Common.FrmSetting frmSetting = new Common.FrmSetting((gbxRFID1, gbxRFID2, gbxRFID3, gbxRFID4, gbxStation, gbxPLC, gbxWCF) =>
+                {
+                    gbxRFID1.Text = "左治具RFID";
+                    gbxRFID2.Text = "右治具RFID";
+                    gbxRFID3.Text = "线材RFID";
+                    gbxRFID4.Visible= false;
+                    gbxWCF.Visible = false;
+                });
                 frmSetting.ShowDialog();
             }
             else

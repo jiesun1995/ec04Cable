@@ -67,7 +67,16 @@ namespace EC04InputStation
         {
             if (DataContent.User == "管理员")
             {
-                FrmSetting frmSetting = new FrmSetting(DataContent.SystemConfig);
+                Common.FrmSetting frmSetting = new Common.FrmSetting((gbxRFID1, gbxRFID2, gbxRFID3, gbxRFID4, gbxStation, gbxPLC, gbxWCF) =>
+                {
+                    gbxRFID1.Text = "感应区读写RFID";
+                    gbxRFID2.Visible= false;
+                    gbxRFID3.Visible= false;
+                    gbxRFID4.Visible= false;
+                    gbxStation.Visible= false;
+                    gbxPLC.Visible= false;
+                    gbxWCF.Visible= false;
+                });
                 frmSetting.ShowDialog();
             }
             else

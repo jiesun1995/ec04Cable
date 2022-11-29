@@ -39,6 +39,8 @@ namespace EC04Hotbar
             {
                 LogManager.Init(lvLogs);
                 _fixtureCableBindService = WCFHelper.CreateClient();
+                if (DataContent.SystemConfig.ScannerCode > 0)
+                    return;
                 _omrHelper = new OMRHelper(DataContent.SystemConfig.PLCIp, DataContent.SystemConfig.PLCPort);
 
                 _rfidHelper1 = new RFIDHelper(DataContent.SystemConfig.RFIDConfigs[0].IP, DataContent.SystemConfig.RFIDConfigs[0].Channel, DataContent.SystemConfig.RFIDConfigs[0].Port);
@@ -210,7 +212,13 @@ namespace EC04Hotbar
         {
             if (DataContent.User == "管理员")
             {
-                FrmSetting frmSetting = new FrmSetting();
+                FrmSetting frmSetting = new FrmSetting((gbxRFID1, gbxRFID2, gbxRFID3, gbxRFID4, gbxStation, gbxPLC, gbxWCF) =>
+                {
+                    gbxRFID1.Text = "流道1子载具RFID";
+                    gbxRFID2.Text = "流道1母载具RFID";
+                    gbxRFID3.Text = "流道2子载具RFID";
+                    gbxRFID4.Text = "流道2母载具RFID";
+                });
                 frmSetting.ShowDialog();
             }
             else

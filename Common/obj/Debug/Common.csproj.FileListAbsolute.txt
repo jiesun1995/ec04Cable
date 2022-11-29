@@ -18,3 +18,5 @@ D:\work\ec04\EC04\Common\obj\Debug\Common.dll
 D:\work\ec04\EC04\Common\obj\Debug\Common.pdb
 D:\work\ec04\EC04\Common\bin\Debug\Newtonsoft.Json.xml
 D:\work\ec04\EC04\Common\bin\Debug\Newtonsoft.Json.pdb
+D:\work\ec04\EC04\Common\obj\Debug\Common.FrmSetting.resources
+D:\work\ec04\EC04\Common\obj\Debug\Common.FrmRFIDSetting.resources

@@ -14,7 +14,6 @@ D:\work\ec04\EC04\EC04铁壳熔接焊\bin\Debug\Dapper.xml
 D:\work\ec04\EC04\EC04铁壳熔接焊\obj\Debug\EC04铁壳熔接焊.csproj.AssemblyReference.cache
 D:\work\ec04\EC04\EC04铁壳熔接焊\obj\Debug\EC04铁壳熔接焊.FrmFixture.resources
 D:\work\ec04\EC04\EC04铁壳熔接焊\obj\Debug\EC04铁壳熔接焊.FrmMain.resources
-D:\work\ec04\EC04\EC04铁壳熔接焊\obj\Debug\EC04铁壳熔接焊.FrmSetting.resources
 D:\work\ec04\EC04\EC04铁壳熔接焊\obj\Debug\EC04铁壳熔接焊.Properties.Resources.resources
 D:\work\ec04\EC04\EC04铁壳熔接焊\obj\Debug\EC04铁壳熔接焊.csproj.GenerateResource.cache
 D:\work\ec04\EC04\EC04铁壳熔接焊\obj\Debug\EC04铁壳熔接焊.csproj.CoreCompileInputs.cache

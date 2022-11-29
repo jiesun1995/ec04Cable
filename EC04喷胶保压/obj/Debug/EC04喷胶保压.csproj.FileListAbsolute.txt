@@ -14,7 +14,6 @@ D:\work\ec04\EC04\EC04喷胶保压\bin\Debug\Dapper.xml
 D:\work\ec04\EC04\EC04喷胶保压\obj\Debug\EC04喷胶保压.csproj.AssemblyReference.cache
 D:\work\ec04\EC04\EC04喷胶保压\obj\Debug\EC04喷胶保压.FrmFixture.resources
 D:\work\ec04\EC04\EC04喷胶保压\obj\Debug\EC04喷胶保压.FrmMain.resources
-D:\work\ec04\EC04\EC04喷胶保压\obj\Debug\EC04喷胶保压.FrmSetting.resources
 D:\work\ec04\EC04\EC04喷胶保压\obj\Debug\EC04喷胶保压.Properties.Resources.resources
 D:\work\ec04\EC04\EC04喷胶保压\obj\Debug\EC04喷胶保压.csproj.GenerateResource.cache
 D:\work\ec04\EC04\EC04喷胶保压\obj\Debug\EC04喷胶保压.csproj.CoreCompileInputs.cache
