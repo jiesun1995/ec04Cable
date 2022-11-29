@@ -63,22 +63,22 @@ namespace EC04铁壳熔接焊
                 try
                 {
                     var rfidHelperL = new RFIDHelper(DataContent.SystemConfig.RFIDConfigs[0].IP, DataContent.SystemConfig.RFIDConfigs[0].Channel, DataContent.SystemConfig.RFIDConfigs[0].Port);
-                rfidHelperL.DataLength_Ch0 = DataContent.SystemConfig.RFIDConfigs[0].DataLength;
-                rfidHelperL.StartAddress_Ch0 = DataContent.SystemConfig.RFIDConfigs[0].StartAddress;
+                    rfidHelperL.DataLength_Ch0 = DataContent.SystemConfig.RFIDConfigs[0].DataLength;
+                    rfidHelperL.StartAddress_Ch0 = DataContent.SystemConfig.RFIDConfigs[0].StartAddress;
 
-                var rfidHelperR = new RFIDHelper(DataContent.SystemConfig.RFIDConfigs[1].IP, DataContent.SystemConfig.RFIDConfigs[1].Channel, DataContent.SystemConfig.RFIDConfigs[1].Port);
-                rfidHelperR.DataLength_Ch1 = DataContent.SystemConfig.RFIDConfigs[1].DataLength;
-                rfidHelperR.StartAddress_Ch1 = DataContent.SystemConfig.RFIDConfigs[1].StartAddress;
+                    var rfidHelperR = new RFIDHelper(DataContent.SystemConfig.RFIDConfigs[1].IP, DataContent.SystemConfig.RFIDConfigs[1].Channel, DataContent.SystemConfig.RFIDConfigs[1].Port);
+                    rfidHelperR.DataLength_Ch1 = DataContent.SystemConfig.RFIDConfigs[1].DataLength;
+                    rfidHelperR.StartAddress_Ch1 = DataContent.SystemConfig.RFIDConfigs[1].StartAddress;
 
-                var rfidHelperCable = new RFIDHelper(DataContent.SystemConfig.RFIDConfigs[2].IP, DataContent.SystemConfig.RFIDConfigs[2].Channel, DataContent.SystemConfig.RFIDConfigs[2].Port);
-                rfidHelperCable.DataLength_Ch2 = DataContent.SystemConfig.RFIDConfigs[2].DataLength;
-                rfidHelperCable.StartAddress_Ch2 = DataContent.SystemConfig.RFIDConfigs[2].StartAddress;
+                    var rfidHelperCable = new RFIDHelper(DataContent.SystemConfig.RFIDConfigs[2].IP, DataContent.SystemConfig.RFIDConfigs[2].Channel, DataContent.SystemConfig.RFIDConfigs[2].Port);
+                    rfidHelperCable.DataLength_Ch2 = DataContent.SystemConfig.RFIDConfigs[2].DataLength;
+                    rfidHelperCable.StartAddress_Ch2 = DataContent.SystemConfig.RFIDConfigs[2].StartAddress;
 
-                
+
                     Form frmcode;
                     frmcode = new FrmFixture(rfidHelperL, rfidHelperR, rfidHelperCable,
                         DataContent.SystemConfig.RFIDConfigs[0].Channel, DataContent.SystemConfig.RFIDConfigs[1].Channel, DataContent.SystemConfig.RFIDConfigs[2].Channel,
-                        (fixture, cable1, cable2) => ScannerCodeByPeople(fixture, new List<string> { cable1, cable2 }));
+                        (fixtureL, fixtureR, cable) => ScannerCodeByPeopleSaveCSV(fixtureL, fixtureR, cable));
                     frmcode.TopLevel = false;
                     frmcode.Dock = DockStyle.None;
                     frmcode.Width = tabPage1.Width;
@@ -90,7 +90,7 @@ namespace EC04铁壳熔接焊
                     tabPage1.Controls.Add(frmcode);
                     frmcode.Show();
                 }
-                catch (Exception ex )
+                catch (Exception ex)
                 {
                     LogManager.Error(ex);
                 }
@@ -98,23 +98,31 @@ namespace EC04铁壳熔接焊
 
         }
 
-        private bool ScannerCodeByPeople(string fixture, List<string> list)
+        private bool ScannerCodeByPeopleSaveCSV(string fixtureL, string fixtureR, string cableSn)
         {
-            var cables= new List<Cable>();
-            foreach (var item in list)
+            try
             {
                 var cable = new Cable
                 {
-                    Sn=item,
-                    Start_time=DateTime.Now,
-                    Test_station=DataContent.SystemConfig.TestStation,
-                    FAI1_A=fixture,
-                    FixtureID=fixture,
-                    Model=DataContent.SystemConfig.Model,
+                    Sn = cableSn,
+                    Start_time = DateTime.Now,
+                    Finish_time = DateTime.Now,
+                    Station = "PASS",
+                    Model = DataContent.SystemConfig.Model,
+                    Test_station = DataContent.SystemConfig.TestStation,
+                    FixtureID = fixtureL,
+                    FAI1_A = fixtureL,
+                    FAI1_B = fixtureR,
                 };
-                cables.Add(cable);
+                var dt = cable.ToTable();
+                CSVHelper.SaveCSV(dt, DataContent.SystemConfig.CSVPath + "//" + Guid.NewGuid() + ".csv");
             }
-            return _fixtureCableBindService.FixtureCableBind(cables);
+            catch (Exception ex)
+            {
+                LogManager.Error(ex);
+                return false;
+            }
+            return true;
         }
 
         private void button1_Click(object sender, EventArgs e)
