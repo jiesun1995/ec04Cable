@@ -69,7 +69,7 @@ namespace Common
 
             tbxWCFServerIP.Text = _systemConfig.WCFSeverIp.ToString();
             tbxWCFServerPort.Text = _systemConfig.WCFSeverPort.ToString();
-            tbxWCFClinetIP.Text = _systemConfig.WCFSeverIp.ToString();
+            tbxWCFClinetIP.Text = _systemConfig.WCFClinetIp.ToString();
             tbxWCFClinetPort.Text = _systemConfig.WCFClinetPort.ToString();
             nudScannerCode.Value = _systemConfig.ScannerCode;
             ChangeScannerCode();

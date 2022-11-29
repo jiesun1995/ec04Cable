@@ -49,8 +49,6 @@ namespace EC04铁壳熔接焊
         {
             tslSysTime.Text = $"系统时间:{DateTime.Now.ToString("yyyyMMdd HH:mm:ss")}";
             tslRunTime.Text = $"运行时间:{_stopwatch.Elapsed}";
-
-            
         }
 
         private void FrmMain_Load(object sender, EventArgs e)
@@ -95,7 +93,6 @@ namespace EC04铁壳熔接焊
                     LogManager.Error(ex);
                 }
             }
-
         }
 
         private bool ScannerCodeByPeopleSaveCSV(string fixtureL, string fixtureR, string cableSn)
@@ -136,6 +133,7 @@ namespace EC04铁壳熔接焊
                     gbxRFID3.Text = "线材RFID";
                     gbxRFID4.Visible= false;
                     gbxWCF.Visible = false;
+                    gbxPLC.Visible = false;
                 });
                 frmSetting.ShowDialog();
             }

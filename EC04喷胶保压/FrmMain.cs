@@ -115,6 +115,25 @@ namespace EC04喷胶保压
                 _inovanceHelper.WriteAddressByD(11, 3);
             }
         }
+        public void Runner1Init()
+        {
+            vals.TryGetValue(0, out string sn);
+            vals.TryGetValue(1, out string fixture);
+            if (!string.IsNullOrEmpty(sn) && string.IsNullOrEmpty(fixture))
+            {
+                var cable = new Cable
+                {
+                    Sn = sn,
+                    Start_time = DateTime.Now,
+                    Test_station = DataContent.SystemConfig.TestStation,
+                    FAI1_A = "NG",
+                    FixtureID = DataContent.SystemConfig.FixtureID,
+                    Model = DataContent.SystemConfig.Model,
+                };
+                _fixtureCableBindService.FixtureCableBind(new List<Cable> { cable });
+            }
+        }
+
         public void DataSaveRunner2()
         {
             vals.TryGetValue(2, out string val);
@@ -124,6 +143,20 @@ namespace EC04喷胶保压
                 _fixtureCableBindService.FixtureBind(val, valP);
                 _inovanceHelper.WriteAddressByD(13, 3);
             }
+        }
+        public void Runner2Init()
+        {
+            vals.TryGetValue(2, out string val);
+            vals.TryGetValue(3, out string valP);
+            if (string.IsNullOrEmpty(val))
+            {
+                _fixtureCableBindService.FixtureBind("NG", string.IsNullOrEmpty(valP)?"NG":valP);
+            }
+            else if(string.IsNullOrEmpty(valP))
+            {
+                _fixtureCableBindService.FixtureBind(val, "NG");
+            }
+            
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -152,8 +185,21 @@ namespace EC04喷胶保压
                     if (_inovanceHelper == null) { await Task.Delay(1000); continue; }
                     if (_inovanceHelper.ReadAddressByD(11) == 1)
                     {
-                        _rfidHelper1.Read(DataContent.SystemConfig.RFIDConfigs[0].Channel);
-                        _rfidHelper1P.Read(DataContent.SystemConfig.RFIDConfigs[1].Channel);
+                        try
+                        {
+                            Runner1Init();
+                            _rfidHelper1.Read(DataContent.SystemConfig.RFIDConfigs[0].Channel);
+                            _rfidHelper1P.Read(DataContent.SystemConfig.RFIDConfigs[1].Channel);
+                        }
+                        catch (Exception ex)
+                        {
+                            LogManager.Error(ex);
+                        }
+                        finally
+                        {
+                            await Task.Delay(1000);
+                            _inovanceHelper.WriteAddressByD(11, 0);
+                        }
                     }
                     await Task.Delay(100);
                 }
@@ -165,8 +211,21 @@ namespace EC04喷胶保压
                     if (_inovanceHelper == null) { await Task.Delay(1000); continue; }
                     if (_inovanceHelper.ReadAddressByD(13) == 1)
                     {
-                        _rfidHelper2.Read(DataContent.SystemConfig.RFIDConfigs[2].Channel);
-                        _rfidHelper2P.Read(DataContent.SystemConfig.RFIDConfigs[3].Channel);
+                        try
+                        {
+                            Runner2Init();
+                            _rfidHelper2.Read(DataContent.SystemConfig.RFIDConfigs[2].Channel);
+                            _rfidHelper2P.Read(DataContent.SystemConfig.RFIDConfigs[3].Channel);
+                        }
+                        catch (Exception ex)
+                        {
+                            LogManager.Error(ex);
+                        }
+                        finally
+                        {
+                            await Task.Delay(1000);
+                            _inovanceHelper.WriteAddressByD(13, 0);
+                        }
                     }
                     await Task.Delay(100);
                 }

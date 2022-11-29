@@ -39,7 +39,7 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tslSysTime = new System.Windows.Forms.ToolStripStatusLabel();
             this.tslRunTime = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel5 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tslRIDFStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.tslPLCStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -158,7 +158,7 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tslSysTime,
             this.tslRunTime,
-            this.toolStripStatusLabel5,
+            this.tslRIDFStatus,
             this.tslPLCStatus});
             this.statusStrip1.Location = new System.Drawing.Point(0, 5);
             this.statusStrip1.Name = "statusStrip1";
@@ -181,12 +181,12 @@
             this.tslRunTime.Size = new System.Drawing.Size(88, 24);
             this.tslRunTime.Text = "软件运行：";
             // 
-            // toolStripStatusLabel5
+            // tslRIDFStatus
             // 
-            this.toolStripStatusLabel5.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
-            this.toolStripStatusLabel5.Name = "toolStripStatusLabel5";
-            this.toolStripStatusLabel5.Size = new System.Drawing.Size(73, 24);
-            this.toolStripStatusLabel5.Text = "扫码器：";
+            this.tslRIDFStatus.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+            this.tslRIDFStatus.Name = "tslRIDFStatus";
+            this.tslRIDFStatus.Size = new System.Drawing.Size(73, 24);
+            this.tslRIDFStatus.Text = "扫码器：";
             // 
             // tslPLCStatus
             // 
@@ -304,7 +304,7 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel tslSysTime;
         private System.Windows.Forms.ToolStripStatusLabel tslRunTime;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel5;
+        private System.Windows.Forms.ToolStripStatusLabel tslRIDFStatus;
         private System.Windows.Forms.ToolStripStatusLabel tslPLCStatus;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label label1;

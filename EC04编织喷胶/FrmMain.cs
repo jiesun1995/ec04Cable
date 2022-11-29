@@ -78,36 +78,18 @@ namespace EC04编织喷胶
             {
                 for (int i = 0; i < newCables.Count; i++)
                 {
-                    var cable = newCables[i];
-                    var dt = new DataTable();
-                    dt.Columns.Add(new DataColumn("SN"));
-                    dt.Columns.Add(new DataColumn("model"));
-                    dt.Columns.Add(new DataColumn("fixtureID"));
-                    dt.Columns.Add(new DataColumn("test_station"));
-                    dt.Columns.Add(new DataColumn("start_time"));
-                    dt.Columns.Add(new DataColumn("finish_time"));
-                    dt.Columns.Add(new DataColumn("status"));
-                    dt.Columns.Add(new DataColumn("error_code"));
-                    dt.Columns.Add(new DataColumn("FAI1_A"));
-                    dt.Columns.Add(new DataColumn("FAI1_B"));
-                    dt.Columns.Add(new DataColumn("FAI1_C"));
-                    dt.Columns.Add(new DataColumn("FAI1_D"));
-                    dt.Columns.Add(new DataColumn("FAI1_E"));
-                    dt.Columns.Add(new DataColumn("FAI1_F"));
-                    dt.Columns.Add(new DataColumn("FAI1_G"));
-                    dt.Columns.Add(new DataColumn("FAI1_H"));
-                    dt.Columns.Add(new DataColumn("Station"));
-                    var row = dt.NewRow();
-                    row[0] = cable;
-                    row[1] = DataContent.SystemConfig.Model;
-                    row[2] = DataContent.SystemConfig.FixtureID;
-                    row[3] = DataContent.SystemConfig.TestStation;
-                    row[4] = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                    row[5] = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                    row[6] = "PASS";
-                    row[8] = fixture;
-                    row[15] = i + 1;
-                    dt.Rows.Add(row);
+                    var cable = new Cable
+                    {
+                        Sn = newCables[i],
+                        Start_time = DateTime.Now,
+                        Finish_time = DateTime.Now,
+                        Station = "PASS",
+                        Model = DataContent.SystemConfig.Model,
+                        Test_station = DataContent.SystemConfig.TestStation,
+                        FixtureID = DataContent.SystemConfig.FixtureID,
+                        FAI1_A = fixture,
+                    };
+                    var dt = cable.ToTable();
                     CSVHelper.SaveCSV(dt, DataContent.SystemConfig.CSVPath + "//" + Guid.NewGuid() + ".csv");
                 }
             }

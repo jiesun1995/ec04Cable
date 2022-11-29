@@ -126,15 +126,29 @@ namespace EC04Hotbar
             tslRunTime.Text = $"运行时间:{_stopwatch.Elapsed}";
             if (_omrHelper == null)
             {
-                tslPLCStatus.Text = $"PLC: 连接失败";
+                tslPLCStatus.Text = $"PLC: 未连接";
                 tslPLCStatus.BackColor = Color.Red;
             }
             else
             {
-                tslPLCStatus.Text = $"PLC:{(_omrHelper.IsConnect ? "已连接" : "连接失败")}";
+                tslPLCStatus.Text = $"PLC:{(_omrHelper.IsConnect ? "已连接" : "未连接")}";
                 tslPLCStatus.BackColor = _omrHelper.IsConnect ? Color.Green : Color.Red;
             }
-            
+            if (_rfidHelper1 != null)
+            {
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.Append($"流道1子RFID:{(_rfidHelper1.channel0_connect ? "已连接" : "未连接")}; ");
+                stringBuilder.Append($"流道1母RFID:{(_rfidHelper1P.channel1_connect ? "已连接" : "未连接")}; ");
+                stringBuilder.Append($"流道2子RFID:{(_rfidHelper2.channel2_connect ? "已连接" : "未连接")}; ");
+                stringBuilder.Append($"流道2母RFID:{(_rfidHelper2P.channel3_connect ? "已连接" : "未连接")}; ");
+                tslRIDFStatus.Text = "RFID：" + stringBuilder.ToString();
+                tslRIDFStatus.BackColor= Color.Green;
+            }
+            else
+            {
+                tslRIDFStatus.Text = "RFID：未连接;";
+                tslRIDFStatus.BackColor = Color.Red;
+            }
         }
 
         private void FrmMain_Load(object sender, EventArgs e)
@@ -157,33 +171,57 @@ namespace EC04Hotbar
                 tabPage1.Controls.Add(frmcode);
                 frmcode.Show();
             }
-
-            Task.Factory.StartNew(() =>
+            if (DataContent.SystemConfig.ScannerCode > 0)
+                return;
+            Task.Factory.StartNew(async () =>
             {
-                if (DataContent.SystemConfig.ScannerCode > 0)
-                    return;
                 while (true)
                 {
-                    if(_omrHelper.Read("D11") == 1)
+                    if (_omrHelper.Read("D11") == 1)
                     {
-                        _rfidHelper1.Read(DataContent.SystemConfig.RFIDConfigs[0].Channel);
-                        _rfidHelper1P.Read(DataContent.SystemConfig.RFIDConfigs[1].Channel);
+                        LogManager.Info($"读取到启动信号：{{D11:1}}");
+                        try
+                        {
+
+                            _rfidHelper1.Read(DataContent.SystemConfig.RFIDConfigs[0].Channel);
+                            _rfidHelper1P.Read(DataContent.SystemConfig.RFIDConfigs[1].Channel);
+                        }
+                        catch (Exception ex)
+                        {
+                            LogManager.Error(ex);
+                        }
+                        finally
+                        {
+                            await Task.Delay(1000);
+                            _omrHelper.Write("D11", 3);
+                        }
                     }
-                    Task.Delay(100).Wait();
+                    await Task.Delay(100);
                 }
-            },TaskCreationOptions.LongRunning);
-            Task.Factory.StartNew(() =>
+            }, TaskCreationOptions.LongRunning);
+            Task.Factory.StartNew(async () =>
             {
-                if (DataContent.SystemConfig.ScannerCode > 0)
-                    return;
                 while (true)
                 {
                     if (_omrHelper.Read("D13") == 1)
                     {
-                        _rfidHelper2.Read(DataContent.SystemConfig.RFIDConfigs[2].Channel);
-                        _rfidHelper2P.Read(DataContent.SystemConfig.RFIDConfigs[3].Channel);
+                        LogManager.Info($"读取到启动信号：{{D13:1}}");
+                        try
+                        {
+                            _rfidHelper2.Read(DataContent.SystemConfig.RFIDConfigs[2].Channel);
+                            _rfidHelper2P.Read(DataContent.SystemConfig.RFIDConfigs[3].Channel);
+                        }
+                        catch (Exception ex)
+                        {
+                            LogManager.Error(ex);
+                        }
+                        finally
+                        {
+                            await Task.Delay(1000);
+                            _omrHelper.Write("D13", 3);
+                        }
                     }
-                    Task.Delay(100).Wait();
+                    await Task.Delay(100);
                 }
             }, TaskCreationOptions.LongRunning);
         }

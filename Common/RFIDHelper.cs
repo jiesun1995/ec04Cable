@@ -26,10 +26,10 @@ namespace Common
         public int StartAddress_Ch3 { get; set; } =0;
 
         //标志位
-        private bool channel0_connect;
-        private bool channel1_connect;
-        private bool channel2_connect;
-        private bool channel3_connect;
+        public bool channel0_connect;
+        public bool channel1_connect;
+        public bool channel2_connect;
+        public bool channel3_connect;
 
         private bool channel0_tp;
         private bool channel1_tp;
