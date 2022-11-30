@@ -26,3 +26,5 @@ D:\work\ec04\EC04\EC04Hotbar\bin\Debug\Newtonsoft.Json.xml
 D:\work\ec04\EC04\EC04Hotbar\bin\Debug\ModbusTcpAPI.dll
 D:\work\ec04\EC04\EC04Hotbar\bin\Debug\StandardModbusApi.dll
 D:\work\ec04\EC04\EC04Hotbar\bin\Debug\stdole.dll
+D:\work\ec04\EC04\EC04Hotbar\bin\Debug\TBEN_RFID.dll
+D:\work\ec04\EC04\EC04Hotbar\bin\Debug\Modbus.dll

@@ -73,6 +73,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="TBEN_RFID">
+      <HintPath>..\packages\TBEN_RFID.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cable.cs" />
@@ -82,6 +85,12 @@
     <Compile Include="CableSqliteDal.cs" />
     <Compile Include="CSVHelper.cs" />
     <Compile Include="DataContent.cs" />
+    <Compile Include="FrmCableHistroies.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCableHistroies.Designer.cs">
+      <DependentUpon>FrmCableHistroies.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,6 +102,12 @@
     </Compile>
     <Compile Include="FrmRFIDSetting.Designer.cs">
       <DependentUpon>FrmRFIDSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmRunFixture.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmRunFixture.Designer.cs">
+      <DependentUpon>FrmRunFixture.cs</DependentUpon>
     </Compile>
     <Compile Include="FrmSetting.cs">
       <SubType>Form</SubType>
@@ -113,11 +128,17 @@
     <Compile Include="WCFHelper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="FrmCableHistroies.resx">
+      <DependentUpon>FrmCableHistroies.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmLogin.resx">
       <DependentUpon>FrmLogin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmRFIDSetting.resx">
       <DependentUpon>FrmRFIDSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmRunFixture.resx">
+      <DependentUpon>FrmRunFixture.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmSetting.resx">
       <DependentUpon>FrmSetting.cs</DependentUpon>
@@ -128,9 +149,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ModbusTcpAPI.dll">
+    <EmbeddedResource Include="ModbusTcpAPI.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </EmbeddedResource>
     <Content Include="SQLite.Interop.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -140,6 +161,9 @@
     <Content Include="stdole.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="dll\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

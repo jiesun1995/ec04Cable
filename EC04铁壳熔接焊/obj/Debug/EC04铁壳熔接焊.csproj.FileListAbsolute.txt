@@ -26,3 +26,5 @@ D:\work\ec04\EC04\EC04铁壳熔接焊\bin\Debug\Newtonsoft.Json.xml
 D:\work\ec04\EC04\EC04铁壳熔接焊\bin\Debug\ModbusTcpAPI.dll
 D:\work\ec04\EC04\EC04铁壳熔接焊\bin\Debug\StandardModbusApi.dll
 D:\work\ec04\EC04\EC04铁壳熔接焊\bin\Debug\stdole.dll
+D:\work\ec04\EC04\EC04铁壳熔接焊\bin\Debug\TBEN_RFID.dll
+D:\work\ec04\EC04\EC04铁壳熔接焊\bin\Debug\Modbus.dll

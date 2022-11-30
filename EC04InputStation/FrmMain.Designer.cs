@@ -34,6 +34,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btnLogin = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.btnLogo = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tslSysTime = new System.Windows.Forms.ToolStripStatusLabel();
@@ -42,14 +43,12 @@
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.GroupBox1 = new System.Windows.Forms.GroupBox();
             this.lvLogs = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.btnLogo = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -130,6 +129,18 @@
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // btnLogo
+            // 
+            this.btnLogo.BackgroundImage = global::EC04InputStation.Properties.Resources.Luxshare;
+            this.btnLogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnLogo.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnLogo.Location = new System.Drawing.Point(0, 0);
+            this.btnLogo.Margin = new System.Windows.Forms.Padding(4);
+            this.btnLogo.Name = "btnLogo";
+            this.btnLogo.Size = new System.Drawing.Size(177, 54);
+            this.btnLogo.TabIndex = 1;
+            this.btnLogo.UseVisualStyleBackColor = true;
+            // 
             // panel2
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.panel2, 2);
@@ -186,7 +197,6 @@
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(3, 63);
             this.tabControl1.Name = "tabControl1";
@@ -203,16 +213,6 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "人工扫码";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 25);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(905, 470);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "运行治具";
-            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // GroupBox1
             // 
@@ -260,18 +260,6 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // btnLogo
-            // 
-            this.btnLogo.BackgroundImage = global::EC04InputStation.Properties.Resources.Luxshare;
-            this.btnLogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnLogo.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btnLogo.Location = new System.Drawing.Point(0, 0);
-            this.btnLogo.Margin = new System.Windows.Forms.Padding(4);
-            this.btnLogo.Name = "btnLogo";
-            this.btnLogo.Size = new System.Drawing.Size(177, 54);
-            this.btnLogo.TabIndex = 1;
-            this.btnLogo.UseVisualStyleBackColor = true;
-            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -310,7 +298,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.GroupBox GroupBox1;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.ListView lvLogs;

@@ -178,6 +178,23 @@ namespace EC04喷胶保压
         private void FrmMain_Load(object sender, EventArgs e)
         {
             tabPage1.Controls.Clear();
+            tabPage2.Controls.Clear();
+            tabPage3.Controls.Clear();
+            Form frmRunFixture;
+            frmRunFixture = new FrmRunFixture();
+            frmRunFixture.TopLevel = false;
+            frmRunFixture.Dock = DockStyle.Fill;
+            frmRunFixture.FormBorderStyle = FormBorderStyle.None;
+            tabPage2.Controls.Add(frmRunFixture);
+            frmRunFixture.Show();
+
+            Form frmCableHistroies;
+            frmCableHistroies = new FrmCableHistroies();
+            frmCableHistroies.TopLevel = false;
+            frmCableHistroies.Dock = DockStyle.Fill;
+            frmCableHistroies.FormBorderStyle = FormBorderStyle.None;
+            tabPage3.Controls.Add(frmCableHistroies);
+            frmCableHistroies.Show();
             Task.Factory.StartNew(async () =>
             {
                 while (true)
@@ -185,6 +202,7 @@ namespace EC04喷胶保压
                     if (_inovanceHelper == null) { await Task.Delay(1000); continue; }
                     if (_inovanceHelper.ReadAddressByD(11) == 1)
                     {
+                        LogManager.Info($"读取到启动信号：{{D11:1}}");
                         try
                         {
                             Runner1Init();
@@ -211,6 +229,7 @@ namespace EC04喷胶保压
                     if (_inovanceHelper == null) { await Task.Delay(1000); continue; }
                     if (_inovanceHelper.ReadAddressByD(13) == 1)
                     {
+                        LogManager.Info($"读取到启动信号：{{D13:1}}");
                         try
                         {
                             Runner2Init();

@@ -1,4 +1,3 @@
-D:\work\ec04\EC04\Test\bin\Debug\SQLite.Interop.dll
 D:\work\ec04\EC04\Test\bin\Debug\Test.exe.config
 D:\work\ec04\EC04\Test\bin\Debug\Test.exe
 D:\work\ec04\EC04\Test\bin\Debug\Test.pdb
@@ -19,3 +18,9 @@ D:\work\ec04\EC04\Test\obj\Debug\Test.pdb
 D:\work\ec04\EC04\Test\bin\Debug\Newtonsoft.Json.dll
 D:\work\ec04\EC04\Test\bin\Debug\Newtonsoft.Json.pdb
 D:\work\ec04\EC04\Test\bin\Debug\Newtonsoft.Json.xml
+D:\work\ec04\EC04\Test\bin\Debug\TBEN_RFID.dll
+D:\work\ec04\EC04\Test\bin\Debug\Modbus.dll
+D:\work\ec04\EC04\Test\bin\Debug\SQLite.Interop.dll
+D:\work\ec04\EC04\Test\bin\Debug\StandardModbusApi.dll
+D:\work\ec04\EC04\Test\bin\Debug\stdole.dll
+D:\work\ec04\EC04\Test\bin\Debug\ModbusTcpAPI.dll

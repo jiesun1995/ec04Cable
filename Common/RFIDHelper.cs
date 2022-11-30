@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using TBEN_RFID;
 
 namespace Common
 {
     public class RFIDHelper
     {
-        
         private string writeString0;
         private string writeString1;
         private string writeString2;
@@ -21,9 +21,9 @@ namespace Common
         public int DataLength_Ch3 { get; set; } = 100;
 
         public int StartAddress_Ch0 { get; set; } = 0;
-        public int StartAddress_Ch1 { get; set; } =0;
-        public int StartAddress_Ch2 { get; set; } =0;
-        public int StartAddress_Ch3 { get; set; } =0;
+        public int StartAddress_Ch1 { get; set; } = 0;
+        public int StartAddress_Ch2 { get; set; } = 0;
+        public int StartAddress_Ch3 { get; set; } = 0;
 
         //标志位
         public bool channel0_connect;
@@ -119,7 +119,7 @@ namespace Common
                     writeString2 = content;
                     startAddress = StartAddress_Ch2;
                     responseCode = responseCode_Ch2;
-                     unit = 2;
+                    unit = 2;
                     StartAddress = 0x0898;
                     break;
                 case 3:
@@ -141,12 +141,12 @@ namespace Common
                     responseCode = responseCode_Ch0;
                     unit = 0;
                     StartAddress = 0x0800;
-                    break;  
+                    break;
             }
 
             if (!connect)
             {
-                string message = "通道ID: " + channelId + "断开连接！"; 
+                string message = "通道ID: " + channelId + "断开连接！";
                 throw new Exception(message);
             }
             if (!tp) { throw new Exception("请将载码体放入读写头的感应区域！"); }
@@ -229,7 +229,7 @@ namespace Common
                     connect = channel0_connect;
                     tp = channel0_tp;
                     length = DataLength_Ch0;
-                    
+
                     startAddress = StartAddress_Ch0;
                     responseCode = responseCode_Ch0;
                     unit = 0;
@@ -318,7 +318,7 @@ namespace Common
             }
             else
             {
-                sendData[0] = 0x00; 
+                sendData[0] = 0x00;
                 sendData[1] = 0x00;
                 ID = 8;
             }
@@ -329,13 +329,13 @@ namespace Common
         #region Reset
         public void Reset()
         {
-            int[] ResponseArr = ResponseCodeArr(); 
-            ushort[] addressArr = {0x0800,0x084c,0x0898,0x08e4};
+            int[] ResponseArr = ResponseCodeArr();
+            ushort[] addressArr = { 0x0800, 0x084c, 0x0898, 0x08e4 };
             byte[] sendData = new byte[12];
             ushort ID = 4;
             ushort StartAddress;
             byte unit;
-            for (int i = 0; i < ResponseArr.Length;i++)
+            for (int i = 0; i < ResponseArr.Length; i++)
             {
                 int res = ResponseArr[i];
                 if (res != 0x8000)
@@ -400,7 +400,7 @@ namespace Common
                         LogManager.Error(ex);
                     }
                 }
-            },channelId);
+            }, channelId);
 
 
             //ThreadPool.SetMaxThreads(10,10);
@@ -446,52 +446,52 @@ namespace Common
                     data = values;
                     //this.Invoke((EventHandler)delegate
                     //{  
-                        if (data.Length == 12)
+                    if (data.Length == 12)
+                    {
+                        RfidChannelState state = new RfidChannelState();
+                        state.ChannelId = unit;
+                        state.Connect = (data[4] & 1) == 1 ? true : false;
+                        state.Busy = (data[0] & 128) == 128 ? true : false;
+                        state.Error = (data[0] & 64) == 64 ? true : false;
+                        state.Tp = (data[5] & 1) == 1 ? true : false;
+
+                        byte resCode_L = data[1];
+                        byte resCode_H = (byte)(data[0] & 63);
+                        int resCode = resCode_L + resCode_H * 256;
+
+                        byte errorCode_L = data[9];
+                        byte errorCode_H = data[8];
+                        int errorCode = errorCode_L + errorCode_H * 256;
+                        state.ErrorCode = errorCode;
+
+                        switch (unit)
                         {
-                            RfidChannelState state = new RfidChannelState();
-                            state.ChannelId = unit;
-                            state.Connect = (data[4] & 1) == 1 ? true : false;
-                            state.Busy = (data[0] & 128) == 128 ? true : false;
-                            state.Error = (data[0] & 64) == 64 ? true : false;
-                            state.Tp = (data[5] & 1) == 1 ? true : false;
-
-                            byte resCode_L = data[1];
-                            byte resCode_H = (byte)(data[0] & 63);
-                            int resCode = resCode_L + resCode_H * 256;
-
-                            byte errorCode_L = data[9];
-                            byte errorCode_H = data[8];
-                            int errorCode = errorCode_L + errorCode_H * 256;
-                            state.ErrorCode = errorCode;
-                        
-                            switch (unit)
-                            {
-                                case 0:
-                                    responseCode_Ch0 = resCode;
-                                    channel0_tp = state.Tp;
-                                    channel0_connect = state.Connect;
-                                    break;
-                                case 1:
-                                    responseCode_Ch1 = resCode;
-                                    channel1_tp = state.Tp;
-                                    channel1_connect = state.Connect;
-                                    break;
-                                case 2:
-                                    responseCode_Ch2 = resCode;
-                                    channel2_tp = state.Tp;
-                                    channel2_connect = state.Connect;
-                                    break;
-                                case 3:
-                                    responseCode_Ch3 = resCode;
-                                    channel3_tp = state.Tp;
-                                    channel3_connect = state.Connect;
-                                    break;
-                                default:
-                                    break;
-                            }
-
-                            if(ChannelStateCallback != null) ChannelStateCallback(state);
+                            case 0:
+                                responseCode_Ch0 = resCode;
+                                channel0_tp = state.Tp;
+                                channel0_connect = state.Connect;
+                                break;
+                            case 1:
+                                responseCode_Ch1 = resCode;
+                                channel1_tp = state.Tp;
+                                channel1_connect = state.Connect;
+                                break;
+                            case 2:
+                                responseCode_Ch2 = resCode;
+                                channel2_tp = state.Tp;
+                                channel2_connect = state.Connect;
+                                break;
+                            case 3:
+                                responseCode_Ch3 = resCode;
+                                channel3_tp = state.Tp;
+                                channel3_connect = state.Connect;
+                                break;
+                            default:
+                                break;
                         }
+
+                        if (ChannelStateCallback != null) ChannelStateCallback(state);
+                    }
                     //});  
                     #endregion
                     break;
@@ -683,7 +683,7 @@ namespace Common
                         luxmaster.WriteMultipleRegister(IDs, units, startAddress, sendData);
 
                     }
-          
+
                     #endregion
                     break;
                 case 7:  //--读取到数据
@@ -748,6 +748,33 @@ namespace Common
                     break;
             }
         }
-  
+
+    }
+
+    public class RFIDGetway
+    {
+        private readonly Reader _reader;
+        public RFIDGetway(string ip, int channel, int port = 502)
+        {
+            var gateway = new Gateway();
+            gateway.Connect(ip, port);
+            _reader = gateway.GetReaderInstance(channel);
+        }
+
+        public void SetChannelState(Action<bool> TpChangedHandler)
+        {
+            _reader.TpChangedHandler += TpChangedHandler;
+        }
+
+        public bool Wirte(string content)
+        {
+            return _reader.WriteString(0, 100, content);
+        }
+
+        public string Read()
+        {
+            var result = _reader.ReadString(0, 100);
+            return result;
+        }
     }
 }

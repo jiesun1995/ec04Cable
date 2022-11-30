@@ -1,4 +1,3 @@
-D:\work\ec04\EC04\Common\bin\Debug\SQLite.Interop.dll
 D:\work\ec04\EC04\Common\bin\Debug\Common.dll.config
 D:\work\ec04\EC04\Common\bin\Debug\Common.dll
 D:\work\ec04\EC04\Common\bin\Debug\Common.pdb
@@ -20,6 +19,11 @@ D:\work\ec04\EC04\Common\bin\Debug\Newtonsoft.Json.xml
 D:\work\ec04\EC04\Common\bin\Debug\Newtonsoft.Json.pdb
 D:\work\ec04\EC04\Common\obj\Debug\Common.FrmSetting.resources
 D:\work\ec04\EC04\Common\obj\Debug\Common.FrmRFIDSetting.resources
-D:\work\ec04\EC04\Common\bin\Debug\ModbusTcpAPI.dll
+D:\work\ec04\EC04\Common\bin\Debug\TBEN_RFID.dll
+D:\work\ec04\EC04\Common\bin\Debug\Modbus.dll
+D:\work\ec04\EC04\Common\bin\Debug\SQLite.Interop.dll
 D:\work\ec04\EC04\Common\bin\Debug\StandardModbusApi.dll
 D:\work\ec04\EC04\Common\bin\Debug\stdole.dll
+D:\work\ec04\EC04\Common\bin\Debug\ModbusTcpAPI.dll
+D:\work\ec04\EC04\Common\obj\Debug\Common.FrmCableHistroies.resources
+D:\work\ec04\EC04\Common\obj\Debug\Common.FrmRunFixture.resources

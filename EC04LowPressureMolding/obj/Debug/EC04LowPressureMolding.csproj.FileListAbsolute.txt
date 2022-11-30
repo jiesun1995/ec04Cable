@@ -23,3 +23,8 @@ D:\work\ec04\EC04\EC04LowPressureMolding\obj\Debug\EC04LowPressureMolding.pdb
 D:\work\ec04\EC04\EC04LowPressureMolding\bin\Debug\Newtonsoft.Json.dll
 D:\work\ec04\EC04\EC04LowPressureMolding\bin\Debug\Newtonsoft.Json.pdb
 D:\work\ec04\EC04\EC04LowPressureMolding\bin\Debug\Newtonsoft.Json.xml
+D:\work\ec04\EC04\EC04LowPressureMolding\bin\Debug\StandardModbusApi.dll
+D:\work\ec04\EC04\EC04LowPressureMolding\bin\Debug\stdole.dll
+D:\work\ec04\EC04\EC04LowPressureMolding\bin\Debug\ModbusTcpAPI.dll
+D:\work\ec04\EC04\EC04LowPressureMolding\bin\Debug\TBEN_RFID.dll
+D:\work\ec04\EC04\EC04LowPressureMolding\bin\Debug\Modbus.dll

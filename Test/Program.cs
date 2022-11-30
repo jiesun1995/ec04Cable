@@ -17,6 +17,24 @@ namespace Test
         static void Main(string[] args)
         {
             LogManager.Init(null);
+
+            TestWCFQueryDt();
+            Console.ReadLine();
+
+        }
+
+        public static void TestWCFQueryDt()
+        {
+            WCFHelper.CreateServer();
+            Task.Delay(1000).Wait();
+            Task.Factory.StartNew(() => {
+                //var kvs =new Dictionary<int, string>();
+                var clinet = WCFHelper.CreateClient();
+                var dt = clinet.QueryHistroy();
+            });
+        }
+        public static void TestHotbarWCF()
+        {
             var cancellationTokenSource = new CancellationTokenSource();
             CancellationToken cancellationToken = cancellationTokenSource.Token;
             WCFHelper.CreateServer();
@@ -29,18 +47,18 @@ namespace Test
             {
                 Task.Factory.StartNew(obj =>
                 {
-                    var index = Convert.ToInt32(obj)+1;
+                    var index = Convert.ToInt32(obj) + 1;
                     //var kvs =new Dictionary<int, string>();
                     var clinet = WCFHelper.CreateClient();
-                    Random random= new Random();
-                    
+                    Random random = new Random();
+
                     while (true)
                     {
                         List<Cable> list = new List<Cable>(2);
                         Dictionary<int, string> kvs = new Dictionary<int, string>();
                         for (int j = 0; j < 2; j++)
                         {
-                            var fix = random.Next(index*10, index*10 + 10);
+                            var fix = random.Next(index * 10, index * 10 + 10);
                             if (!kvs.ContainsKey(fix))
                             {
                                 var fixture = $"fix-000{fix}";
@@ -56,7 +74,7 @@ namespace Test
                                 list.Add(cable);
                                 kvs.Add(fix, string.Empty);
                                 fixtures.Enqueue(fixture);
-                                
+
                             }
                             else
                             {
@@ -66,12 +84,12 @@ namespace Test
                         clinet.FixtureCableBind(list);
                         Console.WriteLine($"写入治具和线材：{list[0].FixtureID}，{list[0].Sn}，{list[1].Sn}");
                         list.Clear();
-                        Task.Delay(random.Next(1,10)*1000).Wait();
-                     }
+                        Task.Delay(random.Next(1, 10) * 1000).Wait();
+                    }
                 }, i);
             }
-            Task.Delay(5*1000).Wait();
-           
+            Task.Delay(5 * 1000).Wait();
+
             Task.Factory.StartNew(() => {
                 //var kvs =new Dictionary<int, string>();
                 var clinet = WCFHelper.CreateClient();
@@ -88,14 +106,39 @@ namespace Test
                     Task.Delay(10).Wait();
                 }
             }, cancellationToken);
+        }
 
-            Console.ReadLine();
+        public static void TestRFID()
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                Task.Factory.StartNew(obj =>
+                {
+                    var index=Convert.ToInt32(obj);
+                    RFIDGetway rfidhelper = new RFIDGetway("192.168.1.10", 0);
+                    rfidhelper.SetChannelState(tp =>
+                    {
+                        if (tp)
+                        {
+                            var result = rfidhelper.Read();
+                            Console.WriteLine(result);
+                        }
+                    });
+                },i);
+            }
+            Task.Factory.StartNew(() =>
+            {
+                RFIDGetway rfidhelper = new RFIDGetway("192.168.1.10", 0);
+                rfidhelper.SetChannelState(tp =>
+                {
+                    if (tp)
+                    {
+                        var result = rfidhelper.Read();
+                        Console.WriteLine(result);
+                    }
+                });
+            });
 
-
-            //var client = WCFHelper.CreateClient();
-            //var length = client.FixtureCableBind(new Cable { Sn="sssss",Start_time=DateTime.Now,Finish_time=DateTime.Now });
-            //Console.WriteLine(length.ToString());
-            //Console.Read();
         }
     }
 }

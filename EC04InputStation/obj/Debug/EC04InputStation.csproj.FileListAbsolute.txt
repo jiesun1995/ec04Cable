@@ -40,3 +40,8 @@ D:\work\ec04\EC04\EC04InputStation\obj\Debug\EC04InputStation.pdb
 D:\work\ec04\EC04\EC04InputStation\bin\Debug\Newtonsoft.Json.dll
 D:\work\ec04\EC04\EC04InputStation\bin\Debug\Newtonsoft.Json.pdb
 D:\work\ec04\EC04\EC04InputStation\bin\Debug\Newtonsoft.Json.xml
+D:\work\ec04\EC04\EC04InputStation\bin\Debug\StandardModbusApi.dll
+D:\work\ec04\EC04\EC04InputStation\bin\Debug\stdole.dll
+D:\work\ec04\EC04\EC04InputStation\bin\Debug\ModbusTcpAPI.dll
+D:\work\ec04\EC04\EC04InputStation\bin\Debug\TBEN_RFID.dll
+D:\work\ec04\EC04\EC04InputStation\bin\Debug\Modbus.dll

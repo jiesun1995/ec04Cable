@@ -154,6 +154,8 @@ namespace EC04Hotbar
         private void FrmMain_Load(object sender, EventArgs e)
         {
             tabPage1.Controls.Clear();
+            tabPage2.Controls.Clear();
+            tabPage3.Controls.Clear();
             var zhanbi = 1.00 / DataContent.SystemConfig.ScannerCode;
             ///动态加载人工扫码位显示界面
             for (int i = 0; i < DataContent.SystemConfig.ScannerCode; i++)
@@ -171,6 +173,23 @@ namespace EC04Hotbar
                 tabPage1.Controls.Add(frmcode);
                 frmcode.Show();
             }
+
+            Form frmRunFixture;
+            frmRunFixture = new FrmRunFixture();
+            frmRunFixture.TopLevel = false;
+            frmRunFixture.Dock = DockStyle.Fill;
+            frmRunFixture.FormBorderStyle = FormBorderStyle.None;
+            tabPage2.Controls.Add(frmRunFixture);
+            frmRunFixture.Show();
+
+            Form frmCableHistroies;
+            frmCableHistroies = new FrmCableHistroies();
+            frmCableHistroies.TopLevel = false;
+            frmCableHistroies.Dock = DockStyle.Fill;
+            frmCableHistroies.FormBorderStyle = FormBorderStyle.None;
+            tabPage3.Controls.Add(frmCableHistroies);
+            frmCableHistroies.Show();
+
             if (DataContent.SystemConfig.ScannerCode > 0)
                 return;
             Task.Factory.StartNew(async () =>
@@ -208,6 +227,7 @@ namespace EC04Hotbar
                         LogManager.Info($"读取到启动信号：{{D13:1}}");
                         try
                         {
+
                             _rfidHelper2.Read(DataContent.SystemConfig.RFIDConfigs[2].Channel);
                             _rfidHelper2P.Read(DataContent.SystemConfig.RFIDConfigs[3].Channel);
                         }

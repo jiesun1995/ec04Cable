@@ -4,6 +4,7 @@ using stdole;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Data.SQLite;
 using System.Linq;
@@ -139,6 +140,83 @@ namespace Common
                     LogManager.Error(ex);
                 }
             }
+        }
+
+        public DataTable QueryHistroy(string cable = null, string fixture = null, string fixturePat = null, DateTime? startDate = null, DateTime? endDate = null)
+        {
+            var dt = new DataTable();
+            var sql = new StringBuilder(@"SELECT [Sn] as 线材序号
+      ,[Model]  as 模块
+      ,[FixtureID] as 治具ID
+      ,[Test_station] as 测试工站
+      ,[Start_time] as 开始时间
+      ,[Finish_time] as 结束时间
+      ,[Status] as 状态
+      ,[Error_code] as 错误码
+      ,[FAI1_A] as 子治具Id
+      ,[FAI1_B] as 治具Id
+  FROM [CableHistroies] where 1=1 ");
+            if (!string.IsNullOrWhiteSpace(cable))
+            {
+                sql.Append(" and Sn = @cable ");
+            }
+            if (!string.IsNullOrWhiteSpace(fixture))
+            {
+                sql.Append(" and FAI1_A = @fixture ");
+            }
+            if (!string.IsNullOrWhiteSpace(fixturePat))
+            {
+                sql.Append(" and FAI1_B = @fixturePat ");
+            }
+            if (startDate != null)
+            {
+                sql.Append(" and Start_time >= @startDate ");
+            }
+            if (endDate != null)
+            {
+                sql.Append(" and Start_time < @endDate ");
+            }
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                var dataReader = connection.ExecuteReader(sql.ToString(), new { cable, fixture, fixturePat, startDate, endDate });
+                dt.Load(dataReader);
+            }
+            return dt;
+        }
+
+        public DataTable Query(string cable = null, string fixture = null, string fixturePat = null)
+        {
+            var dt = new DataTable();
+            var sql = new StringBuilder(@"SELECT [Sn] as 线材序号
+      ,[Model]  as 模块
+      ,[FixtureID] as 治具ID
+      ,[Test_station] as 测试工站
+      ,[Start_time] as 开始时间
+      ,[Finish_time] as 结束时间
+      ,[Status] as 状态
+      ,[Error_code] as 错误码
+      ,[FAI1_A] as 子治具Id
+      ,[FAI1_B] as 母治具Id
+  FROM [Cables] where 1=1 ");
+            if (!string.IsNullOrWhiteSpace(cable))
+            {
+                sql.Append(" and Sn = @cable ");
+            }
+            if (!string.IsNullOrWhiteSpace(fixture))
+            {
+                sql.Append(" and FAI1_A = @fixture ");
+            }
+            if (!string.IsNullOrWhiteSpace(fixturePat))
+            {
+                sql.Append(" and FAI1_B = @fixturePat ");
+            }
+
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                var dataReader = connection.ExecuteReader(sql.ToString(), new { cable, fixture, fixturePat });
+                dt.Load(dataReader);
+            }
+            return dt;
         }
     }
 }

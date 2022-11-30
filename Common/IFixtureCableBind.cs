@@ -1,6 +1,7 @@
 ﻿using stdole;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
@@ -11,16 +12,21 @@ namespace Common
     [ServiceContract]
     public interface IFixtureCableBindService
     {
+
         [OperationContract]
         bool FixtureCableBind(List<Cable> cables);
 
         [OperationContract]
         bool FixtureBind(string fixture, string fixturePat);
+
+        [OperationContract]
+        DataTable QueryHistroy(string cable=null, string fixture = null, string fixturePat = null, DateTime? startDate = null, DateTime? endDate = null);
+        [OperationContract]
+        DataTable Query(string cable = null, string fixture = null, string fixturePat = null);
     }
 
     public class FixtureCableBindService : IFixtureCableBindService
     {
-        //private readonly CableMemoryDal _cableMemoryDal;
         private readonly CableSqliteDal _cableSqliteDal;
 
         public FixtureCableBindService()
@@ -56,6 +62,17 @@ namespace Common
 
             }
             return true;
+        }
+
+        public DataTable QueryHistroy(string cable = null, string fixture = null, string fixturePat = null, DateTime? startDate = null, DateTime? endDate = null)
+        {
+            var dt = _cableSqliteDal.QueryHistroy(cable, fixture, fixturePat, startDate, endDate);
+            return dt;
+        }
+        public DataTable Query(string cable = null, string fixture = null, string fixturePat = null)
+        {
+            var dt = _cableSqliteDal.Query(cable, fixture, fixturePat);
+            return dt;
         }
     }
 }
