@@ -8,7 +8,7 @@ using TBEN_RFID;
 
 namespace Common
 {
-    public class RFIDHelper
+    internal class RFIDHelper
     {
         private string writeString0;
         private string writeString1;
@@ -751,14 +751,18 @@ namespace Common
 
     }
 
-    public class RFIDGetway
+    public class RFIDChannel
     {
-        private readonly Reader _reader;
-        public RFIDGetway(string ip, int channel, int port = 502)
+        private Reader _reader;
+        private bool _isConnect = false;
+        private const int _dataLength = 50;
+        public RFIDChannel(Reader reader)
         {
-            var gateway = new Gateway();
-            gateway.Connect(ip, port);
-            _reader = gateway.GetReaderInstance(channel);
+            _reader = reader;
+            _reader.ConnChangedHandler += state =>
+            {
+                _isConnect = state;
+            };
         }
 
         public void SetChannelState(Action<bool> TpChangedHandler)
@@ -766,15 +770,47 @@ namespace Common
             _reader.TpChangedHandler += TpChangedHandler;
         }
 
+        public bool IsConnect { get { return _isConnect; } }
+
         public bool Wirte(string content)
         {
-            return _reader.WriteString(0, 100, content);
+            return _reader.WriteString(0, _dataLength, content);
         }
 
         public string Read()
         {
-            var result = _reader.ReadString(0, 100);
+            var result = _reader.ReadString(0, _dataLength).Replace("\0", "");
             return result;
+        }
+    }
+
+    public class RFIDFactory
+    {
+        private static object _obj = new object();
+        private static Dictionary<string, Gateway> _gatewaies =new Dictionary<string, Gateway>();
+
+        private RFIDFactory() { }
+        public static RFIDChannel Instance(string ip, int channel, int port = 502)
+        {
+            lock (_obj)
+            {
+                if (!_gatewaies.ContainsKey(ip))
+                {
+                    var gateway = new Gateway();
+                    gateway.Connect(ip, port);
+                    _gatewaies.Add(ip, gateway);
+                }
+            }
+            try
+            {
+                var reader = _gatewaies[ip].GetReaderInstance(channel);
+                return new RFIDChannel(reader);
+            }
+            catch (Exception ex)
+            {
+                LogManager.Error(ex);
+            }
+            return null;
         }
     }
 }

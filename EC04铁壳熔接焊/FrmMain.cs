@@ -19,10 +19,9 @@ namespace EC04铁壳熔接焊
         private Stopwatch _stopwatch ;
         private IFixtureCableBindService _fixtureCableBindService;
         ConcurrentDictionary<int, string> vals = new ConcurrentDictionary<int, string>();
-        private readonly RFIDHelper _rfidHelper1;
-        private readonly RFIDHelper _rfidHelper1P;
-        private readonly RFIDHelper _rfidHelper2;
-        private readonly RFIDHelper _rfidHelper2P;
+        private RFIDChannel _RFIDChannelL;
+        private RFIDChannel _RFIDChannelR;
+        private RFIDChannel _RFIDChannelCable;
         public FrmMain()
         {
             InitializeComponent();
@@ -60,22 +59,11 @@ namespace EC04铁壳熔接焊
             {
                 try
                 {
-                    var rfidHelperL = new RFIDHelper(DataContent.SystemConfig.RFIDConfigs[0].IP, DataContent.SystemConfig.RFIDConfigs[0].Channel, DataContent.SystemConfig.RFIDConfigs[0].Port);
-                    rfidHelperL.DataLength_Ch0 = DataContent.SystemConfig.RFIDConfigs[0].DataLength;
-                    rfidHelperL.StartAddress_Ch0 = DataContent.SystemConfig.RFIDConfigs[0].StartAddress;
-
-                    var rfidHelperR = new RFIDHelper(DataContent.SystemConfig.RFIDConfigs[1].IP, DataContent.SystemConfig.RFIDConfigs[1].Channel, DataContent.SystemConfig.RFIDConfigs[1].Port);
-                    rfidHelperR.DataLength_Ch1 = DataContent.SystemConfig.RFIDConfigs[1].DataLength;
-                    rfidHelperR.StartAddress_Ch1 = DataContent.SystemConfig.RFIDConfigs[1].StartAddress;
-
-                    var rfidHelperCable = new RFIDHelper(DataContent.SystemConfig.RFIDConfigs[2].IP, DataContent.SystemConfig.RFIDConfigs[2].Channel, DataContent.SystemConfig.RFIDConfigs[2].Port);
-                    rfidHelperCable.DataLength_Ch2 = DataContent.SystemConfig.RFIDConfigs[2].DataLength;
-                    rfidHelperCable.StartAddress_Ch2 = DataContent.SystemConfig.RFIDConfigs[2].StartAddress;
-
-
+                    _RFIDChannelL = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[0].IP, DataContent.SystemConfig.RFIDConfigs[0].Channel, DataContent.SystemConfig.RFIDConfigs[0].Port);
+                    _RFIDChannelR = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[1].IP, DataContent.SystemConfig.RFIDConfigs[1].Channel, DataContent.SystemConfig.RFIDConfigs[1].Port);
+                    _RFIDChannelCable = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[2].IP, DataContent.SystemConfig.RFIDConfigs[2].Channel, DataContent.SystemConfig.RFIDConfigs[2].Port);
                     Form frmcode;
-                    frmcode = new FrmFixture(rfidHelperL, rfidHelperR, rfidHelperCable,
-                        DataContent.SystemConfig.RFIDConfigs[0].Channel, DataContent.SystemConfig.RFIDConfigs[1].Channel, DataContent.SystemConfig.RFIDConfigs[2].Channel,
+                    frmcode = new FrmFixture(_RFIDChannelL, _RFIDChannelR, _RFIDChannelCable,
                         (fixtureL, fixtureR, cable) => ScannerCodeByPeopleSaveCSV(fixtureL, fixtureR, cable));
                     frmcode.TopLevel = false;
                     frmcode.Dock = DockStyle.Top;

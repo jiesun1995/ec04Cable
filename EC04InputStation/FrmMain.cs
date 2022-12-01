@@ -42,8 +42,8 @@ namespace EC04InputStation
                 {
                     Form frmcode;
                     var mesService = new MesService();
-                    RFIDHelper RFIDHelper = new RFIDHelper(DataContent.SystemConfig.RFIDConfigs[i].IP, DataContent.SystemConfig.RFIDConfigs[i].Channel, (ushort)DataContent.SystemConfig.RFIDConfigs[i].Port);
-                    frmcode = new FrmRFIDInputCable(DataContent.SystemConfig.RFIDConfigs[i].Channel, RFIDHelper, mesService);
+                    var channel = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[i].IP, DataContent.SystemConfig.RFIDConfigs[i].Channel, (ushort)DataContent.SystemConfig.RFIDConfigs[i].Port);
+                    frmcode = new FrmRFIDInputCable(DataContent.SystemConfig.RFIDConfigs[i].Channel, channel, mesService);
 
                     frmcode.TopLevel = false;
                     frmcode.Dock = DockStyle.Top;

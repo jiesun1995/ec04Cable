@@ -17,12 +17,10 @@ namespace EC04喷胶保压
     {
         private Stopwatch _stopwatch ;
         private readonly InovanceHelper _inovanceHelper;
-        private readonly Common.IFixtureCableBindService _fixtureCableBindService;
-        private ConcurrentDictionary<int, string> vals = new ConcurrentDictionary<int, string>();
-        private readonly RFIDHelper _rfidHelper1;
-        private readonly RFIDHelper _rfidHelper1P;
-        private readonly RFIDHelper _rfidHelper2;
-        private readonly RFIDHelper _rfidHelper2P;
+        private readonly RFIDChannel _RFIDChannel1;
+        private readonly RFIDChannel _RFIDChannel1P;
+        private readonly RFIDChannel _RFIDChannel2;
+        private readonly RFIDChannel _RFIDChannel2P;
         public FrmMain()
         {
             _stopwatch = new Stopwatch();
@@ -34,129 +32,16 @@ namespace EC04喷胶保压
             {
                 _inovanceHelper = new InovanceHelper(DataContent.SystemConfig.PLCIp, DataContent.SystemConfig.PLCPort);
                 LogManager.Init(lvLogs);
-                _fixtureCableBindService = WCFHelper.CreateClient();
-                vals.TryAdd(0, string.Empty);
-                vals.TryAdd(1, string.Empty);
-                vals.TryAdd(2, string.Empty);
-                vals.TryAdd(3, string.Empty);
 
-                _rfidHelper1 = new RFIDHelper(DataContent.SystemConfig.RFIDConfigs[0].IP, DataContent.SystemConfig.RFIDConfigs[0].Channel, DataContent.SystemConfig.RFIDConfigs[0].Port);
-                _rfidHelper1.DataLength_Ch0 = DataContent.SystemConfig.RFIDConfigs[0].DataLength;
-                _rfidHelper1.StartAddress_Ch0 = DataContent.SystemConfig.RFIDConfigs[0].StartAddress;
-
-                _rfidHelper1.ReadCallback = (channel, content) =>
-                {
-                    if (DataContent.SystemConfig.RFIDConfigs[0].Channel == channel)
-                    {
-                        vals.TryUpdate(channel, content, content);
-                        DataSaveRunner1();
-                    }
-                };
-
-                _rfidHelper1P = new RFIDHelper(DataContent.SystemConfig.RFIDConfigs[1].IP, DataContent.SystemConfig.RFIDConfigs[1].Channel, DataContent.SystemConfig.RFIDConfigs[1].Port);
-                _rfidHelper1P.DataLength_Ch1 = DataContent.SystemConfig.RFIDConfigs[1].DataLength;
-                _rfidHelper1P.StartAddress_Ch1 = DataContent.SystemConfig.RFIDConfigs[1].StartAddress;
-
-                _rfidHelper1P.ReadCallback = (channel, content) =>
-                {
-                    if (DataContent.SystemConfig.RFIDConfigs[1].Channel == channel)
-                    {
-                        vals.TryUpdate(channel, content, content);
-                        DataSaveRunner1();
-                    }
-                };
-
-                _rfidHelper2 = new RFIDHelper(DataContent.SystemConfig.RFIDConfigs[2].IP, DataContent.SystemConfig.RFIDConfigs[2].Channel, DataContent.SystemConfig.RFIDConfigs[2].Port);
-                _rfidHelper2.DataLength_Ch2 = DataContent.SystemConfig.RFIDConfigs[2].DataLength;
-                _rfidHelper2.StartAddress_Ch2 = DataContent.SystemConfig.RFIDConfigs[2].StartAddress;
-                _rfidHelper1P.ReadCallback = (channel, content) =>
-                {
-                    if (DataContent.SystemConfig.RFIDConfigs[2].Channel == channel)
-                    {
-                        vals.TryUpdate(channel, content, content);
-                        DataSaveRunner2();
-                    }
-                };
-
-                _rfidHelper2P = new RFIDHelper(DataContent.SystemConfig.RFIDConfigs[3].IP, DataContent.SystemConfig.RFIDConfigs[3].Channel, DataContent.SystemConfig.RFIDConfigs[3].Port);
-                _rfidHelper2P.DataLength_Ch3 = DataContent.SystemConfig.RFIDConfigs[3].DataLength;
-                _rfidHelper2P.StartAddress_Ch3 = DataContent.SystemConfig.RFIDConfigs[3].StartAddress;
-                _rfidHelper1P.ReadCallback = (channel, content) =>
-                {
-                    if (DataContent.SystemConfig.RFIDConfigs[3].Channel == channel)
-                    {
-                        vals.TryUpdate(channel, content, content);
-                        DataSaveRunner2();
-                    }
-                };
+                _RFIDChannel1 = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[0].IP, DataContent.SystemConfig.RFIDConfigs[0].Channel, DataContent.SystemConfig.RFIDConfigs[0].Port);
+                _RFIDChannel1P = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[1].IP, DataContent.SystemConfig.RFIDConfigs[1].Channel, DataContent.SystemConfig.RFIDConfigs[1].Port);
+                _RFIDChannel2 = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[2].IP, DataContent.SystemConfig.RFIDConfigs[2].Channel, DataContent.SystemConfig.RFIDConfigs[2].Port);
+                _RFIDChannel2P = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[3].IP, DataContent.SystemConfig.RFIDConfigs[3].Channel, DataContent.SystemConfig.RFIDConfigs[3].Port);
             }
             catch (Exception ex)
             {
                 LogManager.Error(ex);
             }
-        }
-
-        public void DataSaveRunner1()
-        {
-            vals.TryGetValue(0, out string sn);
-            vals.TryGetValue(1, out string fixture);
-            if (!string.IsNullOrEmpty(sn) && !string.IsNullOrEmpty(fixture))
-            {
-                var cable = new Cable
-                {
-                    Sn = sn,
-                    Start_time = DateTime.Now,
-                    Test_station = DataContent.SystemConfig.TestStation,
-                    FAI1_A = fixture,
-                    FixtureID = fixture,
-                    Model = DataContent.SystemConfig.Model,
-                };
-                _fixtureCableBindService.FixtureCableBind(new List<Cable> { cable });
-                _inovanceHelper.WriteAddressByD(11, 3);
-            }
-        }
-        public void Runner1Init()
-        {
-            vals.TryGetValue(0, out string sn);
-            vals.TryGetValue(1, out string fixture);
-            if (!string.IsNullOrEmpty(sn) && string.IsNullOrEmpty(fixture))
-            {
-                var cable = new Cable
-                {
-                    Sn = sn,
-                    Start_time = DateTime.Now,
-                    Test_station = DataContent.SystemConfig.TestStation,
-                    FAI1_A = "NG",
-                    FixtureID = DataContent.SystemConfig.FixtureID,
-                    Model = DataContent.SystemConfig.Model,
-                };
-                _fixtureCableBindService.FixtureCableBind(new List<Cable> { cable });
-            }
-        }
-
-        public void DataSaveRunner2()
-        {
-            vals.TryGetValue(2, out string val);
-            vals.TryGetValue(3, out string valP);
-            if (!string.IsNullOrEmpty(val) && !string.IsNullOrEmpty(valP))
-            {
-                _fixtureCableBindService.FixtureBind(val, valP);
-                _inovanceHelper.WriteAddressByD(13, 3);
-            }
-        }
-        public void Runner2Init()
-        {
-            vals.TryGetValue(2, out string val);
-            vals.TryGetValue(3, out string valP);
-            if (string.IsNullOrEmpty(val))
-            {
-                _fixtureCableBindService.FixtureBind("NG", string.IsNullOrEmpty(valP)?"NG":valP);
-            }
-            else if(string.IsNullOrEmpty(valP))
-            {
-                _fixtureCableBindService.FixtureBind(val, "NG");
-            }
-            
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -197,6 +82,7 @@ namespace EC04喷胶保压
             frmCableHistroies.Show();
             Task.Factory.StartNew(async () =>
             {
+                var fixtureCableBindService = WCFHelper.CreateClient();
                 while (true)
                 {
                     if (_inovanceHelper == null) { await Task.Delay(1000); continue; }
@@ -205,9 +91,34 @@ namespace EC04喷胶保压
                         LogManager.Info($"读取到启动信号：{{D11:1}}");
                         try
                         {
-                            Runner1Init();
-                            _rfidHelper1.Read(DataContent.SystemConfig.RFIDConfigs[0].Channel);
-                            _rfidHelper1P.Read(DataContent.SystemConfig.RFIDConfigs[1].Channel);
+                            var sn = _RFIDChannel1.Read();
+                            var fixture = _RFIDChannel1P.Read();
+                            if (!string.IsNullOrEmpty(sn) && !string.IsNullOrEmpty(fixture))
+                            {
+                                var cable = new Cable
+                                {
+                                    Sn = sn,
+                                    Start_time = DateTime.Now,
+                                    Test_station = DataContent.SystemConfig.TestStation,
+                                    FAI1_A = fixture,
+                                    FixtureID = fixture,
+                                    Model = DataContent.SystemConfig.Model,
+                                };
+                                fixtureCableBindService.FixtureCableBind(new List<Cable> { cable });
+                            }
+                            else if (!string.IsNullOrEmpty(sn) && string.IsNullOrEmpty(fixture))
+                            {
+                                var cable = new Cable
+                                {
+                                    Sn = sn,
+                                    Start_time = DateTime.Now,
+                                    Test_station = DataContent.SystemConfig.TestStation,
+                                    FAI1_A = "NG",
+                                    FixtureID = DataContent.SystemConfig.FixtureID,
+                                    Model = DataContent.SystemConfig.Model,
+                                };
+                                fixtureCableBindService.FixtureCableBind(new List<Cable> { cable });
+                            }
                         }
                         catch (Exception ex)
                         {
@@ -215,7 +126,6 @@ namespace EC04喷胶保压
                         }
                         finally
                         {
-                            await Task.Delay(1000);
                             _inovanceHelper.WriteAddressByD(11, 0);
                         }
                     }
@@ -224,6 +134,7 @@ namespace EC04喷胶保压
             }, TaskCreationOptions.LongRunning);
             Task.Factory.StartNew(async() =>
             {
+                var fixtureCableBindService = WCFHelper.CreateClient();
                 while (true)
                 {
                     if (_inovanceHelper == null) { await Task.Delay(1000); continue; }
@@ -232,9 +143,20 @@ namespace EC04喷胶保压
                         LogManager.Info($"读取到启动信号：{{D13:1}}");
                         try
                         {
-                            Runner2Init();
-                            _rfidHelper2.Read(DataContent.SystemConfig.RFIDConfigs[2].Channel);
-                            _rfidHelper2P.Read(DataContent.SystemConfig.RFIDConfigs[3].Channel);
+                            var val = _RFIDChannel2.Read();
+                            var valP = _RFIDChannel2P.Read();
+                            if (!string.IsNullOrEmpty(val) && !string.IsNullOrEmpty(valP))
+                            {
+                                fixtureCableBindService.FixtureBind(val, valP);
+                            }
+                            else if (string.IsNullOrEmpty(val))
+                            {
+                                fixtureCableBindService.FixtureBind("NG", string.IsNullOrEmpty(valP) ? "NG" : valP);
+                            }
+                            else if (string.IsNullOrEmpty(valP))
+                            {
+                                fixtureCableBindService.FixtureBind(val, "NG");
+                            }
                         }
                         catch (Exception ex)
                         {
@@ -242,7 +164,6 @@ namespace EC04喷胶保压
                         }
                         finally
                         {
-                            await Task.Delay(1000);
                             _inovanceHelper.WriteAddressByD(13, 0);
                         }
                     }

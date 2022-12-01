@@ -17,13 +17,12 @@ namespace EC04Hotbar
     public partial class FrmMain : Form
     {
         private Stopwatch _stopwatch ;
-        private IFixtureCableBindService _fixtureCableBindService;
         private readonly OMRHelper _omrHelper;
-        private ConcurrentDictionary<int, string> vals = new ConcurrentDictionary<int, string>();
-        private readonly RFIDHelper _rfidHelper1;
-        private readonly RFIDHelper _rfidHelper1P;
-        private readonly RFIDHelper _rfidHelper2;
-        private readonly RFIDHelper _rfidHelper2P;
+        private readonly IFixtureCableBindService _fixtureCableBindService;
+        private readonly RFIDChannel _RFIDChannel1;
+        private readonly RFIDChannel _RFIDChannel1P;
+        private readonly RFIDChannel _RFIDChannel2;
+        private readonly RFIDChannel _RFIDChannel2P;
         public FrmMain()
         {
             InitializeComponent();
@@ -31,10 +30,6 @@ namespace EC04Hotbar
             _stopwatch.Start();
             timer1.Start();
             
-            vals.TryAdd(0, string.Empty);
-            vals.TryAdd(1, string.Empty);
-            vals.TryAdd(2, string.Empty);
-            vals.TryAdd(3, string.Empty);
             try
             {
                 LogManager.Init(lvLogs);
@@ -43,80 +38,14 @@ namespace EC04Hotbar
                     return;
                 _omrHelper = new OMRHelper(DataContent.SystemConfig.PLCIp, DataContent.SystemConfig.PLCPort);
 
-                _rfidHelper1 = new RFIDHelper(DataContent.SystemConfig.RFIDConfigs[0].IP, DataContent.SystemConfig.RFIDConfigs[0].Channel, DataContent.SystemConfig.RFIDConfigs[0].Port);
-                _rfidHelper1.DataLength_Ch0 = DataContent.SystemConfig.RFIDConfigs[0].DataLength;
-                _rfidHelper1.StartAddress_Ch0 = DataContent.SystemConfig.RFIDConfigs[0].StartAddress;
-
-                _rfidHelper1.ReadCallback = (channel, content) =>
-                {
-                    if(DataContent.SystemConfig.RFIDConfigs[0].Channel == channel)
-                    {
-                        vals.TryUpdate(channel, content,content);
-                        DataSaveRunner1();
-                    }
-                };
-
-                _rfidHelper1P = new RFIDHelper(DataContent.SystemConfig.RFIDConfigs[1].IP, DataContent.SystemConfig.RFIDConfigs[1].Channel, DataContent.SystemConfig.RFIDConfigs[1].Port);
-                _rfidHelper1P.DataLength_Ch1 = DataContent.SystemConfig.RFIDConfigs[1].DataLength;
-                _rfidHelper1P.StartAddress_Ch1 = DataContent.SystemConfig.RFIDConfigs[1].StartAddress;
-
-                _rfidHelper1P.ReadCallback = (channel, content) =>
-                {
-                    if (DataContent.SystemConfig.RFIDConfigs[1].Channel == channel)
-                    {
-                        vals.TryUpdate(channel, content, content);
-                        DataSaveRunner1();
-                    }
-                };
-
-                _rfidHelper2 = new RFIDHelper(DataContent.SystemConfig.RFIDConfigs[2].IP, DataContent.SystemConfig.RFIDConfigs[2].Channel, DataContent.SystemConfig.RFIDConfigs[2].Port);
-                _rfidHelper2.DataLength_Ch2 = DataContent.SystemConfig.RFIDConfigs[2].DataLength;
-                _rfidHelper2.StartAddress_Ch2 = DataContent.SystemConfig.RFIDConfigs[2].StartAddress;
-                _rfidHelper1P.ReadCallback = (channel, content) =>
-                {
-                    if (DataContent.SystemConfig.RFIDConfigs[2].Channel == channel)
-                    {
-                        vals.TryUpdate(channel, content, content);
-                        DataSaveRunner2();
-                    }
-                };
-
-                _rfidHelper2P = new RFIDHelper(DataContent.SystemConfig.RFIDConfigs[3].IP, DataContent.SystemConfig.RFIDConfigs[3].Channel, DataContent.SystemConfig.RFIDConfigs[3].Port);
-                _rfidHelper2P.DataLength_Ch3 = DataContent.SystemConfig.RFIDConfigs[3].DataLength;
-                _rfidHelper2P.StartAddress_Ch3 = DataContent.SystemConfig.RFIDConfigs[3].StartAddress;
-                _rfidHelper1P.ReadCallback = (channel, content) =>
-                {
-                    if (DataContent.SystemConfig.RFIDConfigs[3].Channel == channel)
-                    {
-                        vals.TryUpdate(channel, content, content);
-                        DataSaveRunner2();
-                    }
-                };
+                _RFIDChannel1 = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[0].IP, DataContent.SystemConfig.RFIDConfigs[0].Channel, DataContent.SystemConfig.RFIDConfigs[0].Port);
+                _RFIDChannel1P = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[1].IP, DataContent.SystemConfig.RFIDConfigs[1].Channel, DataContent.SystemConfig.RFIDConfigs[1].Port);
+                _RFIDChannel2 = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[2].IP, DataContent.SystemConfig.RFIDConfigs[2].Channel, DataContent.SystemConfig.RFIDConfigs[2].Port);
+                _RFIDChannel2P = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[3].IP, DataContent.SystemConfig.RFIDConfigs[3].Channel, DataContent.SystemConfig.RFIDConfigs[3].Port);
             }
             catch (Exception ex)
             {
                 LogManager.Error(ex);
-            }
-        }
-
-        public void DataSaveRunner1()
-        {
-            vals.TryGetValue(0, out string val);
-            vals.TryGetValue(1, out string valP);
-            if (!string.IsNullOrEmpty(val) && !string.IsNullOrEmpty(valP))
-            {
-                _fixtureCableBindService.FixtureBind(val, valP);
-                _omrHelper.Write("D11", 3);
-            }
-        }
-        public void DataSaveRunner2()
-        {
-            vals.TryGetValue(2, out string val);
-            vals.TryGetValue(3, out string valP);
-            if (!string.IsNullOrEmpty(val) && !string.IsNullOrEmpty(valP))
-            {
-                _fixtureCableBindService.FixtureBind(val, valP);
-                _omrHelper.Write("D13", 3);
             }
         }
 
@@ -134,15 +63,15 @@ namespace EC04Hotbar
                 tslPLCStatus.Text = $"PLC:{(_omrHelper.IsConnect ? "已连接" : "未连接")}";
                 tslPLCStatus.BackColor = _omrHelper.IsConnect ? Color.Green : Color.Red;
             }
-            if (_rfidHelper1 != null)
+            if (_RFIDChannel1 != null)
             {
                 StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.Append($"流道1子RFID:{(_rfidHelper1.channel0_connect ? "已连接" : "未连接")}; ");
-                stringBuilder.Append($"流道1母RFID:{(_rfidHelper1P.channel1_connect ? "已连接" : "未连接")}; ");
-                stringBuilder.Append($"流道2子RFID:{(_rfidHelper2.channel2_connect ? "已连接" : "未连接")}; ");
-                stringBuilder.Append($"流道2母RFID:{(_rfidHelper2P.channel3_connect ? "已连接" : "未连接")}; ");
+                stringBuilder.Append($"流道1子RFID:{(_RFIDChannel1.IsConnect ? "已连接" : "未连接")}; ");
+                stringBuilder.Append($"流道1母RFID:{(_RFIDChannel1P.IsConnect ? "已连接" : "未连接")}; ");
+                stringBuilder.Append($"流道2子RFID:{(_RFIDChannel2 != null && _RFIDChannel2.IsConnect ? "已连接" : "未连接")}; ");
+                stringBuilder.Append($"流道2母RFID:{(_RFIDChannel2P != null && _RFIDChannel2P.IsConnect ? "已连接" : "未连接")}; ");
                 tslRIDFStatus.Text = "RFID：" + stringBuilder.ToString();
-                tslRIDFStatus.BackColor= Color.Green;
+                tslRIDFStatus.BackColor = Color.Green;
             }
             else
             {
@@ -194,6 +123,7 @@ namespace EC04Hotbar
                 return;
             Task.Factory.StartNew(async () =>
             {
+                var fixtureCableBindService = WCFHelper.CreateClient();
                 while (true)
                 {
                     if (_omrHelper.Read("D11") == 1)
@@ -201,9 +131,9 @@ namespace EC04Hotbar
                         LogManager.Info($"读取到启动信号：{{D11:1}}");
                         try
                         {
-
-                            _rfidHelper1.Read(DataContent.SystemConfig.RFIDConfigs[0].Channel);
-                            _rfidHelper1P.Read(DataContent.SystemConfig.RFIDConfigs[1].Channel);
+                            var content = _RFIDChannel1.Read();
+                            var contentP = _RFIDChannel1P.Read();
+                            fixtureCableBindService.FixtureBind(content, contentP);
                         }
                         catch (Exception ex)
                         {
@@ -211,7 +141,6 @@ namespace EC04Hotbar
                         }
                         finally
                         {
-                            await Task.Delay(1000);
                             _omrHelper.Write("D11", 3);
                         }
                     }
@@ -220,6 +149,7 @@ namespace EC04Hotbar
             }, TaskCreationOptions.LongRunning);
             Task.Factory.StartNew(async () =>
             {
+                var fixtureCableBindService = WCFHelper.CreateClient();
                 while (true)
                 {
                     if (_omrHelper.Read("D13") == 1)
@@ -227,9 +157,9 @@ namespace EC04Hotbar
                         LogManager.Info($"读取到启动信号：{{D13:1}}");
                         try
                         {
-
-                            _rfidHelper2.Read(DataContent.SystemConfig.RFIDConfigs[2].Channel);
-                            _rfidHelper2P.Read(DataContent.SystemConfig.RFIDConfigs[3].Channel);
+                            var content = _RFIDChannel2.Read();
+                            var contentP = _RFIDChannel2P.Read();
+                            fixtureCableBindService.FixtureBind(content, contentP);
                         }
                         catch (Exception ex)
                         {
@@ -237,7 +167,6 @@ namespace EC04Hotbar
                         }
                         finally
                         {
-                            await Task.Delay(1000);
                             _omrHelper.Write("D13", 3);
                         }
                     }

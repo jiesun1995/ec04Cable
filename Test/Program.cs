@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
@@ -18,7 +19,7 @@ namespace Test
         {
             LogManager.Init(null);
 
-            TestWCFQueryDt();
+            TestRFID();
             Console.ReadLine();
 
         }
@@ -110,35 +111,82 @@ namespace Test
 
         public static void TestRFID()
         {
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 1; i++)
             {
                 Task.Factory.StartNew(obj =>
                 {
+                    Stopwatch  stopwatch= new Stopwatch();
                     var index=Convert.ToInt32(obj);
-                    RFIDGetway rfidhelper = new RFIDGetway("192.168.1.10", 0);
+                    var rfidhelper = RFIDFactory.Instance("192.168.1.10", index);
+                    
+                    //RFIDGetway rfidhelper = new RFIDGetway("192.168.1.10", index);
                     rfidhelper.SetChannelState(tp =>
                     {
                         if (tp)
                         {
-                            var result = rfidhelper.Read();
-                            Console.WriteLine(result);
+                            Random random = new Random();
+                            for (int j = 0; j < 100; j++)
+                            {
+                                var val = $"ec040000001{random.Next(0, 10000)}";
+                                stopwatch.Restart();
+                                var result = rfidhelper.Wirte(val);
+                                Console.WriteLine($"Wirte: {stopwatch.ElapsedMilliseconds}: {val}；");
+                                if (result)
+                                {
+                                    stopwatch.Restart();
+                                    var content = rfidhelper.Read().Replace("\0", "");
+                                    stopwatch.Stop();
+                                    Console.WriteLine($"Read {stopwatch.ElapsedMilliseconds}: {content}；");
+                                    if (content == val)
+                                    {
+                                        Console.WriteLine("写入读取成功");
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine($"写入读取失败：写入{val},读取{content}；");
+                                    }
+                                }
+                                else
+                                {
+                                    Console.WriteLine($"写入失败:写入{val}；");
+                                }
+                                Thread.Sleep((index+1) * 500);
+                            }
                         }
                     });
                 },i);
             }
-            Task.Factory.StartNew(() =>
-            {
-                RFIDGetway rfidhelper = new RFIDGetway("192.168.1.10", 0);
-                rfidhelper.SetChannelState(tp =>
-                {
-                    if (tp)
-                    {
-                        var result = rfidhelper.Read();
-                        Console.WriteLine(result);
-                    }
-                });
-            });
 
         }
+
+        //public static void TestRFIDHelp()
+        //{
+        //    for (int i = 0; i < 1; i++)
+        //    {
+        //        Task.Factory.StartNew(obj =>
+        //        {
+        //            Stopwatch stopwatch = new Stopwatch();
+        //            var index = Convert.ToInt32(obj);
+        //            RFIDHelper helper = new RFIDHelper("192.168.1.10", index);
+        //            Thread.Sleep(1000);
+        //            helper.ReadCallback += (channel, content) =>
+        //            {
+        //                if(channel== index)
+        //                {
+        //                    stopwatch.Stop();
+        //                    Console.WriteLine($"read {stopwatch.ElapsedMilliseconds} : {content}");
+        //                }
+                        
+        //            };
+        //            for (int j = 0; j < 100; j++)
+        //            {
+        //                stopwatch.Restart();
+        //                helper.Read(index);
+        //                Thread.Sleep(1000);
+        //            }
+        //        },i);
+        //    }
+        //}
+
     }
 }

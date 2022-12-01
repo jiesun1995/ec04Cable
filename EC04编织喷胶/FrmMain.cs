@@ -39,21 +39,11 @@ namespace EC04编织喷胶
             {
                 try
                 {
-                    var rfidHelperFixtrue = new RFIDHelper(DataContent.SystemConfig.RFIDConfigs[i * 2].IP, DataContent.SystemConfig.RFIDConfigs[i * 2].Channel, DataContent.SystemConfig.RFIDConfigs[0].Port);
-                    rfidHelperFixtrue.DataLength_Ch0 = DataContent.SystemConfig.RFIDConfigs[0].DataLength;
-                    rfidHelperFixtrue.StartAddress_Ch0 = DataContent.SystemConfig.RFIDConfigs[0].StartAddress;
+                    var RFIDChannelFixtrue = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[i * 2].IP, DataContent.SystemConfig.RFIDConfigs[i * 2].Channel, DataContent.SystemConfig.RFIDConfigs[i * 2].Port);
+                    var RFIDChannelCable = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[i * 2 + 1].IP, DataContent.SystemConfig.RFIDConfigs[i * 2 + 1].Channel, DataContent.SystemConfig.RFIDConfigs[i * 2 + 1].Port);
 
-                    var rfidHelperCable = new RFIDHelper(DataContent.SystemConfig.RFIDConfigs[i * 2 + 1].IP, DataContent.SystemConfig.RFIDConfigs[i * 2 + 1].Channel, DataContent.SystemConfig.RFIDConfigs[1].Port);
-                    rfidHelperCable.DataLength_Ch1 = DataContent.SystemConfig.RFIDConfigs[1].DataLength;
-                    rfidHelperCable.StartAddress_Ch1 = DataContent.SystemConfig.RFIDConfigs[1].StartAddress;
-
-                    rfidHelperFixtrue.DataLength_Ch2 = DataContent.SystemConfig.RFIDConfigs[2].DataLength;
-                    rfidHelperFixtrue.StartAddress_Ch2 = DataContent.SystemConfig.RFIDConfigs[2].StartAddress;
-                    rfidHelperCable.DataLength_Ch3 = DataContent.SystemConfig.RFIDConfigs[3].DataLength;
-                    rfidHelperCable.StartAddress_Ch3 = DataContent.SystemConfig.RFIDConfigs[3].StartAddress;
                     Form frmcode;
-                    frmcode = new FrmFixture(rfidHelperFixtrue, rfidHelperCable,
-                            DataContent.SystemConfig.RFIDConfigs[i * 2].Channel, DataContent.SystemConfig.RFIDConfigs[i * 2 + 1].Channel,
+                    frmcode = new FrmFixture(RFIDChannelFixtrue, RFIDChannelCable,
                         (fixture, cable) => { return ScannerCodeByPeopleSaveCSV(fixture, new List<string> { cable }); });
                     frmcode.TopLevel = false;
                     frmcode.Dock = DockStyle.Top;
