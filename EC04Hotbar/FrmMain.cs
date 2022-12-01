@@ -63,20 +63,21 @@ namespace EC04Hotbar
                 tslPLCStatus.Text = $"PLC:{(_omrHelper.IsConnect ? "已连接" : "未连接")}";
                 tslPLCStatus.BackColor = _omrHelper.IsConnect ? Color.Green : Color.Red;
             }
-            if (_RFIDChannel1 != null)
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append($"流道1子RFID:{(_RFIDChannel1 != null && _RFIDChannel1.IsConnect ? "已连接" : "未连接")}; ");
+            stringBuilder.Append($"流道1母RFID:{(_RFIDChannel1P != null && _RFIDChannel1P.IsConnect ? "已连接" : "未连接")}; ");
+            stringBuilder.Append($"流道2子RFID:{(_RFIDChannel2 != null && _RFIDChannel2.IsConnect ? "已连接" : "未连接")}; ");
+            stringBuilder.Append($"流道2母RFID:{(_RFIDChannel2P != null && _RFIDChannel2P.IsConnect ? "已连接" : "未连接")}; ");
+            tslRIDFStatus.Text = "RFID：" + stringBuilder.ToString();
+            if(_RFIDChannel1==null || !_RFIDChannel1.IsConnect || _RFIDChannel1P == null || !_RFIDChannel1P.IsConnect
+                || _RFIDChannel2 == null || !_RFIDChannel2.IsConnect || _RFIDChannel2P == null || !_RFIDChannel2P.IsConnect
+                )
             {
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.Append($"流道1子RFID:{(_RFIDChannel1.IsConnect ? "已连接" : "未连接")}; ");
-                stringBuilder.Append($"流道1母RFID:{(_RFIDChannel1P.IsConnect ? "已连接" : "未连接")}; ");
-                stringBuilder.Append($"流道2子RFID:{(_RFIDChannel2 != null && _RFIDChannel2.IsConnect ? "已连接" : "未连接")}; ");
-                stringBuilder.Append($"流道2母RFID:{(_RFIDChannel2P != null && _RFIDChannel2P.IsConnect ? "已连接" : "未连接")}; ");
-                tslRIDFStatus.Text = "RFID：" + stringBuilder.ToString();
-                tslRIDFStatus.BackColor = Color.Green;
+                tslRIDFStatus.BackColor = Color.Red;
             }
             else
             {
-                tslRIDFStatus.Text = "RFID：未连接;";
-                tslRIDFStatus.BackColor = Color.Red;
+                tslRIDFStatus.BackColor = Color.Green;
             }
         }
 

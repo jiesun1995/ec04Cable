@@ -39,18 +39,18 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tslSysTime = new System.Windows.Forms.ToolStripStatusLabel();
             this.tslRunTime = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel5 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tslRIDFStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.tslPLCStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.GroupBox1 = new System.Windows.Forms.GroupBox();
             this.lvLogs = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -159,7 +159,7 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tslSysTime,
             this.tslRunTime,
-            this.toolStripStatusLabel5,
+            this.tslRIDFStatus,
             this.tslPLCStatus});
             this.statusStrip1.Location = new System.Drawing.Point(0, 5);
             this.statusStrip1.Name = "statusStrip1";
@@ -182,12 +182,12 @@
             this.tslRunTime.Size = new System.Drawing.Size(88, 24);
             this.tslRunTime.Text = "软件运行：";
             // 
-            // toolStripStatusLabel5
+            // tslRIDFStatus
             // 
-            this.toolStripStatusLabel5.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
-            this.toolStripStatusLabel5.Name = "toolStripStatusLabel5";
-            this.toolStripStatusLabel5.Size = new System.Drawing.Size(73, 24);
-            this.toolStripStatusLabel5.Text = "扫码器：";
+            this.tslRIDFStatus.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+            this.tslRIDFStatus.Name = "tslRIDFStatus";
+            this.tslRIDFStatus.Size = new System.Drawing.Size(73, 24);
+            this.tslRIDFStatus.Text = "扫码器：";
             // 
             // tslPLCStatus
             // 
@@ -227,6 +227,15 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "运行治具";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Location = new System.Drawing.Point(4, 25);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(905, 470);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "线材溯源";
+            this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // GroupBox1
             // 
@@ -274,15 +283,6 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // tabPage3
-            // 
-            this.tabPage3.Location = new System.Drawing.Point(4, 25);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(905, 470);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "线材溯源";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -315,7 +315,7 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel tslSysTime;
         private System.Windows.Forms.ToolStripStatusLabel tslRunTime;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel5;
+        private System.Windows.Forms.ToolStripStatusLabel tslRIDFStatus;
         private System.Windows.Forms.ToolStripStatusLabel tslPLCStatus;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label label1;

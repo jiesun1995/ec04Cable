@@ -58,6 +58,22 @@ namespace EC04喷胶保压
                 tslPLCStatus.Text = $"PLC:{(_inovanceHelper.IsConnect ? "已连接" : "连接失败")}";
                 tslPLCStatus.BackColor = _inovanceHelper.IsConnect ? Color.Green : Color.Red;
             }
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append($"前段线材RFID:{(_RFIDChannel1 != null && _RFIDChannel1.IsConnect ? "已连接" : "未连接")}; ");
+            stringBuilder.Append($"前段载具RFID:{(_RFIDChannel1P != null && _RFIDChannel1P.IsConnect ? "已连接" : "未连接")}; ");
+            stringBuilder.Append($"后段载具RFID:{(_RFIDChannel2 != null && _RFIDChannel2.IsConnect ? "已连接" : "未连接")}; ");
+            stringBuilder.Append($"后段保压块RFID:{(_RFIDChannel2P != null && _RFIDChannel2P.IsConnect ? "已连接" : "未连接")}; ");
+            tslRIDFStatus.Text = "RFID：" + stringBuilder.ToString();
+            if (_RFIDChannel1 == null || !_RFIDChannel1.IsConnect || _RFIDChannel1P == null || !_RFIDChannel1P.IsConnect
+                || _RFIDChannel2 == null || !_RFIDChannel2.IsConnect || _RFIDChannel2P == null || !_RFIDChannel2P.IsConnect
+                )
+            {
+                tslRIDFStatus.BackColor = Color.Red;
+            }
+            else
+            {
+                tslRIDFStatus.BackColor = Color.Green;
+            }
         }
 
         private void FrmMain_Load(object sender, EventArgs e)
@@ -178,10 +194,10 @@ namespace EC04喷胶保压
             {
                 Common.FrmSetting frmSetting = new Common.FrmSetting((gbxRFID1, gbxRFID2, gbxRFID3, gbxRFID4, gbxStation, gbxPLC, gbxWCF) =>
                 {
-                    gbxRFID1.Text = "线材RFID";
-                    gbxRFID2.Text = "载具RFID";
-                    gbxRFID3.Text = "载具RFID";
-                    gbxRFID4.Text = "保压块RFID";
+                    gbxRFID1.Text = "前段线材RFID";
+                    gbxRFID2.Text = "前段载具RFID";
+                    gbxRFID3.Text = "后段载具RFID";
+                    gbxRFID4.Text = "后段保压块RFID";
                     gbxWCF.Visible = false;
                 });
                 frmSetting.ShowDialog();

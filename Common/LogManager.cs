@@ -105,9 +105,9 @@ namespace Common
                         if (_listView.Items.Count >= 100)
                         {
                             _listView.Items.RemoveAt(0);
+                            _listView.Items[_listView.Items.Count - 1].EnsureVisible();
                         }
                         _listView.EndUpdate();
-                        _listView.Items[_listView.Items.Count - 1].EnsureVisible();
                     });
                 }
                 else
@@ -122,9 +122,10 @@ namespace Common
                     if (_listView.Items.Count >= 100)
                     {
                         _listView.Items.RemoveAt(0);
+                        _listView.Items[_listView.Items.Count - 1].EnsureVisible();
                     }
                     _listView.EndUpdate();
-                    _listView.Items[_listView.Items.Count - 1].EnsureVisible();
+                    
                 }
 
             });
