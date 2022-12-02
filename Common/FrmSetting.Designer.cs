@@ -28,7 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmSetting));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.gbxRFID4 = new System.Windows.Forms.GroupBox();
+            this.gbxRFID3 = new System.Windows.Forms.GroupBox();
+            this.gbxRFID2 = new System.Windows.Forms.GroupBox();
             this.gbxWCF = new System.Windows.Forms.GroupBox();
             this.gbxWCFClient = new System.Windows.Forms.GroupBox();
             this.tbxWCFClinetPort = new System.Windows.Forms.TextBox();
@@ -61,9 +65,6 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.gbxRFID1 = new System.Windows.Forms.GroupBox();
-            this.gbxRFID2 = new System.Windows.Forms.GroupBox();
-            this.gbxRFID3 = new System.Windows.Forms.GroupBox();
-            this.gbxRFID4 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.gbxWCF.SuspendLayout();
             this.gbxWCFClient.SuspendLayout();
@@ -98,6 +99,36 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1337, 726);
             this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // gbxRFID4
+            // 
+            this.gbxRFID4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbxRFID4.Location = new System.Drawing.Point(1005, 3);
+            this.gbxRFID4.Name = "gbxRFID4";
+            this.gbxRFID4.Size = new System.Drawing.Size(329, 266);
+            this.gbxRFID4.TabIndex = 16;
+            this.gbxRFID4.TabStop = false;
+            this.gbxRFID4.Text = "groupBox4";
+            // 
+            // gbxRFID3
+            // 
+            this.gbxRFID3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbxRFID3.Location = new System.Drawing.Point(671, 3);
+            this.gbxRFID3.Name = "gbxRFID3";
+            this.gbxRFID3.Size = new System.Drawing.Size(328, 266);
+            this.gbxRFID3.TabIndex = 15;
+            this.gbxRFID3.TabStop = false;
+            this.gbxRFID3.Text = "groupBox3";
+            // 
+            // gbxRFID2
+            // 
+            this.gbxRFID2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbxRFID2.Location = new System.Drawing.Point(337, 3);
+            this.gbxRFID2.Name = "gbxRFID2";
+            this.gbxRFID2.Size = new System.Drawing.Size(328, 266);
+            this.gbxRFID2.TabIndex = 14;
+            this.gbxRFID2.TabStop = false;
+            this.gbxRFID2.Text = "groupBox2";
             // 
             // gbxWCF
             // 
@@ -414,42 +445,13 @@
             this.gbxRFID1.TabStop = false;
             this.gbxRFID1.Text = "groupBox1";
             // 
-            // gbxRFID2
-            // 
-            this.gbxRFID2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbxRFID2.Location = new System.Drawing.Point(337, 3);
-            this.gbxRFID2.Name = "gbxRFID2";
-            this.gbxRFID2.Size = new System.Drawing.Size(328, 266);
-            this.gbxRFID2.TabIndex = 14;
-            this.gbxRFID2.TabStop = false;
-            this.gbxRFID2.Text = "groupBox2";
-            // 
-            // gbxRFID3
-            // 
-            this.gbxRFID3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbxRFID3.Location = new System.Drawing.Point(671, 3);
-            this.gbxRFID3.Name = "gbxRFID3";
-            this.gbxRFID3.Size = new System.Drawing.Size(328, 266);
-            this.gbxRFID3.TabIndex = 15;
-            this.gbxRFID3.TabStop = false;
-            this.gbxRFID3.Text = "groupBox3";
-            // 
-            // gbxRFID4
-            // 
-            this.gbxRFID4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbxRFID4.Location = new System.Drawing.Point(1005, 3);
-            this.gbxRFID4.Name = "gbxRFID4";
-            this.gbxRFID4.Size = new System.Drawing.Size(329, 266);
-            this.gbxRFID4.TabIndex = 16;
-            this.gbxRFID4.TabStop = false;
-            this.gbxRFID4.Text = "groupBox4";
-            // 
             // FrmSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1337, 726);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmSetting";
             this.Text = "配置设置";
             this.Load += new System.EventHandler(this.FrmSetting_Load);
