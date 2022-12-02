@@ -23,8 +23,8 @@ namespace Common
             tbxIP1.Text = _config.IP;
             tbxChannel1.Text = _config.Channel.ToString();
             tbxPort1.Text = _config.Port.ToString();
-            tbxDataLength1.Text = _config.DataLength.ToString();
-            tbxStartAddress1.Text = _config.StartAddress.ToString();
+            //tbxDataLength1.Text = _config.DataLength.ToString();
+            //tbxStartAddress1.Text = _config.StartAddress.ToString();
         }
 
         private void btnTestConnect_Click(object sender, EventArgs e)
@@ -37,12 +37,12 @@ namespace Common
                     var ip = tbxIP1.Text;
                     var channel = ValidateDataByInt(tbxChannel1.Text, "通道不能设置为非数字");
                     var port = ValidateDataByInt(tbxPort1.Text, "端口不能设置为非数字");
-                    var dataLength = ValidateDataByInt(tbxDataLength1.Text, "内容长度不能设置为非数字");
-                    var startAddress = ValidateDataByInt(tbxStartAddress1.Text, "地址不能设置为非数字");
+                    //var dataLength = ValidateDataByInt(tbxDataLength1.Text, "内容长度不能设置为非数字");
+                    //var startAddress = ValidateDataByInt(tbxStartAddress1.Text, "地址不能设置为非数字");
 
                     rfidHelper = new RFIDHelper(ip, channel, port);
-                    rfidHelper.DataLength_Ch0 = dataLength;
-                    rfidHelper.StartAddress_Ch0 = startAddress;
+                    //rfidHelper.DataLength_Ch0 = dataLength;
+                    //rfidHelper.StartAddress_Ch0 = startAddress;
                     rfidHelper.ReadCallback = (channelId, Content) =>
                     {
                         if (channelId == channel)
@@ -86,15 +86,15 @@ namespace Common
             var ip = tbxIP1.Text;
             var channel = ValidateDataByInt(tbxChannel1.Text, "通道不能设置为非数字");
             var port = ValidateDataByInt(tbxPort1.Text, "端口不能设置为非数字");
-            var dataLength = ValidateDataByInt(tbxDataLength1.Text, "内容长度不能设置为非数字");
-            var startAddress = ValidateDataByInt(tbxStartAddress1.Text, "地址不能设置为非数字");
+            //var dataLength = ValidateDataByInt(tbxDataLength1.Text, "内容长度不能设置为非数字");
+            //var startAddress = ValidateDataByInt(tbxStartAddress1.Text, "地址不能设置为非数字");
             var config = new RFIDConfig
             {
                 IP = ip,
                 Port = port,
                 Channel = channel,
-                DataLength = dataLength,
-                StartAddress = startAddress
+                //DataLength = dataLength,
+                //StartAddress = startAddress
 
             };
             return config;
