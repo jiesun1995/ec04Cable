@@ -25,9 +25,8 @@ namespace Common
                     }
                     Task.Delay(1000).Wait();
                 }
-            });
+            },TaskCreationOptions.LongRunning);
         }
-
         private static ServiceHost BindServer()
         {
             CableSqliteDal.CreateTable();
