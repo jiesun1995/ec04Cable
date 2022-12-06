@@ -23,8 +23,11 @@ namespace EC0401前处理
             bool running = true;
             try
             {
+
                 running = !mutex.WaitOne(0, false);            //这一句有可能会报错，所以要Try起来
+                LogManager.Debug("开始加载配置");
                 DataContent.LoadConfig();
+                LogManager.Debug("加载配置完成");
             }
             catch (Exception ex)
             { 

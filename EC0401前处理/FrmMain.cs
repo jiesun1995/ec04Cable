@@ -101,7 +101,6 @@ namespace EC0401前处理
                     btnLogin.Text = "退出权限";
                 }
             }
-            
         }
     }
 }

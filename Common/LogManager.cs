@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace Common
     {
         private static log4net.ILog _log;
         private static ListView _listView;
+        private static ConcurrentQueue<Tuple<string,Color>> _queue = new ConcurrentQueue<Tuple<string, Color>>();
         /// <summary>
         /// 日志框架初始化
         /// </summary>
@@ -36,6 +38,26 @@ namespace Common
                 _listView.Columns.Add(new ColumnHeader() { Width = 0});
                 _listView.Columns.Add(col);
                 _listView.Columns.Add(col1);
+
+                for (int i = _queue.Count; i > 0; i--)
+                {
+                    if (_queue.TryDequeue(out var val))
+                    {
+                        _listView.BeginUpdate();
+                        ListViewItem listViewItem = new ListViewItem();
+                        listViewItem.SubItems.Add(DateTime.Now.ToString("HH:mm:ss"));
+                        listViewItem.SubItems.Add(val.Item1);
+                        listViewItem.BackColor = val.Item2;
+                        _listView.Items.Add(listViewItem);
+
+                        if (_listView.Items.Count >= 100)
+                        {
+                            _listView.Items.RemoveAt(0);
+                            _listView.Items[_listView.Items.Count - 1].EnsureVisible();
+                        }
+                        _listView.EndUpdate();
+                    }
+                }
             }
         }
         /// <summary>
@@ -87,19 +109,23 @@ namespace Common
 
         private static void UIShow(string message, Color color)
         {
+            _queue.Enqueue(new Tuple<string, Color>(message, color));
             if (_listView == null)
                 return;
+           
             var task = Task.Factory.StartNew(() =>
             {
-                if (_listView.IsHandleCreated)
+                if (_queue.Count <= 0)
+                    return;
+                if(_queue.TryDequeue(out var val))
                 {
                     _listView.Invoke((EventHandler)delegate
                     {
                         _listView.BeginUpdate();
                         ListViewItem listViewItem = new ListViewItem();
                         listViewItem.SubItems.Add(DateTime.Now.ToString("HH:mm:ss"));
-                        listViewItem.SubItems.Add(message);
-                        listViewItem.BackColor = color;
+                        listViewItem.SubItems.Add(val.Item1);
+                        listViewItem.BackColor = val.Item2;
                         _listView.Items.Add(listViewItem);
 
                         if (_listView.Items.Count >= 100)
@@ -110,24 +136,6 @@ namespace Common
                         _listView.EndUpdate();
                     });
                 }
-                else
-                {
-                    _listView.BeginUpdate();
-                    ListViewItem listViewItem = new ListViewItem();
-                    listViewItem.SubItems.Add(DateTime.Now.ToString("HH:mm:ss"));
-                    listViewItem.SubItems.Add(message);
-                    listViewItem.BackColor = color;
-                    _listView.Items.Add(listViewItem);
-
-                    if (_listView.Items.Count >= 100)
-                    {
-                        _listView.Items.RemoveAt(0);
-                        _listView.Items[_listView.Items.Count - 1].EnsureVisible();
-                    }
-                    _listView.EndUpdate();
-                    
-                }
-
             });
             //task.Wait();
         }
