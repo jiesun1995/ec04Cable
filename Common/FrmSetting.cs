@@ -60,10 +60,6 @@ namespace Common
             gbxRFID4.Controls.Add(_frmRFIDSetting3);
             _frmRFIDSetting3.Show();
 
-            tbxCSVPath.Text = _systemConfig.CSVPath;
-            tbxModel.Text = _systemConfig.Model;
-            tbxFixtureId.Text = _systemConfig.FixtureID;
-            tbxTestStation.Text = _systemConfig.TestStation;
             tbxPLCIp.Text = _systemConfig.PLCIp;
             tbxPLCPort.Text = _systemConfig.PLCPort.ToString();
 
@@ -71,7 +67,15 @@ namespace Common
             tbxWCFServerPort.Text = _systemConfig.WCFSeverPort.ToString();
             tbxWCFClinetIP.Text = _systemConfig.WCFClinetIp.ToString();
             tbxWCFClinetPort.Text = _systemConfig.WCFClinetPort.ToString();
+
+            tbxCSVPath.Text = _systemConfig.CSVPath;
+            tbxModel.Text = _systemConfig.Model;
+            tbxFixtureId.Text = _systemConfig.FixtureID;
+            tbxTestStation.Text = _systemConfig.TestStation;
             nudScannerCode.Value = _systemConfig.ScannerCode;
+            tbxConfirmStation.Text = _systemConfig.ConfirmStation;
+            tbxMesUrl.Text = _systemConfig.MESUrl;
+
             ChangeScannerCode();
 
         }
@@ -104,6 +108,8 @@ namespace Common
                 systemConfig.FixtureID = tbxFixtureId.Text;
                 systemConfig.TestStation = tbxTestStation.Text;
                 systemConfig.ScannerCode = Convert.ToInt32(nudScannerCode.Value);
+                systemConfig.ConfirmStation = tbxConfirmStation.Text;
+                systemConfig.MESUrl = tbxMesUrl.Text;
 
                 systemConfig.PLCIp = tbxPLCIp.Text;
                 systemConfig.PLCPort = ValidateDataByInt(tbxPLCPort.Text, "端口号不能为字符");

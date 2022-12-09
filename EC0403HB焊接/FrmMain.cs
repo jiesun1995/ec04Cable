@@ -91,7 +91,8 @@ namespace EC0403HB焊接
             for (int i = 0; i < DataContent.SystemConfig.ScannerCode; i++)
             {
                 Form frmcode;
-                frmcode = new FrmFixture((fixture, cable1, cable2) => ScannerCodeByPeople(fixture, new List<string> { cable1, cable2 }));
+                MesService mesService=new MesService();
+                frmcode = new FrmFixture((fixture, cable1, cable2) => ScannerCodeByPeople(fixture, new List<string> { cable1, cable2 }), mesService);
                 frmcode.TopLevel = false;
                 frmcode.Dock = DockStyle.Top;
                 frmcode.Width = tabPage1.Width;
@@ -198,7 +199,7 @@ namespace EC0403HB焊接
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (DataContent.User == "管理员")
+            if (!string.IsNullOrEmpty(DataContent.User))
             {
                 FrmSetting frmSetting = new FrmSetting((gbxRFID1, gbxRFID2, gbxRFID3, gbxRFID4, gbxStation, gbxPLC, gbxWCF) =>
                 {
@@ -226,7 +227,7 @@ namespace EC0403HB焊接
             {
                 FrmLogin frmLogin = new FrmLogin();
                 frmLogin.ShowDialog();
-                if (DataContent.User == "管理员")
+                if (!string.IsNullOrEmpty(DataContent.User))
                 {
                     btnLogin.Text = "退出权限";
                 }

@@ -15,11 +15,13 @@ namespace EC0401前处理
     public partial class FrmMain : Form
     {
         private Stopwatch _stopwatch ;
+        private Stopwatch _resetStopwatch;
         private static int _peopleScannerCodeCount = 1;
         public FrmMain()
         {
             _stopwatch = new Stopwatch();
             _stopwatch.Start();
+            _resetStopwatch=new Stopwatch();
             InitializeComponent();
             timer1.Start();
             LogManager.Init(lvLogs);
@@ -29,6 +31,13 @@ namespace EC0401前处理
         {
             tslSysTime.Text = $"系统时间:{DateTime.Now.ToString("yyyyMMdd HH:mm:ss")}";
             tslRunTime.Text = $"运行时间:{_stopwatch.Elapsed}";
+
+            if (tabControl1.TabPages.Count > 1 && _resetStopwatch.Elapsed >= TimeSpan.FromMinutes(10))
+            {
+                tabControl1.TabPages.RemoveAt(1);
+                _resetStopwatch.Stop();
+            }
+
         }
 
         private void FrmMain_Load(object sender, EventArgs e)
@@ -43,7 +52,7 @@ namespace EC0401前处理
                     Form frmcode;
                     var mesService = new MesService();
                     var channel = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[i].IP, DataContent.SystemConfig.RFIDConfigs[i].Channel, (ushort)DataContent.SystemConfig.RFIDConfigs[i].Port);
-                    frmcode = new FrmRFIDInputCable(DataContent.SystemConfig.RFIDConfigs[i].Channel, channel, mesService);
+                    frmcode = new FrmRFIDInputCable(channel, mesService);
 
                     frmcode.TopLevel = false;
                     frmcode.Dock = DockStyle.Top;
@@ -65,7 +74,7 @@ namespace EC0401前处理
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            if (DataContent.User == "管理员")
+            if (!string.IsNullOrEmpty(DataContent.User))
             {
                 Common.FrmSetting frmSetting = new Common.FrmSetting((gbxRFID1, gbxRFID2, gbxRFID3, gbxRFID4, gbxStation, gbxPLC, gbxWCF) =>
                 {
@@ -73,7 +82,7 @@ namespace EC0401前处理
                     gbxRFID2.Visible= false;
                     gbxRFID3.Visible= false;
                     gbxRFID4.Visible= false;
-                    gbxStation.Visible= false;
+                    gbxStation.Visible= true;
                     gbxPLC.Visible= false;
                     gbxWCF.Visible= false;
                 });
@@ -91,14 +100,36 @@ namespace EC0401前处理
             {
                 DataContent.User = string.Empty;
                 btnLogin.Text = "权限登陆";
+                if (tabControl1.TabPages.Count > 1)
+                {
+                    tabControl1.TabPages.RemoveAt(1);
+                }
             }
             else
             {
                 FrmLogin frmLogin = new FrmLogin();
                 frmLogin.ShowDialog();
-                if (DataContent.User == "管理员")
+                if (!string.IsNullOrEmpty(DataContent.User))
                 {
                     btnLogin.Text = "退出权限";
+                }
+                if (DataContent.User == "管理员")
+                {
+                    Form frmcode;
+                    var mesService = new MesService();
+                    var channel = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[0].IP, DataContent.SystemConfig.RFIDConfigs[0].Channel, (ushort)DataContent.SystemConfig.RFIDConfigs[0].Port);
+                    frmcode = new FrmResetRFID(channel, mesService, () => _resetStopwatch.Restart());
+
+                    frmcode.TopLevel = false;
+                    frmcode.Dock = DockStyle.Fill;
+                    frmcode.FormBorderStyle = FormBorderStyle.None;
+                    
+                    TabPage tabPage=new TabPage();
+                    tabPage.Text = "RFID重置";
+                    tabPage.Controls.Add(frmcode);
+                    frmcode.Show();
+                    tabControl1.TabPages.Add(tabPage);
+                    _resetStopwatch.Restart();
                 }
             }
         }

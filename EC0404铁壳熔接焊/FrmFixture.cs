@@ -21,12 +21,14 @@ namespace EC0404铁壳熔接焊
         private string _codeFixtrueR = string.Empty;
         private string _codeCable = string.Empty;
 
+        private readonly MesService _mesService;
         private readonly RFIDChannel _RFIDChannelL;
         private readonly RFIDChannel _RFIDChannelR;
         private readonly RFIDChannel _RFIDChannelCable;
 
-        public FrmFixture(RFIDChannel RFIDChannelL, RFIDChannel RFIDChannelR, RFIDChannel RFIDChannelCable, Func<string, string, string, bool> codeCallBack)
+        public FrmFixture(RFIDChannel RFIDChannelL, RFIDChannel RFIDChannelR, RFIDChannel RFIDChannelCable, MesService mesService, Func<string, string, string, bool> codeCallBack)
         {
+            _mesService = mesService;
             _codeCallBack = codeCallBack;
             InitializeComponent();
             _RFIDChannelL = RFIDChannelL;
@@ -43,7 +45,7 @@ namespace EC0404铁壳熔接焊
                     {
                         tbxFixtureL.BackColor = System.Drawing.Color.Yellow;
                         var content = _RFIDChannelL.Read();
-                        LogManager.Info($"读取电子标签:{content};");
+                        LogManager.Info($"读取左治具:{content};");
                         if (_codeFixtrueL == content)
                         {
                             tbxFixtureL.BackColor = System.Drawing.Color.Green;
@@ -70,7 +72,7 @@ namespace EC0404铁壳熔接焊
                     {
                         tbxFixtureR.BackColor = System.Drawing.Color.Yellow;
                         var content = _RFIDChannelR.Read();
-                        LogManager.Info($"读取电子标签:{content};");
+                        LogManager.Info($"读取右治具:{content};");
                         if (_codeFixtrueR == content)
                         {
                             tbxFixtureR.BackColor = System.Drawing.Color.Green;
@@ -95,17 +97,26 @@ namespace EC0404铁壳熔接焊
                 {
                     if (state)
                     {
+                        var result = false;
                         tbxCable.BackColor = System.Drawing.Color.Yellow;
                         var content = _RFIDChannelCable.Read();
-                        LogManager.Info($"读取电子标签:{content};");
+                        LogManager.Info($"读取线材:{content};");
+                        try
+                        {
+                            result = _mesService.GetCurrStation(content) == DataContent.SystemConfig.ConfirmStation;
+                        }
+                        catch (Exception ex)
+                        {
+                            LogManager.Error(ex);
+                        }
                         if (_codeCable == content)
                         {
-                            tbxCable.BackColor = System.Drawing.Color.Green;
+                            tbxCable.BackColor = result ? System.Drawing.Color.Green : Color.Yellow;
                         }
                         else
                         {
                             tbxCable.Text = content;
-                            tbxCable.BackColor = System.Drawing.Color.Green;
+                            tbxCable.BackColor = result ? System.Drawing.Color.Green : Color.Yellow;
                             _codeCable = content;
                         }
                         SaveData();

@@ -39,6 +39,7 @@ namespace Common
             try
             {
                 _cableSqliteDal.AddHistroy(fixture, fixturePat);
+                LogManager.Info($"进行治具绑定：【{fixture}:{fixturePat}】");
             }
             catch (Exception ex)
             {
@@ -54,6 +55,7 @@ namespace Common
             try
             {
                 _cableSqliteDal.AddCable(cables);
+                LogManager.Info($"进行数据绑定：{JsonHelper.SerializeObject(cables)}" );
             }
             catch (Exception ex)
             {

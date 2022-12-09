@@ -93,7 +93,7 @@ namespace EC0405编织喷胶
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (DataContent.User == "管理员")
+            if (!string.IsNullOrEmpty(DataContent.User))
             {
                 Common.FrmSetting frmSetting = new Common.FrmSetting((gbxRFID1, gbxRFID2, gbxRFID3, gbxRFID4, gbxStation, gbxPLC, gbxWCF) =>
                 {
@@ -123,7 +123,7 @@ namespace EC0405编织喷胶
             {
                 FrmLogin frmLogin = new FrmLogin();
                 frmLogin.ShowDialog();
-                if (DataContent.User == "管理员")
+                if (!string.IsNullOrEmpty(DataContent.User))
                 {
                     btnLogin.Text = "退出权限";
                 }

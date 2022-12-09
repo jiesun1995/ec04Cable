@@ -21,9 +21,11 @@ namespace EC0405编织喷胶
         private readonly RFIDChannel _RFIDChannelR;
         private string _codeFixtrue = string.Empty;
         private string _codeCable = string.Empty;
+        private readonly MesService _mesService;
 
-        public FrmFixture(RFIDChannel RFIDChannelL, RFIDChannel RFIDChannelR, Func<string, string, bool>  codeCallBack)
+        public FrmFixture(RFIDChannel RFIDChannelL, RFIDChannel RFIDChannelR, MesService mesService, Func<string, string, bool>  codeCallBack)
         {
+            _mesService = mesService;
             _codeCallBack = codeCallBack;
             InitializeComponent();
             _RFIDChannelL = RFIDChannelL;
@@ -39,7 +41,7 @@ namespace EC0405编织喷胶
                     {
                         tbxFixture.BackColor = System.Drawing.Color.Yellow;
                         var content = _RFIDChannelL.Read();
-                        LogManager.Info($"读取电子标签:{content};");
+                        LogManager.Info($"读取治具:{content};");
                         if (_codeFixtrue == content)
                         {
                             tbxFixture.BackColor = System.Drawing.Color.Green;
@@ -65,17 +67,26 @@ namespace EC0405编织喷胶
                 {
                     if (state)
                     {
+                        var result = false;
                         tbxCable.BackColor = System.Drawing.Color.Yellow;
                         var content = _RFIDChannelR.Read();
-                        LogManager.Info($"读取电子标签:{content};");
+                        LogManager.Info($"读取线材:{content};");
+                        try
+                        {
+                            result = _mesService.GetCurrStation(content) == DataContent.SystemConfig.ConfirmStation;
+                        }
+                        catch (Exception ex)
+                        {
+                            LogManager.Error(ex);
+                        }
                         if (_codeCable == content)
                         {
-                            tbxCable.BackColor = System.Drawing.Color.Green;
+                            tbxCable.BackColor = result ? System.Drawing.Color.Green : Color.Yellow;
                         }
                         else
                         {
                             tbxCable.Text = content;
-                            tbxCable.BackColor = System.Drawing.Color.Green;
+                            tbxCable.BackColor = result ? System.Drawing.Color.Green : Color.Yellow;
                             _codeCable = content;
                         }
                         SaveData();

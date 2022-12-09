@@ -4,10 +4,13 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.ServiceModel;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -18,8 +21,25 @@ namespace Test
         static void Main(string[] args)
         {
             LogManager.Init(null);
+            string data = @"0 SFC_OK
 
-            TestRFID();
+Get_CurrStation=P107_FATP_Puck AOI";
+
+            var  ss= data.Split('\n');
+            foreach (var s in ss)
+            {
+                var start = "Get_CurrStation=";
+                var startIndex= s.IndexOf(start);
+                if (startIndex >= 0)
+                {
+                    var result = s.Substring(startIndex + start.Length, s.Length - (startIndex + start.Length));
+                }
+            }
+            
+
+
+
+            TestHttp();
             Console.ReadLine();
 
         }
@@ -75,7 +95,6 @@ namespace Test
                                 list.Add(cable);
                                 kvs.Add(fix, string.Empty);
                                 fixtures.Enqueue(fixture);
-
                             }
                             else
                             {
@@ -108,7 +127,6 @@ namespace Test
                 }
             }, cancellationToken);
         }
-
         public static void TestRFID()
         {
             for (int i = 0; i < 1; i++)
@@ -157,6 +175,18 @@ namespace Test
                 },i);
             }
 
+        }
+        public static void TestHttp()
+        {
+            Dictionary<string,string> dict = new Dictionary<string,string>();
+            dict.Add("c", "QUERY_HISTORY");
+            dict.Add("sn", "FTL2505074F0KWTA8");
+            dict.Add("p", "Get_CurrStation");
+            HttpContent httpContent = new FormUrlEncodedContent(dict);
+            httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
+            httpContent.Headers.ContentType.CharSet = "UTF-8";
+            HttpClient httpClient=new HttpClient();
+            var result = httpClient.PostAsync("http://192.168.16.30/Bobcat/sfc_response.aspx", httpContent).Result.Content.ReadAsStringAsync().Result;
         }
 
         //public static void TestRFIDHelp()

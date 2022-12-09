@@ -26,16 +26,33 @@ namespace Common
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            if (tbxPassword.Text == DataContent.SystemConfig.PassWord)
+            if (cbxType.SelectedIndex == 1)
             {
-                DataContent.User = "管理员";
-                this.Close();
+                if (tbxPassword.Text == DataContent.SystemConfig.SystemPassWord)
+                {
+                    DataContent.User = "管理员";
+                    this.Close();
+                }
+                else
+                {
+                    lblTip.Text = "输入密码有误";
+                    lblTip.ForeColor = Color.Red;
+                }
             }
             else
             {
-                lblTip.Text = "输入密码有误";
-                lblTip.ForeColor = Color.Red;
+                if (tbxPassword.Text == DataContent.SystemConfig.PassWord)
+                {
+                    DataContent.User = "操作员";
+                    this.Close();
+                }
+                else
+                {
+                    lblTip.Text = "输入密码有误";
+                    lblTip.ForeColor = Color.Red;
+                }
             }
+            
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -51,21 +68,43 @@ namespace Common
                 lblUpdateTip.ForeColor = Color.Red;
                 return;
             }
-            if (tbxOldPassword.Text == DataContent.SystemConfig.PassWord)
+            if (cbxUpdateType.SelectedIndex == 1)
             {
-                if (tbxNewPassword.Text == tbxConfigPassword.Text)
+                if(tbxOldPassword.Text == DataContent.SystemConfig.SystemPassWord)
                 {
-                    DataContent.SystemConfig.PassWord= tbxNewPassword.Text;
-                    DataContent.SetConfig(DataContent.SystemConfig);
-                    lblUpdateTip.Text= "修改成功";
-                    lblUpdateTip.ForeColor = Color.Green;
+                    if (tbxNewPassword.Text == tbxConfigPassword.Text)
+                    {
+                        DataContent.SystemConfig.SystemPassWord = tbxNewPassword.Text;
+                        DataContent.SetConfig(DataContent.SystemConfig);
+                        lblUpdateTip.Text = "修改成功";
+                        lblUpdateTip.ForeColor = Color.Green;
+                    }
+                }
+                else
+                {
+                    lblUpdateTip.Text = "输入密码有误";
+                    lblUpdateTip.ForeColor = Color.Red;
                 }
             }
             else
             {
-                lblUpdateTip.Text = "输入密码有误";
-                lblUpdateTip.ForeColor = Color.Red;
+                if (tbxOldPassword.Text == DataContent.SystemConfig.PassWord)
+                {
+                    if (tbxNewPassword.Text == tbxConfigPassword.Text)
+                    {
+                        DataContent.SystemConfig.PassWord = tbxNewPassword.Text;
+                        DataContent.SetConfig(DataContent.SystemConfig);
+                        lblUpdateTip.Text = "修改成功";
+                        lblUpdateTip.ForeColor = Color.Green;
+                    }
+                }
+                else
+                {
+                    lblUpdateTip.Text = "输入密码有误";
+                    lblUpdateTip.ForeColor = Color.Red;
+                }
             }
+            
         }
 
         private void FrmLogin_Activated(object sender, EventArgs e)

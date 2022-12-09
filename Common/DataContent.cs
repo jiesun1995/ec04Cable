@@ -53,8 +53,11 @@ namespace Common
         public string FixtureID { get; set; }
         public string TestStation { get; set; }
         public string PassWord { get; set; } = "888888";
+        public string SystemPassWord { get; set; } = "jajqr168";
 
         public int ScannerCode { set; get; } = 1;
+        public string ConfirmStation { set; get; }
+        public string MESUrl { set; get; } = "http://192.168.16.30/Bobcat/sfc_response.aspx";
 
         public string PLCIp { get; set; }
         public int PLCPort { get; set; }

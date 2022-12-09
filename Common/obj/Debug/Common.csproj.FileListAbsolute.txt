@@ -27,3 +27,4 @@ D:\work\ec04\EC04\Common\obj\Debug\Common.csproj.CoreCompileInputs.cache
 D:\work\ec04\EC04\Common\obj\Debug\Common.csproj.CopyComplete
 D:\work\ec04\EC04\Common\obj\Debug\Common.dll
 D:\work\ec04\EC04\Common\obj\Debug\Common.pdb
+D:\work\ec04\EC04\Common\obj\Debug\Common.FrmResetRFID.resources

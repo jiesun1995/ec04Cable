@@ -21,8 +21,10 @@ namespace EC0406喷胶保压
         private readonly RFIDChannel _RFIDChannel1P;
         private readonly RFIDChannel _RFIDChannel2;
         private readonly RFIDChannel _RFIDChannel2P;
-        public FrmMain()
+        private readonly MesService _mesService;
+        public FrmMain(MesService mesService)
         {
+            _mesService=mesService;
             _stopwatch = new Stopwatch();
             _stopwatch.Start();
             InitializeComponent();
@@ -109,6 +111,11 @@ namespace EC0406喷胶保压
                         {
                             var sn = _RFIDChannel1.Read();
                             var fixture = _RFIDChannel1P.Read();
+                            var snStation = _mesService.GetCurrStation(sn);
+                            if (_mesService.GetCurrStation(sn) == DataContent.SystemConfig.ConfirmStation)
+                                LogManager.Info($"读取到线材线材：{sn}");
+                            else
+                                LogManager.Warn($"读取到线材：{sn}，但站点不符：{snStation}");
                             if (!string.IsNullOrEmpty(sn) && !string.IsNullOrEmpty(fixture))
                             {
                                 var cable = new Cable
@@ -190,7 +197,7 @@ namespace EC0406喷胶保压
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (DataContent.User == "管理员")
+            if (!string.IsNullOrEmpty(DataContent.User))
             {
                 Common.FrmSetting frmSetting = new Common.FrmSetting((gbxRFID1, gbxRFID2, gbxRFID3, gbxRFID4, gbxStation, gbxPLC, gbxWCF) =>
                 {
@@ -219,7 +226,7 @@ namespace EC0406喷胶保压
             {
                 FrmLogin frmLogin = new FrmLogin();
                 frmLogin.ShowDialog();
-                if (DataContent.User == "管理员")
+                if (!string.IsNullOrEmpty(DataContent.User))
                 {
                     btnLogin.Text = "退出权限";
                 }

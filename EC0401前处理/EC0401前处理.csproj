@@ -63,7 +63,6 @@
     <Compile Include="FrmRFIDInputCable.Designer.cs">
       <DependentUpon>FrmRFIDInputCable.cs</DependentUpon>
     </Compile>
-    <Compile Include="MesService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FrmMain.resx">

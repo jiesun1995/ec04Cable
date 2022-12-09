@@ -80,7 +80,7 @@
             this.tbxCable2.Name = "tbxCable2";
             this.tbxCable2.Size = new System.Drawing.Size(939, 34);
             this.tbxCable2.TabIndex = 6;
-            this.tbxCable2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbxCable2_KeyDown);
+            this.tbxCable2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SaveData);
             // 
             // label3
             // 
@@ -101,7 +101,7 @@
             this.tbxCable1.Name = "tbxCable1";
             this.tbxCable1.Size = new System.Drawing.Size(939, 34);
             this.tbxCable1.TabIndex = 3;
-            this.tbxCable1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbxCable1_KeyDown);
+            this.tbxCable1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SaveData);
             // 
             // label2
             // 
@@ -133,7 +133,7 @@
             this.tbxFixture.Name = "tbxFixture";
             this.tbxFixture.Size = new System.Drawing.Size(939, 34);
             this.tbxFixture.TabIndex = 1;
-            this.tbxFixture.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbxFixture_KeyDown);
+            this.tbxFixture.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SaveData);
             // 
             // FrmFixture
             // 

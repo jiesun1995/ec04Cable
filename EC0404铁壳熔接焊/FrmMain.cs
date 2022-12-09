@@ -62,8 +62,9 @@ namespace EC0404铁壳熔接焊
                     _RFIDChannelL = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[0].IP, DataContent.SystemConfig.RFIDConfigs[0].Channel, DataContent.SystemConfig.RFIDConfigs[0].Port);
                     _RFIDChannelR = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[1].IP, DataContent.SystemConfig.RFIDConfigs[1].Channel, DataContent.SystemConfig.RFIDConfigs[1].Port);
                     _RFIDChannelCable = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[2].IP, DataContent.SystemConfig.RFIDConfigs[2].Channel, DataContent.SystemConfig.RFIDConfigs[2].Port);
+                    MesService mesService = new MesService();
                     Form frmcode;
-                    frmcode = new FrmFixture(_RFIDChannelL, _RFIDChannelR, _RFIDChannelCable,
+                    frmcode = new FrmFixture(_RFIDChannelL, _RFIDChannelR, _RFIDChannelCable, mesService,
                         (fixtureL, fixtureR, cable) => ScannerCodeByPeopleSaveCSV(fixtureL, fixtureR, cable));
                     frmcode.TopLevel = false;
                     frmcode.Dock = DockStyle.Top;
@@ -112,7 +113,7 @@ namespace EC0404铁壳熔接焊
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (DataContent.User == "管理员")
+            if (!string.IsNullOrEmpty(DataContent.User))
             {
                 Common.FrmSetting frmSetting = new Common.FrmSetting((gbxRFID1, gbxRFID2, gbxRFID3, gbxRFID4, gbxStation, gbxPLC, gbxWCF) =>
                 {
@@ -142,7 +143,7 @@ namespace EC0404铁壳熔接焊
             {
                 FrmLogin frmLogin = new FrmLogin();
                 frmLogin.ShowDialog();
-                if (DataContent.User == "管理员")
+                if (!string.IsNullOrEmpty(DataContent.User))
                 {
                     btnLogin.Text = "退出权限";
                 }

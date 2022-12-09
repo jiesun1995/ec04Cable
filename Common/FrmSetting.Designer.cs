@@ -65,6 +65,10 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.gbxRFID1 = new System.Windows.Forms.GroupBox();
+            this.tbxConfirmStation = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.tbxMesUrl = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.gbxWCF.SuspendLayout();
             this.gbxWCFClient.SuspendLayout();
@@ -282,6 +286,10 @@
             // 
             // gbxStation
             // 
+            this.gbxStation.Controls.Add(this.tbxMesUrl);
+            this.gbxStation.Controls.Add(this.label2);
+            this.gbxStation.Controls.Add(this.tbxConfirmStation);
+            this.gbxStation.Controls.Add(this.label1);
             this.gbxStation.Controls.Add(this.label31);
             this.gbxStation.Controls.Add(this.nudScannerCode);
             this.gbxStation.Controls.Add(this.label30);
@@ -304,17 +312,17 @@
             // label31
             // 
             this.label31.AutoSize = true;
-            this.label31.Font = new System.Drawing.Font("宋体", 6F);
+            this.label31.Font = new System.Drawing.Font("宋体", 7F);
             this.label31.ForeColor = System.Drawing.Color.Brown;
-            this.label31.Location = new System.Drawing.Point(135, 251);
+            this.label31.Location = new System.Drawing.Point(135, 354);
             this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(150, 10);
+            this.label31.Size = new System.Drawing.Size(179, 12);
             this.label31.TabIndex = 20;
             this.label31.Text = "为0时代表服务端，监控流道信号";
             // 
             // nudScannerCode
             // 
-            this.nudScannerCode.Location = new System.Drawing.Point(138, 207);
+            this.nudScannerCode.Location = new System.Drawing.Point(138, 310);
             this.nudScannerCode.Maximum = new decimal(new int[] {
             4,
             0,
@@ -333,7 +341,7 @@
             // label30
             // 
             this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(9, 209);
+            this.label30.Location = new System.Drawing.Point(9, 312);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(97, 15);
             this.label30.TabIndex = 18;
@@ -445,6 +453,38 @@
             this.gbxRFID1.TabStop = false;
             this.gbxRFID1.Text = "groupBox1";
             // 
+            // tbxConfirmStation
+            // 
+            this.tbxConfirmStation.Location = new System.Drawing.Point(138, 209);
+            this.tbxConfirmStation.Name = "tbxConfirmStation";
+            this.tbxConfirmStation.Size = new System.Drawing.Size(184, 25);
+            this.tbxConfirmStation.TabIndex = 22;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 212);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(127, 15);
+            this.label1.TabIndex = 21;
+            this.label1.Text = "ConfirmStation:";
+            // 
+            // tbxMesUrl
+            // 
+            this.tbxMesUrl.Location = new System.Drawing.Point(42, 252);
+            this.tbxMesUrl.Name = "tbxMesUrl";
+            this.tbxMesUrl.Size = new System.Drawing.Size(279, 25);
+            this.tbxMesUrl.TabIndex = 24;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(5, 255);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(39, 15);
+            this.label2.TabIndex = 23;
+            this.label2.Text = "MES:";
+            // 
             // FrmSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -509,5 +549,9 @@
         private System.Windows.Forms.GroupBox gbxRFID3;
         private System.Windows.Forms.GroupBox gbxRFID2;
         private System.Windows.Forms.GroupBox gbxRFID1;
+        private System.Windows.Forms.TextBox tbxConfirmStation;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox tbxMesUrl;
+        private System.Windows.Forms.Label label2;
     }
 }
