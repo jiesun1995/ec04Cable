@@ -41,9 +41,9 @@ namespace EC0405编织喷胶
                 {
                     var RFIDChannelFixtrue = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[i * 2].IP, DataContent.SystemConfig.RFIDConfigs[i * 2].Channel, DataContent.SystemConfig.RFIDConfigs[i * 2].Port);
                     var RFIDChannelCable = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[i * 2 + 1].IP, DataContent.SystemConfig.RFIDConfigs[i * 2 + 1].Channel, DataContent.SystemConfig.RFIDConfigs[i * 2 + 1].Port);
-
+                    var mesService= new MesService();
                     Form frmcode;
-                    frmcode = new FrmFixture(RFIDChannelFixtrue, RFIDChannelCable,
+                    frmcode = new FrmFixture(RFIDChannelFixtrue, RFIDChannelCable, mesService,
                         (fixture, cable) => { return ScannerCodeByPeopleSaveCSV(fixture, new List<string> { cable }); });
                     frmcode.TopLevel = false;
                     frmcode.Dock = DockStyle.Top;

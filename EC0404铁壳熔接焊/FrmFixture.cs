@@ -45,7 +45,6 @@ namespace EC0404铁壳熔接焊
                     {
                         tbxFixtureL.BackColor = System.Drawing.Color.Yellow;
                         var content = _RFIDChannelL.Read();
-                        LogManager.Info($"读取左治具:{content};");
                         if (_codeFixtrueL == content)
                         {
                             tbxFixtureL.BackColor = System.Drawing.Color.Green;
@@ -72,7 +71,6 @@ namespace EC0404铁壳熔接焊
                     {
                         tbxFixtureR.BackColor = System.Drawing.Color.Yellow;
                         var content = _RFIDChannelR.Read();
-                        LogManager.Info($"读取右治具:{content};");
                         if (_codeFixtrueR == content)
                         {
                             tbxFixtureR.BackColor = System.Drawing.Color.Green;
@@ -100,7 +98,6 @@ namespace EC0404铁壳熔接焊
                         var result = false;
                         tbxCable.BackColor = System.Drawing.Color.Yellow;
                         var content = _RFIDChannelCable.Read();
-                        LogManager.Info($"读取线材:{content};");
                         try
                         {
                             result = _mesService.GetCurrStation(content) == DataContent.SystemConfig.ConfirmStation;

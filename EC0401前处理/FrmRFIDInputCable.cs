@@ -43,7 +43,6 @@ namespace EC0401前处理
                         {
                             groupBox1.BackColor = System.Drawing.Color.Yellow;
                             var content = _RFIDChannel.Read();
-                            LogManager.Info($"读取电子标签:{content};");
                             if (code == content)
                             {
                                 groupBox1.BackColor = System.Drawing.Color.Green;
@@ -88,7 +87,6 @@ namespace EC0401前处理
                                     groupBox1.BackColor = System.Drawing.Color.Red;
                                     return;
                                 }
-                                LogManager.Info($"写入电子标签:{code};");
                                 tbxCable.Text = code;
                                 return;
                             }

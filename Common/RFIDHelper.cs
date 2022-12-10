@@ -771,16 +771,19 @@ namespace Common
         }
 
         public bool IsConnect { get { return _isConnect; } }
-
+        
         public bool Wirte(string content)
         {
-            return _reader.WriteString(0, _dataLength, content);
+            var result = _reader.WriteString(0, _dataLength, content);
+            LogManager.Info($"写入rfid{(result?"成功":"失败")}:{content}");
+            return result;
         }
 
         public string Read()
         {
-            var result = _reader.ReadString(0, _dataLength).Replace("\0", "");
-            return result;
+            var content = _reader.ReadString(0, _dataLength).Replace("\0", "");
+            LogManager.Info($"读取rfid:{content}");
+            return content;
         }
     }
 

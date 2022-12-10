@@ -22,9 +22,9 @@ namespace EC0406喷胶保压
         private readonly RFIDChannel _RFIDChannel2;
         private readonly RFIDChannel _RFIDChannel2P;
         private readonly MesService _mesService;
-        public FrmMain(MesService mesService)
+        public FrmMain()
         {
-            _mesService=mesService;
+            _mesService = new MesService();
             _stopwatch = new Stopwatch();
             _stopwatch.Start();
             InitializeComponent();
@@ -112,9 +112,7 @@ namespace EC0406喷胶保压
                             var sn = _RFIDChannel1.Read();
                             var fixture = _RFIDChannel1P.Read();
                             var snStation = _mesService.GetCurrStation(sn);
-                            if (_mesService.GetCurrStation(sn) == DataContent.SystemConfig.ConfirmStation)
-                                LogManager.Info($"读取到线材线材：{sn}");
-                            else
+                            if (_mesService.GetCurrStation(sn) != DataContent.SystemConfig.ConfirmStation)
                                 LogManager.Warn($"读取到线材：{sn}，但站点不符：{snStation}");
                             if (!string.IsNullOrEmpty(sn) && !string.IsNullOrEmpty(fixture))
                             {
