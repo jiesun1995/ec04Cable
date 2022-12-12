@@ -13,13 +13,19 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Test
 {
     internal class Program
     {
+        [STAThread]
         static void Main(string[] args)
         {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new FrmLogs());
+
             LogManager.Init(null);
             string data = @"0 SFC_OK
 

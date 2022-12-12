@@ -17,7 +17,7 @@ namespace EC0403HB焊接
     public partial class FrmMain : Form
     {
         private Stopwatch _stopwatch ;
-        private readonly OMRHelper _omrHelper;
+        private readonly InovanceHelper _inovanceHelper;
         private readonly IFixtureCableBindService _fixtureCableBindService;
         private readonly RFIDChannel _RFIDChannel1;
         private readonly RFIDChannel _RFIDChannel1P;
@@ -36,8 +36,7 @@ namespace EC0403HB焊接
                 _fixtureCableBindService = WCFHelper.CreateClient();
                 if (DataContent.SystemConfig.ScannerCode > 0)
                     return;
-                _omrHelper = new OMRHelper(DataContent.SystemConfig.PLCIp, DataContent.SystemConfig.PLCPort);
-
+                _inovanceHelper = new InovanceHelper(DataContent.SystemConfig.PLCIp, DataContent.SystemConfig.PLCPort);
                 _RFIDChannel1 = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[0].IP, DataContent.SystemConfig.RFIDConfigs[0].Channel, DataContent.SystemConfig.RFIDConfigs[0].Port);
                 _RFIDChannel1P = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[1].IP, DataContent.SystemConfig.RFIDConfigs[1].Channel, DataContent.SystemConfig.RFIDConfigs[1].Port);
                 _RFIDChannel2 = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[2].IP, DataContent.SystemConfig.RFIDConfigs[2].Channel, DataContent.SystemConfig.RFIDConfigs[2].Port);
@@ -53,15 +52,15 @@ namespace EC0403HB焊接
         {
             tslSysTime.Text = $"系统时间:{DateTime.Now.ToString("yyyyMMdd HH:mm:ss")}";
             tslRunTime.Text = $"运行时间:{_stopwatch.Elapsed}";
-            if (_omrHelper == null)
+            if (_inovanceHelper == null)
             {
                 tslPLCStatus.Text = $"PLC: 未连接";
                 tslPLCStatus.BackColor = Color.Red;
             }
             else
             {
-                tslPLCStatus.Text = $"PLC:{(_omrHelper.IsConnect ? "已连接" : "未连接")}";
-                tslPLCStatus.BackColor = _omrHelper.IsConnect ? Color.Green : Color.Red;
+                tslPLCStatus.Text = $"PLC:{(_inovanceHelper.IsConnect ? "已连接" : "未连接")}";
+                tslPLCStatus.BackColor = _inovanceHelper.IsConnect ? Color.Green : Color.Red;
             }
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append($"流道1子RFID:{(_RFIDChannel1 != null && _RFIDChannel1.IsConnect ? "已连接" : "未连接")}; ");
@@ -128,7 +127,7 @@ namespace EC0403HB焊接
                 var fixtureCableBindService = WCFHelper.CreateClient();
                 while (true)
                 {
-                    if (_omrHelper.Read("D11") == 1)
+                    if (_inovanceHelper.read_D_Address(11) == 1)
                     {
                         LogManager.Info($"读取到启动信号：{{D11:1}}");
                         try
@@ -143,7 +142,7 @@ namespace EC0403HB焊接
                         }
                         finally
                         {
-                            _omrHelper.Write("D11", 3);
+                            _inovanceHelper.write_D_Address(11, 3);
                         }
                     }
                     await Task.Delay(100);
@@ -154,7 +153,7 @@ namespace EC0403HB焊接
                 var fixtureCableBindService = WCFHelper.CreateClient();
                 while (true)
                 {
-                    if (_omrHelper.Read("D13") == 1)
+                    if (_inovanceHelper.read_D_Address(13) == 1)
                     {
                         LogManager.Info($"读取到启动信号：{{D13:1}}");
                         try
@@ -169,7 +168,7 @@ namespace EC0403HB焊接
                         }
                         finally
                         {
-                            _omrHelper.Write("D13", 3);
+                            _inovanceHelper.write_D_Address(13, 3);
                         }
                     }
                     await Task.Delay(100);

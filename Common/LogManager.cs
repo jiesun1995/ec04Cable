@@ -23,6 +23,7 @@ namespace Common
             _log = log4net.LogManager.GetLogger(typeof(LogManager));
             if (listView != null)
             {
+               
                 _listView = listView;
                 _listView.Columns.Clear();
                 ColumnHeader col = new ColumnHeader()
@@ -133,6 +134,7 @@ namespace Common
                             _listView.Items.RemoveAt(0);
                             _listView.Items[_listView.Items.Count - 1].EnsureVisible();
                         }
+                        _listView.EnsureVisible(_listView.Items.Count-1);
                         _listView.EndUpdate();
                     });
                 }
