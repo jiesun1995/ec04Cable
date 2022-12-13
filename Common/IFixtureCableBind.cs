@@ -23,15 +23,19 @@ namespace Common
         DataTable QueryHistroy(string cable=null, string fixture = null, string fixturePat = null, DateTime? startDate = null, DateTime? endDate = null);
         [OperationContract]
         DataTable Query(string cable = null, string fixture = null, string fixturePat = null);
+        [OperationContract]
+        string GetCurrStationByMes(string SN);
     }
 
     public class FixtureCableBindService : IFixtureCableBindService
     {
         private readonly CableSqliteDal _cableSqliteDal;
+        private readonly MesService _mesService;
 
         public FixtureCableBindService()
         {
             _cableSqliteDal = new CableSqliteDal();
+            _mesService= new MesService();
         }
 
         public bool FixtureBind(string fixture, string fixturePat)
@@ -75,6 +79,11 @@ namespace Common
         {
             var dt = _cableSqliteDal.Query(cable, fixture, fixturePat);
             return dt;
+        }
+
+        public string GetCurrStationByMes(string SN)
+        {
+            return _mesService.GetCurrStation(SN);
         }
     }
 }

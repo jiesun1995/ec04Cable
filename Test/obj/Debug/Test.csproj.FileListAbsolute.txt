@@ -24,3 +24,5 @@ D:\work\ec04\EC04\Test\obj\Debug\Test.csproj.CoreCompileInputs.cache
 D:\work\ec04\EC04\Test\obj\Debug\Test.csproj.CopyComplete
 D:\work\ec04\EC04\Test\obj\Debug\Test.exe
 D:\work\ec04\EC04\Test\obj\Debug\Test.pdb
+D:\work\ec04\EC04\Test\obj\Debug\Test.FrmLogs.resources
+D:\work\ec04\EC04\Test\obj\Debug\Test.csproj.GenerateResource.cache

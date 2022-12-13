@@ -34,7 +34,7 @@ namespace Common
                 {
                     Text = "详细信息",
                     TextAlign = HorizontalAlignment.Left,
-                    Width = _listView.Width - col.Width,
+                    Width = 500,
                 };
                 _listView.Columns.Add(new ColumnHeader() { Width = 0});
                 _listView.Columns.Add(col);
@@ -106,7 +106,6 @@ namespace Common
             _log.Fatal(mesage);
             UIShow(mesage.ToString(), Color.Brown);
         }
-
 
         private static void UIShow(string message, Color color)
         {

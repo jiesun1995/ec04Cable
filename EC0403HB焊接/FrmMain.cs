@@ -90,8 +90,8 @@ namespace EC0403HB焊接
             for (int i = 0; i < DataContent.SystemConfig.ScannerCode; i++)
             {
                 Form frmcode;
-                MesService mesService=new MesService();
-                frmcode = new FrmFixture((fixture, cable1, cable2) => ScannerCodeByPeople(fixture, new List<string> { cable1, cable2 }), mesService);
+                //MesService mesService=new MesService();
+                frmcode = new FrmFixture((fixture, cable1, cable2) => ScannerCodeByPeople(fixture, new List<string> { cable1, cable2 }), _fixtureCableBindService);
                 frmcode.TopLevel = false;
                 frmcode.Dock = DockStyle.Top;
                 frmcode.Width = tabPage1.Width;

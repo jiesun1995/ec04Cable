@@ -17,11 +17,13 @@ namespace EC0403HB焊接
         private string _cable1 = string.Empty;
         private string _cable2 = string.Empty;
         private Func<string, string, string, bool> _codeCallBack;
-        private readonly MesService _mesService;
+        private readonly IFixtureCableBindService _fixtureCableBindService;
+        //private readonly MesService _mesService;
 
-        public FrmFixture( Func<string, string, string, bool> codeCallBack,MesService mesService)
+        public FrmFixture( Func<string, string, string, bool> codeCallBack, IFixtureCableBindService fixtureCableBindService)
         {
-            _mesService= mesService;
+            _fixtureCableBindService= fixtureCableBindService;
+            //_mesService = mesService;
             _codeCallBack = codeCallBack;
             InitializeComponent();
         }
@@ -61,7 +63,7 @@ namespace EC0403HB焊接
                 {
                     if(textBox.Name!= "tbxFixture")
                     {
-                        var station = _mesService.GetCurrStation(textBox.Text);
+                        var station = _fixtureCableBindService.GetCurrStationByMes(textBox.Text);
                         if (DataContent.SystemConfig.ConfirmStation != station)
                         {
                             textBox.BackColor = Color.Red;

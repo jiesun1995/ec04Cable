@@ -14,7 +14,7 @@ namespace EC0402低压成型
 {
     public partial class FrmMain : Form
     {
-        private Stopwatch _stopwatch ;
+        private Stopwatch _stopwatch;
         //private static int _peopleScannerCodeCount = 1;
         public FrmMain()
         {
@@ -39,7 +39,7 @@ namespace EC0402低压成型
             for (int i = 0; i < DataContent.SystemConfig.ScannerCode; i++)
             {
                 Form frmcode;
-                MesService mesService= new MesService();
+                MesService mesService = new MesService();
                 frmcode = new FrmFixture((fixture, cable1, cable2) => { return ScannerCodeByPeopleSaveCSV(fixture, new List<string> { cable1, cable2 }); }, mesService);
                 frmcode.TopLevel = false;
                 frmcode.Dock = DockStyle.Top;
@@ -123,7 +123,7 @@ namespace EC0402低压成型
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if(btnLogin.Text == "退出权限")
+            if (btnLogin.Text == "退出权限")
             {
                 DataContent.User = string.Empty;
                 btnLogin.Text = "权限登陆";
@@ -137,7 +137,7 @@ namespace EC0402低压成型
                     btnLogin.Text = "退出权限";
                 }
             }
-            
+
         }
     }
 }

@@ -14,7 +14,6 @@ namespace Common
         {
             var result = string.Empty;
             HttpContent httpContent = new FormUrlEncodedContent(dict);
-            httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
             httpContent.Headers.ContentType.CharSet = "UTF-8";
             HttpClient httpClient = new HttpClient();
             try

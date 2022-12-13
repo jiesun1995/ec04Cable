@@ -27,8 +27,8 @@ namespace Common
             LogManager.Info($"获取当前站点:{JsonHelper.SerializeObject(dict)}");
             var data = HttpHelper.PostHandle(DataContent.SystemConfig.MESUrl, dict);
             LogManager.Info($"当前站点结果：{data}");
-            if (!data.StartsWith(""))
-                throw new Exception("处理Mes结果异常");
+            if (!data.StartsWith("0 SFC_OK"))
+                throw new Exception($"处理Mes结果异常 :{data}");
             var ss = data.Split('\n');
             foreach (var s in ss)
             {
@@ -59,8 +59,8 @@ namespace Common
             LogManager.Info($"获取SN:{JsonHelper.SerializeObject(dict)}");
             var data = HttpHelper.PostHandle(DataContent.SystemConfig.MESUrl, dict);
             LogManager.Info($"获取SN结果：{data}");
-            if (!data.StartsWith(""))
-                throw new Exception("处理Mes结果异常");
+            if (!data.StartsWith("0 SFC_OK"))
+                throw new Exception($"处理Mes结果异常 :{data}");
             var ss = data.Split('\n');
             foreach (var s in ss)
             {
@@ -81,7 +81,27 @@ namespace Common
         public bool ValidationInvoices(string invoices)
         {
             if(string.IsNullOrEmpty(invoices)) return false;
-            return true;
+            var result = string.Empty;
+            Dictionary<string, string> dict = new Dictionary<string, string>();
+            dict.Add("c", "QUERY_RECORD");
+            dict.Add("p", "Auto_Wo");
+            dict.Add("sn", invoices);
+            LogManager.Info($"验证工单:{JsonHelper.SerializeObject(dict)}");
+            var data = HttpHelper.PostHandle(DataContent.SystemConfig.MESUrl, dict);
+            LogManager.Info($"验证结果：{data}");
+            if (!data.StartsWith("0 SFC_OK"))
+                throw new Exception($"处理Mes结果异常 :{data}");
+            var ss = data.Split('\n');
+            foreach (var s in ss)
+            {
+                var start = "Auto_Wo=";
+                var startIndex = s.IndexOf(start);
+                if (startIndex >= 0)
+                {
+                    result = s.Substring(startIndex + start.Length, s.Length - (startIndex + start.Length));
+                }
+            }
+            return result==invoices;
         }
     }
 }

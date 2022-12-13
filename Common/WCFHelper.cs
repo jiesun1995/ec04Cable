@@ -22,6 +22,8 @@ namespace Common
                         server = WCFHelper.BindServer();
                         if (server.State == CommunicationState.Opened)
                             LogManager.Info($"WCF服务启动成功：{server.BaseAddresses[0].OriginalString}");
+                        else
+                            LogManager.Info($"WCF服务启动失败，请使用管理员权限重新启动。");
                     }
                     Task.Delay(1000).Wait();
                 }

@@ -43,9 +43,12 @@ namespace EC0401前处理
                         {
                             groupBox1.BackColor = System.Drawing.Color.Yellow;
                             var content = _RFIDChannel.Read();
+                            tbxCable.Text = content;
                             if (code == content)
                             {
                                 groupBox1.BackColor = System.Drawing.Color.Green;
+                                lblTip.Text = $"PASS";
+                                lblTip.BackColor = Color.Green;
                                 return;
                             }
                             if (!string.IsNullOrWhiteSpace(content))
@@ -61,9 +64,7 @@ namespace EC0401前处理
                                 }
                                 else
                                 {
-                                    lblTip.Text = $"产品不是确认工站：{{{station}：{DataContent.SystemConfig.ConfirmStation}}}；";
-                                    lblTip.BackColor = Color.Red;
-                                    return;
+                                    throw new Exception($"产品不是确认工站：【{station}：{DataContent.SystemConfig.ConfirmStation}】");
                                 }
                             }
                             else
@@ -77,15 +78,19 @@ namespace EC0401前处理
                                 {
                                     var result = _RFIDChannel.Wirte(code);
                                     if (result)
+                                    {
                                         groupBox1.BackColor = System.Drawing.Color.Green;
+                                        lblTip.Text = $"PASS";
+                                        lblTip.BackColor = Color.Green;
+                                    }
                                     else
-                                        groupBox1.BackColor = System.Drawing.Color.Red;
+                                    {
+                                        throw new Exception($"RFID写入失败");
+                                    }
                                 }
                                 catch (Exception ex)
                                 {
-                                    LogManager.Warn($"电子标签写入失败，请重试。{ex.Message}");
-                                    groupBox1.BackColor = System.Drawing.Color.Red;
-                                    return;
+                                    throw new Exception($"RFID写入失败. \n{ex.Message}");
                                 }
                                 tbxCable.Text = code;
                                 return;
@@ -93,6 +98,9 @@ namespace EC0401前处理
                         }
                         catch (Exception ex)
                         {
+                            lblTip.Text = $"Fail：{ex.Message}";
+                            lblTip.BackColor = Color.Red;
+                            groupBox1.BackColor = System.Drawing.Color.Red;
                             LogManager.Error(ex);
                         }
                     }
@@ -108,17 +116,32 @@ namespace EC0401前处理
 
         private void ValidationInvoices()
         {
-            if (_mesService.ValidationInvoices(tbxInvoices.Text))
+            try
+            {
+                var result = _mesService.ValidationInvoices(tbxInvoices.Text);
+            }
+            catch (Exception ex)
+            {
+                LogManager.Error(ex);
+            }
+            if (result)
             {
                 IsRead = true;
                 tbxCable.Enabled = true;
                 tbxInvoices.Enabled = false;
+                lblTip.Text = $"工单验证成功";
+                lblTip.BackColor = Color.Green;
+                groupBox1.BackColor = System.Drawing.Color.Green;
+                
             }
             else
             {
                 IsRead = false;
                 tbxCable.Enabled = false;
                 tbxInvoices.Enabled = true;
+                lblTip.Text = $"工单验证失败：工单无可用SN";
+                lblTip.BackColor = Color.Red;
+                groupBox1.BackColor = System.Drawing.Color.Red;
             }
         }
 
