@@ -18,10 +18,11 @@ namespace Common
         private FrmRFIDSetting _frmRFIDSetting1;
         private FrmRFIDSetting _frmRFIDSetting2;
         private FrmRFIDSetting _frmRFIDSetting3;
+        private FrmRFIDSetting _frmRFIDSetting4;
 
-        private readonly Action<GroupBox, GroupBox, GroupBox, GroupBox, GroupBox, GroupBox, GroupBox> _configGroup;
+        private readonly Action<GroupBox, GroupBox, GroupBox, GroupBox, GroupBox, GroupBox, GroupBox, GroupBox> _configGroup;
 
-        public FrmSetting(Action<GroupBox, GroupBox, GroupBox, GroupBox, GroupBox, GroupBox, GroupBox> configGroup)
+        public FrmSetting(Action<GroupBox, GroupBox, GroupBox, GroupBox, GroupBox, GroupBox, GroupBox, GroupBox> configGroup)
         {
             _systemConfig = DataContent.SystemConfig;
             InitializeComponent();
@@ -30,7 +31,7 @@ namespace Common
 
         private void FrmSetting_Load(object sender, EventArgs e)
         {
-            _configGroup(gbxRFID1, gbxRFID2, gbxRFID3, gbxRFID4, gbxStation, gbxPLC, gbxWCF);
+            _configGroup(gbxRFID1, gbxRFID2, gbxRFID3, gbxRFID4,gbxRFID5, gbxStation, gbxPLC, gbxWCF);
 
             _frmRFIDSetting0 = new FrmRFIDSetting(_systemConfig.RFIDConfigs[0]);
             _frmRFIDSetting0.TopLevel = false;
@@ -59,6 +60,13 @@ namespace Common
             _frmRFIDSetting3.FormBorderStyle = FormBorderStyle.None;
             gbxRFID4.Controls.Add(_frmRFIDSetting3);
             _frmRFIDSetting3.Show();
+
+            _frmRFIDSetting4 = new FrmRFIDSetting(_systemConfig.RFIDConfigs[4]);
+            _frmRFIDSetting4.TopLevel = false;
+            _frmRFIDSetting4.Dock = DockStyle.Fill;
+            _frmRFIDSetting4.FormBorderStyle = FormBorderStyle.None;
+            gbxRFID5.Controls.Add(_frmRFIDSetting4);
+            _frmRFIDSetting4.Show();
 
             tbxPLCIp.Text = _systemConfig.PLCIp;
             tbxPLCPort.Text = _systemConfig.PLCPort.ToString();
@@ -102,6 +110,7 @@ namespace Common
                 systemConfig.RFIDConfigs[1] = _frmRFIDSetting1.GetRFIDConfig();
                 systemConfig.RFIDConfigs[2] = _frmRFIDSetting2.GetRFIDConfig();
                 systemConfig.RFIDConfigs[3] = _frmRFIDSetting3.GetRFIDConfig();
+                systemConfig.RFIDConfigs[4] = _frmRFIDSetting4.GetRFIDConfig();
 
                 systemConfig.CSVPath = tbxCSVPath.Text;
                 systemConfig.Model = tbxModel.Text;

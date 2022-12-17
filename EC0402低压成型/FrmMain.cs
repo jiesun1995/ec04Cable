@@ -22,7 +22,6 @@ namespace EC0402低压成型
             _stopwatch.Start();
             InitializeComponent();
             timer1.Start();
-            LogManager.Init(lvLogs);
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -33,6 +32,7 @@ namespace EC0402低压成型
 
         private void FrmMain_Load(object sender, EventArgs e)
         {
+            LogManager.Init(lvLogs);
             tabPage1.Controls.Clear();
             var zhanbi = 1.00 / DataContent.SystemConfig.ScannerCode;
             ///动态加载人工扫码位显示界面
@@ -104,7 +104,7 @@ namespace EC0402低压成型
         {
             if (!string.IsNullOrEmpty(DataContent.User))
             {
-                Common.FrmSetting frmSetting = new Common.FrmSetting((gbxRFID1, gbxRFID2, gbxRFID3, gbxRFID4, gbxStation, gbxPLC, gbxWCF) =>
+                Common.FrmSetting frmSetting = new Common.FrmSetting((gbxRFID1, gbxRFID2, gbxRFID3, gbxRFID4, gbxRFID5, gbxStation, gbxPLC, gbxWCF) =>
                 {
                     gbxRFID1.Visible = false;
                     gbxRFID2.Visible = false;

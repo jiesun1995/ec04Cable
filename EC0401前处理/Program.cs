@@ -30,7 +30,7 @@ namespace EC0401前处理
                 LogManager.Debug("加载配置完成");
             }
             catch (Exception ex)
-            { 
+            {
                 LogManager.Fatal(ex);
             }
             if (running)

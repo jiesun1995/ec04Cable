@@ -15,7 +15,7 @@ namespace EC0406喷胶保压
 {
     public partial class FrmMain : Form
     {
-        private Stopwatch _stopwatch ;
+        private Stopwatch _stopwatch;
         private readonly InovanceHelper _inovanceHelper;
         private readonly RFIDChannel _RFIDChannel1;
         private readonly RFIDChannel _RFIDChannel1P;
@@ -29,12 +29,10 @@ namespace EC0406喷胶保压
             _stopwatch.Start();
             InitializeComponent();
             timer1.Start();
-            
+
             try
             {
                 _inovanceHelper = new InovanceHelper(DataContent.SystemConfig.PLCIp, DataContent.SystemConfig.PLCPort);
-                LogManager.Init(lvLogs);
-
                 _RFIDChannel1 = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[0].IP, DataContent.SystemConfig.RFIDConfigs[0].Channel, DataContent.SystemConfig.RFIDConfigs[0].Port);
                 _RFIDChannel1P = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[1].IP, DataContent.SystemConfig.RFIDConfigs[1].Channel, DataContent.SystemConfig.RFIDConfigs[1].Port);
                 _RFIDChannel2 = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[2].IP, DataContent.SystemConfig.RFIDConfigs[2].Channel, DataContent.SystemConfig.RFIDConfigs[2].Port);
@@ -80,6 +78,7 @@ namespace EC0406喷胶保压
 
         private void FrmMain_Load(object sender, EventArgs e)
         {
+            LogManager.Init(lvLogs);
             tabPage1.Controls.Clear();
             tabPage2.Controls.Clear();
             tabPage3.Controls.Clear();
@@ -153,7 +152,7 @@ namespace EC0406喷胶保压
                     await Task.Delay(100);
                 }
             }, TaskCreationOptions.LongRunning);
-            Task.Factory.StartNew(async() =>
+            Task.Factory.StartNew(async () =>
             {
                 var fixtureCableBindService = WCFHelper.CreateClient();
                 while (true)
@@ -197,12 +196,13 @@ namespace EC0406喷胶保压
         {
             if (!string.IsNullOrEmpty(DataContent.User))
             {
-                Common.FrmSetting frmSetting = new Common.FrmSetting((gbxRFID1, gbxRFID2, gbxRFID3, gbxRFID4, gbxStation, gbxPLC, gbxWCF) =>
+                Common.FrmSetting frmSetting = new Common.FrmSetting((gbxRFID1, gbxRFID2, gbxRFID3, gbxRFID4, gbxRFID5, gbxStation, gbxPLC, gbxWCF) =>
                 {
                     gbxRFID1.Text = "前段线材RFID";
                     gbxRFID2.Text = "前段载具RFID";
                     gbxRFID3.Text = "后段载具RFID";
-                    gbxRFID4.Text = "后段保压块RFID";
+                    gbxRFID4.Text = "后段保压块RFID左";
+                    gbxRFID4.Text = "后段保压块RFID右";
                     gbxWCF.Visible = false;
                 });
                 frmSetting.ShowDialog();
@@ -215,7 +215,7 @@ namespace EC0406喷胶保压
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if(btnLogin.Text == "退出权限")
+            if (btnLogin.Text == "退出权限")
             {
                 DataContent.User = string.Empty;
                 btnLogin.Text = "权限登陆";
@@ -229,7 +229,7 @@ namespace EC0406喷胶保压
                     btnLogin.Text = "退出权限";
                 }
             }
-            
+
         }
     }
 }

@@ -36,9 +36,10 @@ namespace Common
                     RFIDConfigs = new List<RFIDConfig>
                     {
                         new RFIDConfig{ },
-                         new RFIDConfig{ },
-                          new RFIDConfig{ },
-                           new RFIDConfig{ },
+                        new RFIDConfig{ },
+                        new RFIDConfig{ },
+                        new RFIDConfig{ },
+                        new RFIDConfig{ },
                     }
                 };
             }

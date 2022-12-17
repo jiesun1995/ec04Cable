@@ -32,7 +32,7 @@ namespace EC0403HB焊接
             
             try
             {
-                LogManager.Init(lvLogs);
+               
                 _fixtureCableBindService = WCFHelper.CreateClient();
                 if (DataContent.SystemConfig.ScannerCode > 0)
                     return;
@@ -82,6 +82,7 @@ namespace EC0403HB焊接
 
         private void FrmMain_Load(object sender, EventArgs e)
         {
+            LogManager.Init(lvLogs);
             tabPage1.Controls.Clear();
             tabPage2.Controls.Clear();
             tabPage3.Controls.Clear();
@@ -200,7 +201,7 @@ namespace EC0403HB焊接
         {
             if (!string.IsNullOrEmpty(DataContent.User))
             {
-                FrmSetting frmSetting = new FrmSetting((gbxRFID1, gbxRFID2, gbxRFID3, gbxRFID4, gbxStation, gbxPLC, gbxWCF) =>
+                FrmSetting frmSetting = new FrmSetting((gbxRFID1, gbxRFID2, gbxRFID3, gbxRFID4, gbxRFID5, gbxStation, gbxPLC, gbxWCF) =>
                 {
                     gbxRFID1.Text = "流道1子载具RFID";
                     gbxRFID2.Text = "流道1母载具RFID";
