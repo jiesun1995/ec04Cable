@@ -20,7 +20,8 @@ namespace EC0406喷胶保压
         private readonly RFIDChannel _RFIDChannel1;
         private readonly RFIDChannel _RFIDChannel1P;
         private readonly RFIDChannel _RFIDChannel2;
-        private readonly RFIDChannel _RFIDChannel2P;
+        private readonly RFIDChannel _RFIDChannel2L;
+        private readonly RFIDChannel _RFIDChannel2R;
         private readonly MesService _mesService;
         public FrmMain()
         {
@@ -36,7 +37,8 @@ namespace EC0406喷胶保压
                 _RFIDChannel1 = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[0].IP, DataContent.SystemConfig.RFIDConfigs[0].Channel, DataContent.SystemConfig.RFIDConfigs[0].Port);
                 _RFIDChannel1P = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[1].IP, DataContent.SystemConfig.RFIDConfigs[1].Channel, DataContent.SystemConfig.RFIDConfigs[1].Port);
                 _RFIDChannel2 = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[2].IP, DataContent.SystemConfig.RFIDConfigs[2].Channel, DataContent.SystemConfig.RFIDConfigs[2].Port);
-                _RFIDChannel2P = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[3].IP, DataContent.SystemConfig.RFIDConfigs[3].Channel, DataContent.SystemConfig.RFIDConfigs[3].Port);
+                _RFIDChannel2L = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[3].IP, DataContent.SystemConfig.RFIDConfigs[3].Channel, DataContent.SystemConfig.RFIDConfigs[3].Port);
+                _RFIDChannel2R = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[4].IP, DataContent.SystemConfig.RFIDConfigs[4].Channel, DataContent.SystemConfig.RFIDConfigs[4].Port);
             }
             catch (Exception ex)
             {
@@ -62,10 +64,12 @@ namespace EC0406喷胶保压
             stringBuilder.Append($"前段线材RFID:{(_RFIDChannel1 != null && _RFIDChannel1.IsConnect ? "已连接" : "未连接")}; ");
             stringBuilder.Append($"前段载具RFID:{(_RFIDChannel1P != null && _RFIDChannel1P.IsConnect ? "已连接" : "未连接")}; ");
             stringBuilder.Append($"后段载具RFID:{(_RFIDChannel2 != null && _RFIDChannel2.IsConnect ? "已连接" : "未连接")}; ");
-            stringBuilder.Append($"后段保压块RFID:{(_RFIDChannel2P != null && _RFIDChannel2P.IsConnect ? "已连接" : "未连接")}; ");
+            stringBuilder.Append($"后段保压块RFID左:{(_RFIDChannel2L != null && _RFIDChannel2L.IsConnect ? "已连接" : "未连接")}; ");
+            stringBuilder.Append($"后段保压块RFID右:{(_RFIDChannel2R != null && _RFIDChannel2R.IsConnect ? "已连接" : "未连接")}; ");
             tslRIDFStatus.Text = "RFID：" + stringBuilder.ToString();
             if (_RFIDChannel1 == null || !_RFIDChannel1.IsConnect || _RFIDChannel1P == null || !_RFIDChannel1P.IsConnect
-                || _RFIDChannel2 == null || !_RFIDChannel2.IsConnect || _RFIDChannel2P == null || !_RFIDChannel2P.IsConnect
+                || _RFIDChannel2 == null || !_RFIDChannel2.IsConnect || _RFIDChannel2L == null || !_RFIDChannel2L.IsConnect
+                || _RFIDChannel2R == null || !_RFIDChannel2R.IsConnect
                 )
             {
                 tslRIDFStatus.BackColor = Color.Red;
@@ -164,18 +168,19 @@ namespace EC0406喷胶保压
                         try
                         {
                             var val = _RFIDChannel2.Read();
-                            var valP = _RFIDChannel2P.Read();
-                            if (!string.IsNullOrEmpty(val) && !string.IsNullOrEmpty(valP))
+                            var valL = _RFIDChannel2L.Read();
+                            var valR = _RFIDChannel2R.Read();
+                            if (!string.IsNullOrEmpty(val) && !string.IsNullOrEmpty(valL))
                             {
-                                fixtureCableBindService.FixtureBind(val, valP);
+                                fixtureCableBindService.FixtureBind(val, valL,valR);
                             }
                             else if (string.IsNullOrEmpty(val))
                             {
-                                fixtureCableBindService.FixtureBind("NG", string.IsNullOrEmpty(valP) ? "NG" : valP);
+                                fixtureCableBindService.FixtureBind("NG", string.IsNullOrEmpty(valL) ? "NG" : valL,valR);
                             }
-                            else if (string.IsNullOrEmpty(valP))
+                            else if (string.IsNullOrEmpty(valL))
                             {
-                                fixtureCableBindService.FixtureBind(val, "NG");
+                                fixtureCableBindService.FixtureBind(val, "NG", valR);
                             }
                         }
                         catch (Exception ex)
@@ -202,7 +207,7 @@ namespace EC0406喷胶保压
                     gbxRFID2.Text = "前段载具RFID";
                     gbxRFID3.Text = "后段载具RFID";
                     gbxRFID4.Text = "后段保压块RFID左";
-                    gbxRFID4.Text = "后段保压块RFID右";
+                    gbxRFID5.Text = "后段保压块RFID右";
                     gbxWCF.Visible = false;
                 });
                 frmSetting.ShowDialog();

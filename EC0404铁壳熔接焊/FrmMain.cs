@@ -122,6 +122,7 @@ namespace EC0404铁壳熔接焊
                     gbxRFID2.Text = "右治具RFID";
                     gbxRFID3.Text = "线材RFID";
                     gbxRFID4.Visible= false;
+                    gbxRFID5.Visible = false;
                     gbxWCF.Visible = false;
                     gbxPLC.Visible = false;
                 });

@@ -102,6 +102,7 @@ namespace EC0405编织喷胶
                     gbxRFID2.Text = "前工站线材扫码RFID";
                     gbxRFID3.Text = "后工站载具扫码RFID";
                     gbxRFID4.Text = "后工站线材扫码RFID";
+                    gbxRFID5.Visible = false;
                     gbxPLC.Visible = false;
                     gbxWCF.Visible = false;
                 });

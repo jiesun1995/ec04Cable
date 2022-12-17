@@ -27,6 +27,13 @@ namespace Common
             {
                 var result = File.ReadAllText("System.Config");
                 var config = JsonConvert.DeserializeObject<SystemConfig>(result);
+                if (config.RFIDConfigs.Count < 5)
+                {
+                    for (int i = config.RFIDConfigs.Count -1; i < 5; i++)
+                    {
+                        config.RFIDConfigs.Add(new RFIDConfig());
+                    }
+                }
                 DataContent.SetConfig(config);
             }
             else

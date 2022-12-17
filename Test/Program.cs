@@ -22,30 +22,12 @@ namespace Test
         [STAThread]
         static void Main(string[] args)
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmLogs());
+            //Application.EnableVisualStyles();
+            //Application.SetCompatibleTextRenderingDefault(false);
+            //Application.Run(new FrmLogs());
 
             LogManager.Init(null);
-            string data = @"0 SFC_OK
-
-Get_CurrStation=P107_FATP_Puck AOI";
-
-            var  ss= data.Split('\n');
-            foreach (var s in ss)
-            {
-                var start = "Get_CurrStation=";
-                var startIndex= s.IndexOf(start);
-                if (startIndex >= 0)
-                {
-                    var result = s.Substring(startIndex + start.Length, s.Length - (startIndex + start.Length));
-                }
-            }
-            
-
-
-
-            TestHttp();
+            TestHotbarWCF();
             Console.ReadLine();
 
         }
@@ -126,7 +108,7 @@ Get_CurrStation=P107_FATP_Puck AOI";
                     {
                         fixtures.TryDequeue(out string fixture);
                         var fixturePat = $"fixtruepat-00000{random.Next(1000, 9999).ToString()}";
-                        clinet.FixtureBind(fixture, fixturePat);
+                        clinet.FixtureBind(fixture, fixturePat,"hotbar1","hotbar2","hotbar3");
                         Console.WriteLine($"写入治具和和母治具：{fixture}，{fixturePat}");
                     }
                     Task.Delay(10).Wait();

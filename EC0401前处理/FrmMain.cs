@@ -82,6 +82,7 @@ namespace EC0401前处理
                     gbxRFID2.Visible= false;
                     gbxRFID3.Visible= false;
                     gbxRFID4.Visible= false;
+                    gbxRFID5.Visible = false;
                     gbxStation.Visible= true;
                     gbxPLC.Visible= false;
                     gbxWCF.Visible= false;

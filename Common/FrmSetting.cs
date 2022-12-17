@@ -61,7 +61,7 @@ namespace Common
             gbxRFID4.Controls.Add(_frmRFIDSetting3);
             _frmRFIDSetting3.Show();
 
-            _frmRFIDSetting4 = new FrmRFIDSetting(_systemConfig.RFIDConfigs[4]);
+            _frmRFIDSetting4 = new FrmRFIDSetting(_systemConfig.RFIDConfigs[4]??new RFIDConfig());
             _frmRFIDSetting4.TopLevel = false;
             _frmRFIDSetting4.Dock = DockStyle.Fill;
             _frmRFIDSetting4.FormBorderStyle = FormBorderStyle.None;

@@ -207,6 +207,7 @@ namespace EC0403HB焊接
                     gbxRFID2.Text = "流道1母载具RFID";
                     gbxRFID3.Text = "流道2子载具RFID";
                     gbxRFID4.Text = "流道2母载具RFID";
+                    gbxRFID5.Visible = false;
                 });
                 frmSetting.ShowDialog();
             }

@@ -17,10 +17,10 @@ namespace Common
         bool FixtureCableBind(List<Cable> cables);
 
         [OperationContract]
-        bool FixtureBind(string fixture, string fixturePat);
+        bool FixtureBind(string fixture, string fixturePat, params string[] fixtures);
 
         [OperationContract]
-        DataTable QueryHistroy(string cable=null, string fixture = null, string fixturePat = null, DateTime? startDate = null, DateTime? endDate = null);
+        DataTable QueryHistroy(string cable = null, string fixture = null, string fixturePat = null, DateTime? startDate = null, DateTime? endDate = null);
         [OperationContract]
         DataTable Query(string cable = null, string fixture = null, string fixturePat = null);
         [OperationContract]
@@ -35,14 +35,14 @@ namespace Common
         public FixtureCableBindService()
         {
             _cableSqliteDal = new CableSqliteDal();
-            _mesService= new MesService();
+            _mesService = new MesService();
         }
 
-        public bool FixtureBind(string fixture, string fixturePat)
+        public bool FixtureBind(string fixture, string fixturePat, params string[] fixtures)
         {
             try
             {
-                _cableSqliteDal.AddHistroy(fixture, fixturePat);
+                _cableSqliteDal.AddHistroy(fixture, fixturePat, fixtures);
                 LogManager.Info($"进行治具绑定：【{fixture}:{fixturePat}】");
             }
             catch (Exception ex)
@@ -59,7 +59,7 @@ namespace Common
             try
             {
                 _cableSqliteDal.AddCable(cables);
-                LogManager.Info($"进行数据绑定：{JsonHelper.SerializeObject(cables)}" );
+                LogManager.Info($"进行数据绑定：{JsonHelper.SerializeObject(cables)}");
             }
             catch (Exception ex)
             {

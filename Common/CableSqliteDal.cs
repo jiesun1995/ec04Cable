@@ -117,7 +117,7 @@ namespace Common
             }
         }
 
-        public void AddHistroy(string fixture, string fixturePat)
+        public void AddHistroy(string fixture, string fixturePat, string[] fixtures)
         {
             var cables = QueryByFixture(fixture);
             foreach (var cable in cables)
@@ -125,6 +125,19 @@ namespace Common
                 try
                 {
                     cable.FAI1_B = fixturePat;
+                    for (int i = 0; i < fixtures.Count(); i++)
+                    {
+                        switch (i)
+                        {
+                            case 0: cable.FAI1_C = fixtures[i]; break;
+                            case 1: cable.FAI1_D = fixtures[i]; break;
+                            case 2: cable.FAI1_E = fixtures[i]; break;
+                            case 3: cable.FAI1_F = fixtures[i]; break;
+                            case 4: cable.FAI1_G = fixtures[i]; break;
+                            default:
+                                break;
+                        }
+                    }
                     cable.Status = "PASS";
                     var dt = cable.ToTable();
                     CSVHelper.SaveCSV(dt, $"{DataContent.SystemConfig.CSVPath}\\{Guid.NewGuid().ToString()}.csv");
@@ -153,8 +166,9 @@ namespace Common
       ,[Finish_time] as 结束时间
       ,[Status] as 状态
       ,[Error_code] as 错误码
-      ,[FAI1_A] as 子治具Id
-      ,[FAI1_B] as 治具Id
+      ,[FAI1_A] as 治具A
+      ,[FAI1_B] as 治具B
+      ,[FAI1_C] as 治具C
   FROM [CableHistroies] where 1=1 ");
             if (!string.IsNullOrWhiteSpace(cable))
             {
@@ -195,8 +209,9 @@ namespace Common
       ,[Finish_time] as 结束时间
       ,[Status] as 状态
       ,[Error_code] as 错误码
-      ,[FAI1_A] as 子治具Id
-      ,[FAI1_B] as 母治具Id
+      ,[FAI1_A] as 治具A
+      ,[FAI1_B] as 治具B
+      ,[FAI1_C] as 治具C
   FROM [Cables] where 1=1 ");
             if (!string.IsNullOrWhiteSpace(cable))
             {

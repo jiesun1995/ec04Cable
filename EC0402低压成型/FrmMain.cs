@@ -110,6 +110,7 @@ namespace EC0402低压成型
                     gbxRFID2.Visible = false;
                     gbxRFID3.Visible = false;
                     gbxRFID4.Visible = false;
+                    gbxRFID5.Visible = false;
                     gbxPLC.Visible = false;
                     gbxWCF.Visible = false;
                 });
