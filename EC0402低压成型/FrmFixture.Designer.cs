@@ -86,12 +86,13 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label3.Font = new System.Drawing.Font("宋体", 15F);
             this.label3.Location = new System.Drawing.Point(3, 86);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(98, 44);
             this.label3.TabIndex = 4;
             this.label3.Text = "线材：";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // tbxCable1
             // 
@@ -107,23 +108,25 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label2.Font = new System.Drawing.Font("宋体", 15F);
             this.label2.Location = new System.Drawing.Point(3, 43);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(98, 43);
             this.label2.TabIndex = 2;
             this.label2.Text = "线材：";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label1.Font = new System.Drawing.Font("宋体", 15F);
             this.label1.Location = new System.Drawing.Point(3, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(98, 43);
             this.label1.TabIndex = 0;
             this.label1.Text = "子治具：";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // tbxFixture
             // 

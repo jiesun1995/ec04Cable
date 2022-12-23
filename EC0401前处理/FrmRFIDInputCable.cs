@@ -116,9 +116,10 @@ namespace EC0401前处理
 
         private void ValidationInvoices()
         {
+            var result = false;
             try
             {
-                var result = _mesService.ValidationInvoices(tbxInvoices.Text);
+                result = _mesService.ValidationInvoices(tbxInvoices.Text);
             }
             catch (Exception ex)
             {
