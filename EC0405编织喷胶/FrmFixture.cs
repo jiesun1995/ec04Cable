@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Runtime.Remoting.Channels;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,44 +23,70 @@ namespace EC0405编织喷胶
         private string _codeFixtrue = string.Empty;
         private string _codeCable = string.Empty;
         private readonly MesService _mesService;
+        private readonly InovanceHelper _inovanceHelper;
+        private readonly int _dAddress;
 
-        public FrmFixture(RFIDChannel RFIDChannelL, RFIDChannel RFIDChannelR, MesService mesService, Func<string, string, bool>  codeCallBack)
+        public FrmFixture(RFIDChannel RFIDChannelL, RFIDChannel RFIDChannelR, MesService mesService, InovanceHelper inovanceHelper, int dAddress, Func<string, string, bool>  codeCallBack)
         {
             _mesService = mesService;
             _codeCallBack = codeCallBack;
             InitializeComponent();
             _RFIDChannelL = RFIDChannelL;
             _RFIDChannelR = RFIDChannelR;
+            _inovanceHelper = inovanceHelper;
+            _dAddress = dAddress;
         }
         private void FrmFixture_Load(object sender, EventArgs e)
         {
-            _RFIDChannelL.SetChannelState(state =>
+            Task.Factory.StartNew(() =>
             {
-                Invoke((EventHandler)delegate
+                while (true)
                 {
-                    if (state)
+                    if (_inovanceHelper.read_D_Address(_dAddress) == 1)
                     {
-                        tbxFixture.BackColor = System.Drawing.Color.Yellow;
-                        var content = _RFIDChannelL.Read();
-                        LogManager.Info($"读取治具:{content};");
-                        if (_codeFixtrue == content)
+                        try
                         {
-                            tbxFixture.BackColor = System.Drawing.Color.Green;
+                            _codeFixtrue = _RFIDChannelR.Read();
+                            SaveData();
+                            _inovanceHelper.write_D_Address(_dAddress, 2);
                         }
-                        else
+                        catch (Exception ex)
                         {
-                            tbxFixture.Text = content;
-                            tbxFixture.BackColor = System.Drawing.Color.Green;
-                            _codeFixtrue = content;
+                            LogManager.Error(ex);
+                            _inovanceHelper.write_D_Address(_dAddress, 3);
                         }
-                        SaveData();
                     }
-                    else
-                    {
-                        tbxFixture.BackColor = SystemColors.Control;
-                    }
-                });
+                }
             });
+
+
+            //_RFIDChannelL.SetChannelState(state =>
+            //{
+            //    Invoke((EventHandler)delegate
+            //    {
+            //        if (state)
+            //        {
+            //            tbxFixture.BackColor = System.Drawing.Color.Yellow;
+            //            var content = _RFIDChannelL.Read();
+            //            LogManager.Info($"读取治具:{content};");
+            //            if (_codeFixtrue == content)
+            //            {
+            //                tbxFixture.BackColor = System.Drawing.Color.Green;
+            //            }
+            //            else
+            //            {
+            //                tbxFixture.Text = content;
+            //                tbxFixture.BackColor = System.Drawing.Color.Green;
+            //                _codeFixtrue = content;
+            //            }
+            //            SaveData();
+            //        }
+            //        else
+            //        {
+            //            tbxFixture.BackColor = SystemColors.Control;
+            //        }
+            //    });
+            //});
 
             _RFIDChannelR.SetChannelState(state =>
             {

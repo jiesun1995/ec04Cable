@@ -25,9 +25,12 @@ namespace EC0404铁壳熔接焊
         private readonly RFIDChannel _RFIDChannelL;
         private readonly RFIDChannel _RFIDChannelR;
         private readonly RFIDChannel _RFIDChannelCable;
+        private readonly OMRHelper _omrHelper;
+        private readonly string _address = "";
 
-        public FrmFixture(RFIDChannel RFIDChannelL, RFIDChannel RFIDChannelR, RFIDChannel RFIDChannelCable, MesService mesService, Func<string, string, string, bool> codeCallBack)
+        public FrmFixture(RFIDChannel RFIDChannelL, RFIDChannel RFIDChannelR, RFIDChannel RFIDChannelCable, MesService mesService, OMRHelper omrHelper, Func<string, string, string, bool> codeCallBack)
         {
+            _omrHelper = omrHelper;
             _mesService = mesService;
             _codeCallBack = codeCallBack;
             InitializeComponent();
@@ -37,58 +40,83 @@ namespace EC0404铁壳熔接焊
         }
         private void FrmFixture_Load(object sender, EventArgs e)
         {
-            _RFIDChannelL.SetChannelState(state =>
+            Task.Factory.StartNew(() =>
             {
-                Invoke((EventHandler)delegate
+                while (true)
                 {
-                    if (state)
+                    if (_omrHelper.Read(_address) == 1)
                     {
-                        tbxFixtureL.BackColor = System.Drawing.Color.Yellow;
-                        var content = _RFIDChannelL.Read();
-                        if (_codeFixtrueL == content)
+                        try
                         {
-                            tbxFixtureL.BackColor = System.Drawing.Color.Green;
+
+                            _codeFixtrueL = _RFIDChannelL.Read();
+                            _codeFixtrueR = _RFIDChannelR.Read();
+                            SaveData();
+                            _omrHelper.Write(_address, 2);
                         }
-                        else
+                        catch (Exception ex)
                         {
-                            tbxFixtureL.Text = content;
-                            tbxFixtureL.BackColor = System.Drawing.Color.Green;
-                            _codeFixtrueL = content;
+                            LogManager.Error(ex);
+                            _omrHelper.Write(_address, 3);
                         }
-                        SaveData();
                     }
-                    else
-                    {
-                        tbxFixtureL.BackColor = SystemColors.Control;
-                    }
-                });
+                }
             });
-            _RFIDChannelR.SetChannelState(state =>
-            {
-                Invoke((EventHandler)delegate
-                {
-                    if (state)
-                    {
-                        tbxFixtureR.BackColor = System.Drawing.Color.Yellow;
-                        var content = _RFIDChannelR.Read();
-                        if (_codeFixtrueR == content)
-                        {
-                            tbxFixtureR.BackColor = System.Drawing.Color.Green;
-                        }
-                        else
-                        {
-                            tbxFixtureR.Text = content;
-                            tbxFixtureR.BackColor = System.Drawing.Color.Green;
-                            _codeFixtrueR = content;
-                        }
-                        SaveData();
-                    }
-                    else
-                    {
-                        tbxFixtureR.BackColor = SystemColors.Control;
-                    }
-                });
-            });
+
+
+
+            //_RFIDChannelL.SetChannelState(state =>
+            //{
+            //    Invoke((EventHandler)delegate
+            //    {
+            //        if (state)
+            //        {
+            //            tbxFixtureL.BackColor = System.Drawing.Color.Yellow;
+            //            var content = _RFIDChannelL.Read();
+            //            if (_codeFixtrueL == content)
+            //            {
+            //                tbxFixtureL.BackColor = System.Drawing.Color.Green;
+            //            }
+            //            else
+            //            {
+            //                tbxFixtureL.Text = content;
+            //                tbxFixtureL.BackColor = System.Drawing.Color.Green;
+            //                _codeFixtrueL = content;
+            //            }
+            //            SaveData();
+            //        }
+            //        else
+            //        {
+            //            tbxFixtureL.BackColor = SystemColors.Control;
+            //        }
+            //    });
+            //});
+            //_RFIDChannelR.SetChannelState(state =>
+            //{
+            //    Invoke((EventHandler)delegate
+            //    {
+            //        if (state)
+            //        {
+            //            tbxFixtureR.BackColor = System.Drawing.Color.Yellow;
+            //            var content = _RFIDChannelR.Read();
+            //            if (_codeFixtrueR == content)
+            //            {
+            //                tbxFixtureR.BackColor = System.Drawing.Color.Green;
+            //            }
+            //            else
+            //            {
+            //                tbxFixtureR.Text = content;
+            //                tbxFixtureR.BackColor = System.Drawing.Color.Green;
+            //                _codeFixtrueR = content;
+            //            }
+            //            SaveData();
+            //        }
+            //        else
+            //        {
+            //            tbxFixtureR.BackColor = SystemColors.Control;
+            //        }
+            //    });
+            //});
             _RFIDChannelCable.SetChannelState(state =>
             {
                 Invoke((EventHandler)delegate

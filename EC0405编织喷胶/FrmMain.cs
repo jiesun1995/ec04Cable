@@ -15,6 +15,7 @@ namespace EC0405编织喷胶
     public partial class FrmMain : Form
     {
         private Stopwatch _stopwatch ;
+        private int[] _address = new int[] { };
         public FrmMain()
         {
             _stopwatch = new Stopwatch();
@@ -34,17 +35,18 @@ namespace EC0405编织喷胶
         {
             LogManager.Init(lvLogs);
             tabPage1.Controls.Clear();
-            var zhanbi = 1.00 / DataContent.SystemConfig.ScannerCode;
+            var zhanbi = 1.00 / 2;
             ///动态加载人工扫码位显示界面
-            for (int i = 0; i < DataContent.SystemConfig.ScannerCode; i++)
+            for (int i = 0; i < 2; i++)
             {
                 try
                 {
                     var RFIDChannelFixtrue = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[i * 2].IP, DataContent.SystemConfig.RFIDConfigs[i * 2].Channel, DataContent.SystemConfig.RFIDConfigs[i * 2].Port);
                     var RFIDChannelCable = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[i * 2 + 1].IP, DataContent.SystemConfig.RFIDConfigs[i * 2 + 1].Channel, DataContent.SystemConfig.RFIDConfigs[i * 2 + 1].Port);
                     var mesService= new MesService();
+                    var inovanceHelper = new InovanceHelper(DataContent.SystemConfig.PLCIp, DataContent.SystemConfig.PLCPort);
                     Form frmcode;
-                    frmcode = new FrmFixture(RFIDChannelFixtrue, RFIDChannelCable, mesService,
+                    frmcode = new FrmFixture(RFIDChannelFixtrue, RFIDChannelCable, mesService, inovanceHelper, _address[i],
                         (fixture, cable) => { return ScannerCodeByPeopleSaveCSV(fixture, new List<string> { cable }); });
                     frmcode.TopLevel = false;
                     frmcode.Dock = DockStyle.Top;

@@ -42,7 +42,8 @@ namespace Common
 
                 for (int i = _queue.Count; i > 0; i--)
                 {
-                    if (_queue.TryDequeue(out var val))
+                    Tuple<string, Color> val = null;
+                    if (_queue.TryDequeue(out val))
                     {
                         _listView.BeginUpdate();
                         ListViewItem listViewItem = new ListViewItem();
@@ -117,7 +118,8 @@ namespace Common
             {
                 if (_queue.Count <= 0)
                     return;
-                if(_queue.TryDequeue(out var val))
+                Tuple<string, Color> val = null;
+                if (_queue.TryDequeue(out val))
                 {
                     _listView.Invoke((EventHandler)delegate
                     {

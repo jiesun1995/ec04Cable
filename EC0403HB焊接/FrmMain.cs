@@ -23,6 +23,7 @@ namespace EC0403HB焊接
         private readonly RFIDChannel _RFIDChannel1P;
         private readonly RFIDChannel _RFIDChannel2;
         private readonly RFIDChannel _RFIDChannel2P;
+
         public FrmMain()
         {
             InitializeComponent();

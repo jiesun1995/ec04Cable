@@ -19,9 +19,9 @@ namespace EC0402低压成型
         private Func<string, string, string, bool> _codeCallBack;
         private readonly MesService _mesService;
 
-        public FrmFixture( Func<string, string, string, bool>  codeCallBack,MesService mesService)
+        public FrmFixture(Func<string, string, string, bool> codeCallBack, MesService mesService)
         {
-            _mesService= mesService;
+            _mesService = mesService;
             _codeCallBack = codeCallBack;
             InitializeComponent();
         }
@@ -49,7 +49,7 @@ namespace EC0402低压成型
         }
         private void SaveData(object sender, KeyEventArgs e)
         {
-           
+
             if (e.KeyCode == Keys.Enter)
             {
                 var textBox = sender as TextBox;
@@ -60,7 +60,7 @@ namespace EC0402低压成型
                 }
                 try
                 {
-                    if(textBox.Name!= "tbxFixture")
+                    if (textBox.Name != "tbxFixture")
                     {
                         var station = _mesService.GetCurrStation(textBox.Text);
                         if (DataContent.SystemConfig.ConfirmStation != station)

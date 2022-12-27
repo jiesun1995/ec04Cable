@@ -64,8 +64,9 @@ namespace EC0404铁壳熔接焊
                     _RFIDChannelR = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[1].IP, DataContent.SystemConfig.RFIDConfigs[1].Channel, DataContent.SystemConfig.RFIDConfigs[1].Port);
                     _RFIDChannelCable = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[2].IP, DataContent.SystemConfig.RFIDConfigs[2].Channel, DataContent.SystemConfig.RFIDConfigs[2].Port);
                     MesService mesService = new MesService();
+                    OMRHelper omrHelper = new OMRHelper(DataContent.SystemConfig.PLCIp, DataContent.SystemConfig.PLCPort);
                     Form frmcode;
-                    frmcode = new FrmFixture(_RFIDChannelL, _RFIDChannelR, _RFIDChannelCable, mesService,
+                    frmcode = new FrmFixture(_RFIDChannelL, _RFIDChannelR, _RFIDChannelCable, mesService, omrHelper,
                         (fixtureL, fixtureR, cable) => ScannerCodeByPeopleSaveCSV(fixtureL, fixtureR, cable));
                     frmcode.TopLevel = false;
                     frmcode.Dock = DockStyle.Top;

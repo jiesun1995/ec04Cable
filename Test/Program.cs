@@ -106,7 +106,8 @@ namespace Test
                 {
                     if (fixtures.Count > 0)
                     {
-                        fixtures.TryDequeue(out string fixture);
+                        var fixture = string.Empty;
+                        fixtures.TryDequeue(out fixture);
                         var fixturePat = $"fixtruepat-00000{random.Next(1000, 9999).ToString()}";
                         clinet.FixtureBind(fixture, fixturePat,"hotbar1","hotbar2","hotbar3");
                         Console.WriteLine($"写入治具和和母治具：{fixture}，{fixturePat}");

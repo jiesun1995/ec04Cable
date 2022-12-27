@@ -90,7 +90,8 @@ namespace Common
         private int ValidateDataByInt(string content,string tip)
         {
             if(string.IsNullOrEmpty(content)) return 0;
-            if (int.TryParse(content, out int value))
+            var value = 0;
+            if (int.TryParse(content, out value))
             {
                 return value;
             }
