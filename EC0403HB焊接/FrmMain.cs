@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Collections.Concurrent;
 using System.Runtime.Remoting.Channels;
+using System.Configuration;
 
 namespace EC0403HB焊接
 {
@@ -92,8 +93,24 @@ namespace EC0403HB焊接
             for (int i = 0; i < DataContent.SystemConfig.ScannerCode; i++)
             {
                 Form frmcode;
-                //MesService mesService=new MesService();
-                frmcode = new FrmFixture((fixture, cable1, cable2) => ScannerCodeByPeople(fixture, new List<string> { cable1, cable2 }), _fixtureCableBindService);
+                MesService mesService=new MesService();
+                if (ConfigurationManager.AppSettings["Input"] != null)
+                {
+                    RFIDChannel channel = null;
+                    try
+                    {
+                        channel = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[0].IP, DataContent.SystemConfig.RFIDConfigs[0].Channel, DataContent.SystemConfig.RFIDConfigs[0].Port);
+                    }
+                    catch (Exception ex)
+                    {
+                        LogManager.Error(ex);
+                    }
+                    frmcode = new FrmRFIDGetWayFixture(channel, (fixture, cable1, cable2) => ScannerCodeByPeople(fixture, new List<string> { cable1, cable2 }), mesService);
+                }
+                else
+                {
+                    frmcode = new FrmFixture((fixture, cable1, cable2) => ScannerCodeByPeople(fixture, new List<string> { cable1, cable2 }), _fixtureCableBindService);
+                }
                 frmcode.TopLevel = false;
                 frmcode.Dock = DockStyle.Top;
                 frmcode.Width = tabPage1.Width;
@@ -129,22 +146,43 @@ namespace EC0403HB焊接
                 var fixtureCableBindService = WCFHelper.CreateClient();
                 while (true)
                 {
-                    if (_inovanceHelper.read_D_Address(11) == 1)
+                    if (_inovanceHelper.read_D_Address(2500) == 1)
                     {
-                        LogManager.Info($"读取到启动信号：{{D11:1}}");
+                        LogManager.Info($"读取到启动信号：{{D2500:1}}");
                         try
                         {
-                            var content = _RFIDChannel1.Read();
-                            var contentP = _RFIDChannel1P.Read();
+                            var content = "NG";
+                            var contentP = "NG";
+                            try
+                            {
+                                content = _RFIDChannel1.Read();
+                                _inovanceHelper.WriteAddressByD(2500, 2);
+                            }
+                            catch (Exception ex)
+                            {
+                                LogManager.Error(ex);
+                                _inovanceHelper.WriteAddressByD(2500, 3);
+                            }
+                            try
+                            {
+                                contentP = _RFIDChannel1P.Read();
+                                _inovanceHelper.WriteAddressByD(2502, 2);
+                            }
+                            catch (Exception ex)
+                            {
+                                LogManager.Error(ex);
+                                _inovanceHelper.WriteAddressByD(2502, 3);
+                            }
+
+                            if (string.IsNullOrWhiteSpace(content))
+                                continue;
                             fixtureCableBindService.FixtureBind(content, contentP);
                         }
                         catch (Exception ex)
                         {
                             LogManager.Error(ex);
-                        }
-                        finally
-                        {
-                            _inovanceHelper.write_D_Address(11, 3);
+                            _inovanceHelper.WriteAddressByD(2500, 3);
+                            _inovanceHelper.WriteAddressByD(2502, 3);
                         }
                     }
                     await Task.Delay(100);
@@ -155,22 +193,40 @@ namespace EC0403HB焊接
                 var fixtureCableBindService = WCFHelper.CreateClient();
                 while (true)
                 {
-                    if (_inovanceHelper.read_D_Address(13) == 1)
+                    if (_inovanceHelper.read_D_Address(2600) == 1)
                     {
-                        LogManager.Info($"读取到启动信号：{{D13:1}}");
+                        LogManager.Info($"读取到启动信号：{{D2600:1}}");
                         try
                         {
-                            var content = _RFIDChannel2.Read();
-                            var contentP = _RFIDChannel2P.Read();
+                            var content = "NG";
+                            var contentP = "NG";
+                            try
+                            {
+                                content = _RFIDChannel2.Read();
+                                _inovanceHelper.WriteAddressByD(2600, 2);
+                            }
+                            catch (Exception ex)
+                            {
+                                LogManager.Error(ex);
+                                _inovanceHelper.WriteAddressByD(2600, 3);
+                            }
+                            try
+                            {
+                                contentP = _RFIDChannel2P.Read();
+                                _inovanceHelper.WriteAddressByD(2602, 2);
+                            }
+                            catch (Exception ex)
+                            {
+                                LogManager.Error(ex);
+                                _inovanceHelper.WriteAddressByD(2602, 3);
+                            }
                             fixtureCableBindService.FixtureBind(content, contentP);
                         }
                         catch (Exception ex)
                         {
                             LogManager.Error(ex);
-                        }
-                        finally
-                        {
-                            _inovanceHelper.write_D_Address(13, 3);
+                            _inovanceHelper.WriteAddressByD(2600, 3);
+                            _inovanceHelper.WriteAddressByD(2602, 3);
                         }
                     }
                     await Task.Delay(100);
@@ -189,7 +245,7 @@ namespace EC0403HB焊接
                     Start_time=DateTime.Now,
                     Test_station=DataContent.SystemConfig.TestStation,
                     FAI1_A=fixture,
-                    FixtureID=fixture,
+                    //FixtureID=fixture,
                     Model=DataContent.SystemConfig.Model,
                     
                 };

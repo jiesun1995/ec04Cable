@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Runtime.Remoting.Channels;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Net.WebRequestMethods;
@@ -44,20 +45,26 @@ namespace EC0405编织喷胶
                 {
                     if (_inovanceHelper.read_D_Address(_dAddress) == 1)
                     {
+                        LogManager.Info($"读取到【{_dAddress}:1】");
                         try
                         {
-                            _codeFixtrue = _RFIDChannelR.Read();
+                            _inovanceHelper.WriteAddressByD(_dAddress, 9);
+                            _codeFixtrue = _RFIDChannelL.Read();
+                            Invoke((EventHandler)delegate {
+                                tbxFixture.Text = _codeFixtrue;tbxFixture.BackColor = Color.Yellow;
+                                groupBox1.BackColor = SystemColors.Control;
+                            });
                             SaveData();
-                            _inovanceHelper.write_D_Address(_dAddress, 2);
                         }
                         catch (Exception ex)
                         {
                             LogManager.Error(ex);
-                            _inovanceHelper.write_D_Address(_dAddress, 3);
+                            _inovanceHelper.WriteAddressByD(_dAddress, 3);
                         }
                     }
+                    Thread.Sleep(100);
                 }
-            });
+            },TaskCreationOptions.LongRunning);
 
 
             //_RFIDChannelL.SetChannelState(state =>
@@ -96,8 +103,8 @@ namespace EC0405编织喷胶
                     {
                         var result = false;
                         tbxCable.BackColor = System.Drawing.Color.Yellow;
+                        groupBox1.BackColor = SystemColors.Control;
                         var content = _RFIDChannelR.Read();
-                        LogManager.Info($"读取线材:{content};");
                         try
                         {
                             result = _mesService.GetCurrStation(content) == DataContent.SystemConfig.ConfirmStation;
@@ -108,12 +115,12 @@ namespace EC0405编织喷胶
                         }
                         if (_codeCable == content)
                         {
-                            tbxCable.BackColor = result ? System.Drawing.Color.Green : Color.Yellow;
+                            tbxCable.BackColor = result ? System.Drawing.Color.Yellow : Color.Yellow;
                         }
                         else
                         {
                             tbxCable.Text = content;
-                            tbxCable.BackColor = result ? System.Drawing.Color.Green : Color.Yellow;
+                            tbxCable.BackColor = result ? System.Drawing.Color.Yellow : Color.Yellow;
                             _codeCable = content;
                         }
                         SaveData();
@@ -132,11 +139,13 @@ namespace EC0405编织喷胶
             {
                 Invoke((EventHandler)delegate
                 {
-                    groupBox1.BackColor = System.Drawing.SystemColors.Control;
-                    tbxFixture.Text = string.Empty;
-                    tbxCable.Text = string.Empty;
+                    groupBox1.BackColor = Color.Green;
+                    //tbxFixture.Text = string.Empty;
+                    //tbxCable.Text = string.Empty;
                     tbxFixture.BackColor= System.Drawing.SystemColors.Control;
                     tbxCable.BackColor = System.Drawing.SystemColors.Control;
+                    _codeFixtrue = string.Empty;
+                    _codeCable = string.Empty;
                 });
             });
         }
@@ -146,6 +155,7 @@ namespace EC0405编织喷胶
             {
                 if (!string.IsNullOrWhiteSpace(_codeFixtrue) && !string.IsNullOrWhiteSpace(_codeCable))
                 {
+                    _inovanceHelper.WriteAddressByD(_dAddress, 2);
                     var result = _codeCallBack(_codeFixtrue, _codeCable);
                     if (result)
                     {

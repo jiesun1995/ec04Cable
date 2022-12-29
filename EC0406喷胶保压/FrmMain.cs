@@ -107,9 +107,9 @@ namespace EC0406喷胶保压
                 while (true)
                 {
                     if (_inovanceHelper == null) { await Task.Delay(1000); continue; }
-                    if (_inovanceHelper.ReadAddressByD(11) == 1)
+                    if (_inovanceHelper.ReadAddressByD(5100) == 1)
                     {
-                        LogManager.Info($"读取到启动信号：{{D11:1}}");
+                        LogManager.Info($"读取到启动信号：{{D5100:1}}");
                         try
                         {
                             var sn = _RFIDChannel1.Read();
@@ -125,7 +125,7 @@ namespace EC0406喷胶保压
                                     Start_time = DateTime.Now,
                                     Test_station = DataContent.SystemConfig.TestStation,
                                     FAI1_A = fixture,
-                                    FixtureID = fixture,
+                                    //FixtureID = fixture,
                                     Model = DataContent.SystemConfig.Model,
                                 };
                                 fixtureCableBindService.FixtureCableBind(new List<Cable> { cable });
@@ -143,17 +143,15 @@ namespace EC0406喷胶保压
                                 };
                                 fixtureCableBindService.FixtureCableBind(new List<Cable> { cable });
                             }
+                            _inovanceHelper.WriteAddressByD(5100, 2);
                         }
                         catch (Exception ex)
                         {
                             LogManager.Error(ex);
-                        }
-                        finally
-                        {
-                            _inovanceHelper.WriteAddressByD(11, 0);
+                            _inovanceHelper.WriteAddressByD(5100, 3);
                         }
                     }
-                    await Task.Delay(100);
+                    await Task.Delay(10);
                 }
             }, TaskCreationOptions.LongRunning);
             Task.Factory.StartNew(async () =>
@@ -162,9 +160,9 @@ namespace EC0406喷胶保压
                 while (true)
                 {
                     if (_inovanceHelper == null) { await Task.Delay(1000); continue; }
-                    if (_inovanceHelper.ReadAddressByD(13) == 1)
+                    if (_inovanceHelper.ReadAddressByD(5102) == 1)
                     {
-                        LogManager.Info($"读取到启动信号：{{D13:1}}");
+                        LogManager.Info($"读取到启动信号：{{D5102:1}}");
                         try
                         {
                             var val = _RFIDChannel2.Read();
@@ -182,17 +180,15 @@ namespace EC0406喷胶保压
                             {
                                 fixtureCableBindService.FixtureBind(val, "NG", valR);
                             }
+                            _inovanceHelper.WriteAddressByD(5102, 2);
                         }
                         catch (Exception ex)
                         {
                             LogManager.Error(ex);
-                        }
-                        finally
-                        {
-                            _inovanceHelper.WriteAddressByD(13, 0);
+                            _inovanceHelper.WriteAddressByD(5102, 3);
                         }
                     }
-                    await Task.Delay(100);
+                    await Task.Delay(10);
                 }
             }, TaskCreationOptions.LongRunning);
         }

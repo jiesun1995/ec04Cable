@@ -15,7 +15,7 @@ namespace EC0405编织喷胶
     public partial class FrmMain : Form
     {
         private Stopwatch _stopwatch ;
-        private int[] _address = new int[] { };
+        private int[] _address = new int[] {6050,6070 };
         public FrmMain()
         {
             _stopwatch = new Stopwatch();
@@ -46,7 +46,7 @@ namespace EC0405编织喷胶
                     var mesService= new MesService();
                     var inovanceHelper = new InovanceHelper(DataContent.SystemConfig.PLCIp, DataContent.SystemConfig.PLCPort);
                     Form frmcode;
-                    frmcode = new FrmFixture(RFIDChannelFixtrue, RFIDChannelCable, mesService, inovanceHelper, _address[i],
+                    frmcode = new FrmFixture(RFIDChannelFixtrue, RFIDChannelCable  , mesService, inovanceHelper, _address[i],
                         (fixture, cable) => { return ScannerCodeByPeopleSaveCSV(fixture, new List<string> { cable }); });
                     frmcode.TopLevel = false;
                     frmcode.Dock = DockStyle.Top;
@@ -76,10 +76,11 @@ namespace EC0405编织喷胶
                         Sn = newCables[i],
                         Start_time = DateTime.Now,
                         Finish_time = DateTime.Now,
-                        Station = "PASS",
+                        //Station = "PASS",
+                        Status="PASS",
                         Model = DataContent.SystemConfig.Model,
                         Test_station = DataContent.SystemConfig.TestStation,
-                        FixtureID = DataContent.SystemConfig.FixtureID,
+                        //FixtureID = DataContent.SystemConfig.FixtureID,
                         FAI1_A = fixture,
                     };
                     var dt = cable.ToTable();
@@ -105,7 +106,7 @@ namespace EC0405编织喷胶
                     gbxRFID3.Text = "后工站载具扫码RFID";
                     gbxRFID4.Text = "后工站线材扫码RFID";
                     gbxRFID5.Visible = false;
-                    gbxPLC.Visible = false;
+                    gbxPLC.Visible = true;
                     gbxWCF.Visible = false;
                 });
                 frmSetting.ShowDialog();

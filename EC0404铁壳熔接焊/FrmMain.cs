@@ -95,10 +95,11 @@ namespace EC0404铁壳熔接焊
                     Sn = cableSn,
                     Start_time = DateTime.Now,
                     Finish_time = DateTime.Now,
-                    Station = "PASS",
+                    //Station = "PASS",
+                    Status = "PASS",
                     Model = DataContent.SystemConfig.Model,
                     Test_station = DataContent.SystemConfig.TestStation,
-                    FixtureID = fixtureL,
+                    //FixtureID = fixtureL,
                     FAI1_A = fixtureL,
                     FAI1_B = fixtureR,
                 };
@@ -125,7 +126,7 @@ namespace EC0404铁壳熔接焊
                     gbxRFID4.Visible= false;
                     gbxRFID5.Visible = false;
                     gbxWCF.Visible = false;
-                    gbxPLC.Visible = false;
+                    gbxPLC.Visible = true;
                 });
                 frmSetting.ShowDialog();
             }

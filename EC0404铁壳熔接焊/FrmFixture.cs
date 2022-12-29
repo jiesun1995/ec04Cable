@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.Remoting.Channels;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Net.WebRequestMethods;
@@ -26,7 +27,7 @@ namespace EC0404铁壳熔接焊
         private readonly RFIDChannel _RFIDChannelR;
         private readonly RFIDChannel _RFIDChannelCable;
         private readonly OMRHelper _omrHelper;
-        private readonly string _address = "";
+        private readonly string _address = "D4035";
 
         public FrmFixture(RFIDChannel RFIDChannelL, RFIDChannel RFIDChannelR, RFIDChannel RFIDChannelCable, MesService mesService, OMRHelper omrHelper, Func<string, string, string, bool> codeCallBack)
         {
@@ -46,13 +47,22 @@ namespace EC0404铁壳熔接焊
                 {
                     if (_omrHelper.Read(_address) == 1)
                     {
+                        LogManager.Info($"读取地址【{_address}:1】");
                         try
                         {
 
+                            _omrHelper.Write(_address, 9);
                             _codeFixtrueL = _RFIDChannelL.Read();
                             _codeFixtrueR = _RFIDChannelR.Read();
+                            Invoke((EventHandler)delegate
+                            {
+                                tbxFixtureL.Text = _codeFixtrueL;
+                                tbxFixtureR.Text = _codeFixtrueR;
+                                groupBox1.BackColor= SystemColors.Control;
+                                tbxFixtureL.BackColor = Color.Yellow;
+                                tbxFixtureR.BackColor = Color.Yellow;
+                            });
                             SaveData();
-                            _omrHelper.Write(_address, 2);
                         }
                         catch (Exception ex)
                         {
@@ -60,8 +70,10 @@ namespace EC0404铁壳熔接焊
                             _omrHelper.Write(_address, 3);
                         }
                     }
+
+                    Thread.Sleep(100);
                 }
-            });
+            },TaskCreationOptions.LongRunning);
 
 
 
@@ -125,6 +137,7 @@ namespace EC0404铁壳熔接焊
                     {
                         var result = false;
                         tbxCable.BackColor = System.Drawing.Color.Yellow;
+                        groupBox1.BackColor = SystemColors.Control;
                         var content = _RFIDChannelCable.Read();
                         try
                         {
@@ -136,12 +149,12 @@ namespace EC0404铁壳熔接焊
                         }
                         if (_codeCable == content)
                         {
-                            tbxCable.BackColor = result ? System.Drawing.Color.Green : Color.Yellow;
+                            tbxCable.BackColor = result ? System.Drawing.Color.Yellow : Color.Yellow;
                         }
                         else
                         {
                             tbxCable.Text = content;
-                            tbxCable.BackColor = result ? System.Drawing.Color.Green : Color.Yellow;
+                            tbxCable.BackColor = result ? System.Drawing.Color.Yellow : Color.Yellow;
                             _codeCable = content;
                         }
                         SaveData();
@@ -160,10 +173,13 @@ namespace EC0404铁壳熔接焊
             {
                 Invoke((EventHandler)delegate
                 {
-                    groupBox1.BackColor = System.Drawing.SystemColors.Control;
-                    tbxFixtureL.Text = string.Empty;
-                    tbxFixtureR.Text = string.Empty;
-                    tbxCable.Text = string.Empty;
+                    groupBox1.BackColor = Color.Green;
+                    //tbxFixtureL.Text = string.Empty;
+                    //tbxFixtureR.Text = string.Empty;
+                    //tbxCable.Text = string.Empty;
+                    _codeFixtrueL = string.Empty;
+                    _codeFixtrueR = string.Empty;
+                    _codeCable = string.Empty;
                     tbxFixtureL.BackColor = System.Drawing.SystemColors.Control;
                     tbxFixtureR.BackColor = System.Drawing.SystemColors.Control;
                     tbxCable.BackColor = System.Drawing.SystemColors.Control;
@@ -176,6 +192,8 @@ namespace EC0404铁壳熔接焊
             {
                 if (!string.IsNullOrWhiteSpace(_codeFixtrueL) && !string.IsNullOrWhiteSpace(_codeFixtrueR) && !string.IsNullOrWhiteSpace(_codeCable))
                 {
+                    _omrHelper.Write(_address, 2);
+
                     var result = _codeCallBack(_codeFixtrueL, _codeFixtrueR, _codeCable);
                     if (result)
                     {

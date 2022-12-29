@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
@@ -40,7 +41,23 @@ namespace EC0402低压成型
             {
                 Form frmcode;
                 MesService mesService = new MesService();
-                frmcode = new FrmFixture((fixture, cable1, cable2) => { return ScannerCodeByPeopleSaveCSV(fixture, new List<string> { cable1, cable2 }); }, mesService);
+                if (ConfigurationManager.AppSettings["Input"] != null)
+                {
+                    RFIDChannel channel=null;
+                    try
+                    {
+                        channel = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[0].IP, DataContent.SystemConfig.RFIDConfigs[0].Channel, DataContent.SystemConfig.RFIDConfigs[0].Port);
+                    }
+                    catch (Exception ex)
+                    {
+                        LogManager.Error(ex);
+                    }
+                    frmcode = new FrmRFIDGetWayFixture(channel, (fixture, cable1, cable2) => { return ScannerCodeByPeopleSaveCSV(fixture, new List<string> { cable1, cable2 }); }, mesService);
+                }
+                else
+                {
+                    frmcode = new FrmFixture((fixture, cable1, cable2) => { return ScannerCodeByPeopleSaveCSV(fixture, new List<string> { cable1, cable2 }); }, mesService);
+                }
                 frmcode.TopLevel = false;
                 frmcode.Dock = DockStyle.Top;
                 frmcode.Width = tabPage1.Width;
@@ -106,7 +123,7 @@ namespace EC0402低压成型
             {
                 Common.FrmSetting frmSetting = new Common.FrmSetting((gbxRFID1, gbxRFID2, gbxRFID3, gbxRFID4, gbxRFID5, gbxStation, gbxPLC, gbxWCF) =>
                 {
-                    gbxRFID1.Visible = false;
+                    gbxRFID1.Visible = true;
                     gbxRFID2.Visible = false;
                     gbxRFID3.Visible = false;
                     gbxRFID4.Visible = false;
