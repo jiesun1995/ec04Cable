@@ -795,17 +795,17 @@ namespace Common
         private RFIDFactory() { }
         public static RFIDChannel Instance(string ip, int channel, int port = 502)
         {
-            lock (_obj)
-            {
-                if (!_gatewaies.ContainsKey(ip))
-                {
-                    var gateway = new Gateway();
-                    gateway.Connect(ip, port);
-                    _gatewaies.Add(ip, gateway);
-                }
-            }
             try
             {
+                lock (_obj)
+                {
+                    if (!_gatewaies.ContainsKey(ip))
+                    {
+                        var gateway = new Gateway();
+                        gateway.Connect(ip, port);
+                        _gatewaies.Add(ip, gateway);
+                    }
+                }
                 var reader = _gatewaies[ip].GetReaderInstance(channel);
                 return new RFIDChannel(reader);
             }

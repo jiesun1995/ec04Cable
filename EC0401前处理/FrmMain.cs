@@ -16,7 +16,6 @@ namespace EC0401前处理
     {
         private Stopwatch _stopwatch ;
         private Stopwatch _resetStopwatch;
-        private static int _peopleScannerCodeCount = 1;
         public FrmMain()
         {
             _stopwatch = new Stopwatch();
@@ -43,9 +42,9 @@ namespace EC0401前处理
         {
             LogManager.Init(lvLogs);
             tabPage1.Controls.Clear();
-            var zhanbi = 1.00 / _peopleScannerCodeCount;
+            var zhanbi = 1.00 / DataContent.SystemConfig.ScannerCode;
             ///动态加载人工扫码位显示界面
-            for (int i = 0; i < _peopleScannerCodeCount; i++)
+            for (int i = 0; i < DataContent.SystemConfig.ScannerCode; i++)
             {
                 try
                 {
@@ -79,10 +78,10 @@ namespace EC0401前处理
                 Common.FrmSetting frmSetting = new Common.FrmSetting((gbxRFID1, gbxRFID2, gbxRFID3, gbxRFID4, gbxRFID5, gbxStation, gbxPLC, gbxWCF) =>
                 {
                     gbxRFID1.Text = "感应区读写RFID";
-                    gbxRFID2.Visible= false;
-                    gbxRFID3.Visible= false;
-                    gbxRFID4.Visible= false;
-                    gbxRFID5.Visible = false;
+                    gbxRFID2.Text = "感应区读写RFID";
+                    gbxRFID3.Text = "感应区读写RFID";
+                    gbxRFID4.Text = "感应区读写RFID";
+                    gbxRFID5.Text = "感应区读写RFID";
                     gbxStation.Visible= true;
                     gbxPLC.Visible= false;
                     gbxWCF.Visible= false;

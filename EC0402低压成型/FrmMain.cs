@@ -36,6 +36,19 @@ namespace EC0402低压成型
             LogManager.Init(lvLogs);
             tabPage1.Controls.Clear();
             var zhanbi = 1.00 / DataContent.SystemConfig.ScannerCode;
+            TableLayoutPanel tableLayoutPanel = new TableLayoutPanel();
+            //tableLayoutPanel.SuspendLayout();
+            
+            
+            tableLayoutPanel.RowCount = DataContent.SystemConfig.ScannerCode % 2 > 0 ? DataContent.SystemConfig.ScannerCode / 2 + 1 : DataContent.SystemConfig.ScannerCode / 2;
+            tableLayoutPanel.ColumnCount = DataContent.SystemConfig.ScannerCode > 1 ? 2 : 1;
+            tableLayoutPanel.Dock = DockStyle.Fill;
+            //tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,50F));
+            //tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            //tableLayoutPanel.RowStyles.Add(new ColumnStyle(SizeType.Percent,50F));
+            //tableLayoutPanel.RowStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+           
+
             ///动态加载人工扫码位显示界面
             for (int i = 0; i < DataContent.SystemConfig.ScannerCode; i++)
             {
@@ -44,31 +57,39 @@ namespace EC0402低压成型
                 if (ConfigurationManager.AppSettings["Input"] != null)
                 {
                     RFIDChannel channel=null;
-                    try
-                    {
-                        channel = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[0].IP, DataContent.SystemConfig.RFIDConfigs[0].Channel, DataContent.SystemConfig.RFIDConfigs[0].Port);
-                    }
-                    catch (Exception ex)
-                    {
-                        LogManager.Error(ex);
-                    }
+                    //try
+                    //{
+                    //    channel = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[0].IP, DataContent.SystemConfig.RFIDConfigs[0].Channel, DataContent.SystemConfig.RFIDConfigs[0].Port);
+                    //}
+                    //catch (Exception ex)
+                    //{
+                    //    LogManager.Error(ex);
+                    //}
                     frmcode = new FrmRFIDGetWayFixture(channel, (fixture, cable1, cable2) => { return ScannerCodeByPeopleSaveCSV(fixture, new List<string> { cable1, cable2 }); }, mesService);
                 }
                 else
                 {
                     frmcode = new FrmFixture((fixture, cable1, cable2) => { return ScannerCodeByPeopleSaveCSV(fixture, new List<string> { cable1, cable2 }); }, mesService);
                 }
+                tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100 / DataContent.SystemConfig.ScannerCode > 1 ? 2 : 1));
+                tableLayoutPanel.RowStyles.Add(new ColumnStyle(SizeType.Percent, 100 / DataContent.SystemConfig.ScannerCode % 2 > 0 ? DataContent.SystemConfig.ScannerCode / 2 + 1 : DataContent.SystemConfig.ScannerCode / 2));
+
+                var panel = new Panel();
+                panel.Dock = DockStyle.Fill;
                 frmcode.TopLevel = false;
-                frmcode.Dock = DockStyle.Top;
+                frmcode.Dock = DockStyle.Fill;
                 frmcode.Width = tabPage1.Width;
                 frmcode.FormBorderStyle = FormBorderStyle.None;
 
-                frmcode.Height = Convert.ToInt32(tabPage1.Height * zhanbi);
-                var y = Convert.ToInt32(tabPage1.Height * zhanbi * i);
-                frmcode.Location = new Point(0, y);
-                tabPage1.Controls.Add(frmcode);
+                //frmcode.Height = Convert.ToInt32(tabPage1.Height * zhanbi);
+                //var y = Convert.ToInt32(tabPage1.Height * zhanbi * i);
+                //frmcode.Location = new Point(0, y);
+                //tabPage1.Controls.Add(frmcode);
+                panel.Controls.Add(frmcode);
                 frmcode.Show();
+                tableLayoutPanel.Controls.Add(panel, i % 2, i / 2);
             }
+            tabPage1.Controls.Add(tableLayoutPanel);
         }
         private bool ScannerCodeByPeopleSaveCSV(string fixture, List<string> newCables)
         {

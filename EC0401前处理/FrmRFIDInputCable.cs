@@ -32,6 +32,7 @@ namespace EC0401前处理
         {
             ValidationInvoices();
 
+            if (_RFIDChannel == null) return;
             _RFIDChannel.SetChannelState(state =>
             {
                 Invoke((EventHandler)delegate
