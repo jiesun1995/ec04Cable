@@ -27,6 +27,8 @@ namespace Common
             _systemConfig = DataContent.SystemConfig;
             InitializeComponent();
             _configGroup = configGroup;
+            
+
         }
 
         private void FrmSetting_Load(object sender, EventArgs e)
@@ -68,8 +70,15 @@ namespace Common
             gbxRFID5.Controls.Add(_frmRFIDSetting4);
             _frmRFIDSetting4.Show();
 
-            tbxPLCIp.Text = _systemConfig.PLCIp;
-            tbxPLCPort.Text = _systemConfig.PLCPort.ToString();
+            tbxPLCIp.Text = _systemConfig.PLCConfigs[0].IP;
+            tbxPLCPort.Text = _systemConfig.PLCConfigs[0].Port.ToString();
+            cbxPLCType.DataSource = Enum.GetNames(typeof(PLCType));
+            cbxPLCType.SelectedIndex =cbxPLCType.FindString(_systemConfig.PLCConfigs[0].Type.ToString());
+
+            tbxPLCIp2.Text = _systemConfig.PLCConfigs[1].IP;
+            tbxPLCPort2.Text = _systemConfig.PLCConfigs[1].Port.ToString();
+            cbxPLCType2.DataSource = Enum.GetNames(typeof(PLCType));
+            cbxPLCType2.SelectedIndex = cbxPLCType.FindString(_systemConfig.PLCConfigs[1].Type.ToString());
 
             tbxWCFServerIP.Text = _systemConfig.WCFSeverIp.ToString();
             tbxWCFServerPort.Text = _systemConfig.WCFSeverPort.ToString();
@@ -121,8 +130,13 @@ namespace Common
                 systemConfig.ConfirmStation = tbxConfirmStation.Text;
                 systemConfig.MESUrl = tbxMesUrl.Text;
 
-                systemConfig.PLCIp = tbxPLCIp.Text;
-                systemConfig.PLCPort = ValidateDataByInt(tbxPLCPort.Text, "端口号不能为字符");
+                systemConfig.PLCConfigs[0].IP = tbxPLCIp.Text;
+                systemConfig.PLCConfigs[0].Port = ValidateDataByInt(tbxPLCPort.Text, "端口号不能为字符");
+                systemConfig.PLCConfigs[0].Type = (PLCType)Enum.Parse(typeof(PLCType), cbxPLCType.SelectedItem.ToString(), false);
+
+                systemConfig.PLCConfigs[1].IP = tbxPLCIp2.Text;
+                systemConfig.PLCConfigs[1].Port = ValidateDataByInt(tbxPLCPort2.Text, "端口号不能为字符");
+                systemConfig.PLCConfigs[1].Type = (PLCType)Enum.Parse(typeof(PLCType), cbxPLCType2.SelectedItem.ToString(), false);
 
                 systemConfig.WCFSeverIp = tbxWCFServerIP.Text;
                 systemConfig.WCFSeverPort = tbxWCFServerPort.Text;

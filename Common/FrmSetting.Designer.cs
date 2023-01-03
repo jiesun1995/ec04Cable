@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmSetting));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.gbxRFID5 = new System.Windows.Forms.GroupBox();
             this.gbxRFID4 = new System.Windows.Forms.GroupBox();
             this.gbxRFID3 = new System.Windows.Forms.GroupBox();
             this.gbxRFID2 = new System.Windows.Forms.GroupBox();
@@ -66,11 +67,20 @@
             this.tbxModel = new System.Windows.Forms.TextBox();
             this.label25 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.gbxRFID1 = new System.Windows.Forms.GroupBox();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.gbxRFID1 = new System.Windows.Forms.GroupBox();
-            this.gbxRFID5 = new System.Windows.Forms.GroupBox();
-            this.panel2 = new System.Windows.Forms.Panel();
+            this.GroupBox1 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.cbxPLCType = new System.Windows.Forms.ComboBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.cbxPLCType2 = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.tbxPLCIp2 = new System.Windows.Forms.TextBox();
+            this.tbxPLCPort2 = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.gbxWCF.SuspendLayout();
             this.gbxWCFClient.SuspendLayout();
@@ -79,6 +89,8 @@
             this.gbxStation.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudScannerCode)).BeginInit();
             this.panel2.SuspendLayout();
+            this.GroupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -108,6 +120,16 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1337, 726);
             this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // gbxRFID5
+            // 
+            this.gbxRFID5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbxRFID5.Location = new System.Drawing.Point(1071, 3);
+            this.gbxRFID5.Name = "gbxRFID5";
+            this.gbxRFID5.Size = new System.Drawing.Size(263, 258);
+            this.gbxRFID5.TabIndex = 18;
+            this.gbxRFID5.TabStop = false;
+            this.gbxRFID5.Text = "groupBox4";
             // 
             // gbxRFID4
             // 
@@ -249,10 +271,8 @@
             // 
             // gbxPLC
             // 
-            this.gbxPLC.Controls.Add(this.tbxPLCPort);
-            this.gbxPLC.Controls.Add(this.label26);
-            this.gbxPLC.Controls.Add(this.tbxPLCIp);
-            this.gbxPLC.Controls.Add(this.label27);
+            this.gbxPLC.Controls.Add(this.groupBox2);
+            this.gbxPLC.Controls.Add(this.GroupBox1);
             this.gbxPLC.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gbxPLC.Location = new System.Drawing.Point(270, 267);
             this.gbxPLC.Name = "gbxPLC";
@@ -263,7 +283,7 @@
             // 
             // tbxPLCPort
             // 
-            this.tbxPLCPort.Location = new System.Drawing.Point(54, 86);
+            this.tbxPLCPort.Location = new System.Drawing.Point(54, 59);
             this.tbxPLCPort.Name = "tbxPLCPort";
             this.tbxPLCPort.Size = new System.Drawing.Size(201, 25);
             this.tbxPLCPort.TabIndex = 13;
@@ -272,7 +292,7 @@
             // 
             this.label26.AutoSize = true;
             this.label26.Font = new System.Drawing.Font("宋体", 7F);
-            this.label26.Location = new System.Drawing.Point(6, 89);
+            this.label26.Location = new System.Drawing.Point(6, 62);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(35, 12);
             this.label26.TabIndex = 12;
@@ -280,7 +300,7 @@
             // 
             // tbxPLCIp
             // 
-            this.tbxPLCIp.Location = new System.Drawing.Point(54, 46);
+            this.tbxPLCIp.Location = new System.Drawing.Point(54, 19);
             this.tbxPLCIp.Name = "tbxPLCIp";
             this.tbxPLCIp.Size = new System.Drawing.Size(201, 25);
             this.tbxPLCIp.TabIndex = 11;
@@ -289,7 +309,7 @@
             // 
             this.label27.AutoSize = true;
             this.label27.Font = new System.Drawing.Font("宋体", 7F);
-            this.label27.Location = new System.Drawing.Point(6, 49);
+            this.label27.Location = new System.Drawing.Point(6, 22);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(47, 12);
             this.label27.TabIndex = 10;
@@ -359,7 +379,7 @@
             this.label31.AutoSize = true;
             this.label31.Font = new System.Drawing.Font("宋体", 7F);
             this.label31.ForeColor = System.Drawing.Color.Brown;
-            this.label31.Location = new System.Drawing.Point(135, 354);
+            this.label31.Location = new System.Drawing.Point(76, 356);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(179, 12);
             this.label31.TabIndex = 20;
@@ -469,6 +489,26 @@
             this.panel1.Size = new System.Drawing.Size(261, 435);
             this.panel1.TabIndex = 6;
             // 
+            // gbxRFID1
+            // 
+            this.gbxRFID1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gbxRFID1.Location = new System.Drawing.Point(3, 3);
+            this.gbxRFID1.Name = "gbxRFID1";
+            this.gbxRFID1.Size = new System.Drawing.Size(261, 258);
+            this.gbxRFID1.TabIndex = 13;
+            this.gbxRFID1.TabStop = false;
+            this.gbxRFID1.Text = "groupBox1";
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.button2);
+            this.panel2.Controls.Add(this.button1);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(1071, 267);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(263, 435);
+            this.panel2.TabIndex = 19;
+            // 
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("宋体", 20F);
@@ -491,35 +531,107 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // gbxRFID1
+            // GroupBox1
             // 
-            this.gbxRFID1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbxRFID1.Location = new System.Drawing.Point(3, 3);
-            this.gbxRFID1.Name = "gbxRFID1";
-            this.gbxRFID1.Size = new System.Drawing.Size(261, 258);
-            this.gbxRFID1.TabIndex = 13;
-            this.gbxRFID1.TabStop = false;
-            this.gbxRFID1.Text = "groupBox1";
+            this.GroupBox1.Controls.Add(this.cbxPLCType);
+            this.GroupBox1.Controls.Add(this.label3);
+            this.GroupBox1.Controls.Add(this.tbxPLCIp);
+            this.GroupBox1.Controls.Add(this.tbxPLCPort);
+            this.GroupBox1.Controls.Add(this.label27);
+            this.GroupBox1.Controls.Add(this.label26);
+            this.GroupBox1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.GroupBox1.Location = new System.Drawing.Point(3, 21);
+            this.GroupBox1.Name = "GroupBox1";
+            this.GroupBox1.Size = new System.Drawing.Size(255, 144);
+            this.GroupBox1.TabIndex = 14;
+            this.GroupBox1.TabStop = false;
+            this.GroupBox1.Text = "PLC配置1";
             // 
-            // gbxRFID5
+            // label3
             // 
-            this.gbxRFID5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gbxRFID5.Location = new System.Drawing.Point(1071, 3);
-            this.gbxRFID5.Name = "gbxRFID5";
-            this.gbxRFID5.Size = new System.Drawing.Size(263, 258);
-            this.gbxRFID5.TabIndex = 18;
-            this.gbxRFID5.TabStop = false;
-            this.gbxRFID5.Text = "groupBox4";
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("宋体", 7F);
+            this.label3.Location = new System.Drawing.Point(9, 100);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(35, 12);
+            this.label3.TabIndex = 14;
+            this.label3.Text = "类型:";
             // 
-            // panel2
+            // cbxPLCType
             // 
-            this.panel2.Controls.Add(this.button2);
-            this.panel2.Controls.Add(this.button1);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(1071, 267);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(263, 435);
-            this.panel2.TabIndex = 19;
+            this.cbxPLCType.FormattingEnabled = true;
+            this.cbxPLCType.Location = new System.Drawing.Point(54, 100);
+            this.cbxPLCType.Name = "cbxPLCType";
+            this.cbxPLCType.Size = new System.Drawing.Size(201, 23);
+            this.cbxPLCType.TabIndex = 15;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.cbxPLCType2);
+            this.groupBox2.Controls.Add(this.label4);
+            this.groupBox2.Controls.Add(this.tbxPLCIp2);
+            this.groupBox2.Controls.Add(this.tbxPLCPort2);
+            this.groupBox2.Controls.Add(this.label5);
+            this.groupBox2.Controls.Add(this.label6);
+            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox2.Location = new System.Drawing.Point(3, 165);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(255, 144);
+            this.groupBox2.TabIndex = 17;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "PLC配置2";
+            // 
+            // cbxPLCType2
+            // 
+            this.cbxPLCType2.FormattingEnabled = true;
+            this.cbxPLCType2.Location = new System.Drawing.Point(54, 100);
+            this.cbxPLCType2.Name = "cbxPLCType2";
+            this.cbxPLCType2.Size = new System.Drawing.Size(201, 23);
+            this.cbxPLCType2.TabIndex = 15;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("宋体", 7F);
+            this.label4.Location = new System.Drawing.Point(9, 100);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(35, 12);
+            this.label4.TabIndex = 14;
+            this.label4.Text = "类型:";
+            // 
+            // tbxPLCIp2
+            // 
+            this.tbxPLCIp2.Location = new System.Drawing.Point(54, 19);
+            this.tbxPLCIp2.Name = "tbxPLCIp2";
+            this.tbxPLCIp2.Size = new System.Drawing.Size(201, 25);
+            this.tbxPLCIp2.TabIndex = 11;
+            // 
+            // tbxPLCPort2
+            // 
+            this.tbxPLCPort2.Location = new System.Drawing.Point(54, 59);
+            this.tbxPLCPort2.Name = "tbxPLCPort2";
+            this.tbxPLCPort2.Size = new System.Drawing.Size(201, 25);
+            this.tbxPLCPort2.TabIndex = 13;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("宋体", 7F);
+            this.label5.Location = new System.Drawing.Point(6, 22);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(47, 12);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "PLC IP:";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("宋体", 7F);
+            this.label6.Location = new System.Drawing.Point(6, 62);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(35, 12);
+            this.label6.TabIndex = 12;
+            this.label6.Text = "Port:";
             // 
             // FrmSetting
             // 
@@ -538,11 +650,14 @@
             this.gbxWCFServer.ResumeLayout(false);
             this.gbxWCFServer.PerformLayout();
             this.gbxPLC.ResumeLayout(false);
-            this.gbxPLC.PerformLayout();
             this.gbxStation.ResumeLayout(false);
             this.gbxStation.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudScannerCode)).EndInit();
             this.panel2.ResumeLayout(false);
+            this.GroupBox1.ResumeLayout(false);
+            this.GroupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -591,5 +706,15 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox gbxRFID5;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.ComboBox cbxPLCType2;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox tbxPLCIp2;
+        private System.Windows.Forms.TextBox tbxPLCPort2;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.GroupBox GroupBox1;
+        private System.Windows.Forms.ComboBox cbxPLCType;
+        private System.Windows.Forms.Label label3;
     }
 }

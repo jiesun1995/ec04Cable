@@ -130,6 +130,7 @@
     <Compile Include="Master.cs" />
     <Compile Include="MesService.cs" />
     <Compile Include="OMRHelper.cs" />
+    <Compile Include="PLCFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RfidChannelState.cs" />
     <Compile Include="RFIDHelper.cs" />

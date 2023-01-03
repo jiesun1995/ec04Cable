@@ -24,17 +24,17 @@ namespace EC0405编织喷胶
         private string _codeFixtrue = string.Empty;
         private string _codeCable = string.Empty;
         private readonly MesService _mesService;
-        private readonly InovanceHelper _inovanceHelper;
+        private readonly IPLCReadWrite _plcHelper;
         private readonly int _dAddress;
 
-        public FrmFixture(RFIDChannel RFIDChannelL, RFIDChannel RFIDChannelR, MesService mesService, InovanceHelper inovanceHelper, int dAddress, Func<string, string, bool>  codeCallBack)
+        public FrmFixture(RFIDChannel RFIDChannelL, RFIDChannel RFIDChannelR, MesService mesService, IPLCReadWrite plcHelper, int dAddress, Func<string, string, bool>  codeCallBack)
         {
             _mesService = mesService;
             _codeCallBack = codeCallBack;
             InitializeComponent();
             _RFIDChannelL = RFIDChannelL;
             _RFIDChannelR = RFIDChannelR;
-            _inovanceHelper = inovanceHelper;
+            _plcHelper = plcHelper;
             _dAddress = dAddress;
         }
         private void FrmFixture_Load(object sender, EventArgs e)
@@ -43,12 +43,12 @@ namespace EC0405编织喷胶
             {
                 while (true)
                 {
-                    if (_inovanceHelper.read_D_Address(_dAddress) == 1)
+                    if (_plcHelper.Read(_dAddress) == 1)
                     {
                         LogManager.Info($"读取到【{_dAddress}:1】");
                         try
                         {
-                            _inovanceHelper.WriteAddressByD(_dAddress, 9);
+                            _plcHelper.Write(_dAddress, 9);
                             _codeFixtrue = _RFIDChannelL.Read();
                             Invoke((EventHandler)delegate {
                                 tbxFixture.Text = _codeFixtrue;tbxFixture.BackColor = Color.Yellow;
@@ -59,7 +59,7 @@ namespace EC0405编织喷胶
                         catch (Exception ex)
                         {
                             LogManager.Error(ex);
-                            _inovanceHelper.WriteAddressByD(_dAddress, 3);
+                            _plcHelper.Write(_dAddress, 3);
                         }
                     }
                     Thread.Sleep(100);
@@ -155,7 +155,7 @@ namespace EC0405编织喷胶
             {
                 if (!string.IsNullOrWhiteSpace(_codeFixtrue) && !string.IsNullOrWhiteSpace(_codeCable))
                 {
-                    _inovanceHelper.WriteAddressByD(_dAddress, 2);
+                    _plcHelper.Write(_dAddress, 2);
                     var result = _codeCallBack(_codeFixtrue, _codeCable);
                     if (result)
                     {

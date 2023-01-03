@@ -37,18 +37,9 @@ namespace EC0402低压成型
             tabPage1.Controls.Clear();
             var zhanbi = 1.00 / DataContent.SystemConfig.ScannerCode;
             TableLayoutPanel tableLayoutPanel = new TableLayoutPanel();
-            //tableLayoutPanel.SuspendLayout();
-            
-            
             tableLayoutPanel.RowCount = DataContent.SystemConfig.ScannerCode % 2 > 0 ? DataContent.SystemConfig.ScannerCode / 2 + 1 : DataContent.SystemConfig.ScannerCode / 2;
             tableLayoutPanel.ColumnCount = DataContent.SystemConfig.ScannerCode > 1 ? 2 : 1;
             tableLayoutPanel.Dock = DockStyle.Fill;
-            //tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent,50F));
-            //tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            //tableLayoutPanel.RowStyles.Add(new ColumnStyle(SizeType.Percent,50F));
-            //tableLayoutPanel.RowStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-           
-
             ///动态加载人工扫码位显示界面
             for (int i = 0; i < DataContent.SystemConfig.ScannerCode; i++)
             {
@@ -57,14 +48,14 @@ namespace EC0402低压成型
                 if (ConfigurationManager.AppSettings["Input"] != null)
                 {
                     RFIDChannel channel=null;
-                    //try
-                    //{
-                    //    channel = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[0].IP, DataContent.SystemConfig.RFIDConfigs[0].Channel, DataContent.SystemConfig.RFIDConfigs[0].Port);
-                    //}
-                    //catch (Exception ex)
-                    //{
-                    //    LogManager.Error(ex);
-                    //}
+                    try
+                    {
+                        channel = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[0].IP, DataContent.SystemConfig.RFIDConfigs[0].Channel, DataContent.SystemConfig.RFIDConfigs[0].Port);
+                    }
+                    catch (Exception ex)
+                    {
+                        LogManager.Error(ex);
+                    }
                     frmcode = new FrmRFIDGetWayFixture(channel, (fixture, cable1, cable2) => { return ScannerCodeByPeopleSaveCSV(fixture, new List<string> { cable1, cable2 }); }, mesService);
                 }
                 else

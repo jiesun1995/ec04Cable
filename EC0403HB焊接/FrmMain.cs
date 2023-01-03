@@ -18,7 +18,7 @@ namespace EC0403HB焊接
     public partial class FrmMain : Form
     {
         private Stopwatch _stopwatch ;
-        private readonly InovanceHelper _inovanceHelper;
+        private readonly IPLCReadWrite _plcHelper;
         private readonly IFixtureCableBindService _fixtureCableBindService;
         private readonly RFIDChannel _RFIDChannel1;
         private readonly RFIDChannel _RFIDChannel1P;
@@ -38,7 +38,8 @@ namespace EC0403HB焊接
                 _fixtureCableBindService = WCFHelper.CreateClient();
                 if (DataContent.SystemConfig.ScannerCode > 0)
                     return;
-                _inovanceHelper = new InovanceHelper(DataContent.SystemConfig.PLCIp, DataContent.SystemConfig.PLCPort);
+                //_inovanceHelper = new InovanceHelper(DataContent.SystemConfig.PLCConfigs[0]., DataContent.SystemConfig.PLCPort);
+                _plcHelper = PLCFactory.Instance(DataContent.SystemConfig.PLCConfigs[0].IP, DataContent.SystemConfig.PLCConfigs[0].Port, DataContent.SystemConfig.PLCConfigs[0].Type);
                 _RFIDChannel1 = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[0].IP, DataContent.SystemConfig.RFIDConfigs[0].Channel, DataContent.SystemConfig.RFIDConfigs[0].Port);
                 _RFIDChannel1P = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[1].IP, DataContent.SystemConfig.RFIDConfigs[1].Channel, DataContent.SystemConfig.RFIDConfigs[1].Port);
                 _RFIDChannel2 = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[2].IP, DataContent.SystemConfig.RFIDConfigs[2].Channel, DataContent.SystemConfig.RFIDConfigs[2].Port);
@@ -54,15 +55,15 @@ namespace EC0403HB焊接
         {
             tslSysTime.Text = $"系统时间:{DateTime.Now.ToString("yyyyMMdd HH:mm:ss")}";
             tslRunTime.Text = $"运行时间:{_stopwatch.Elapsed}";
-            if (_inovanceHelper == null)
+            if (_plcHelper == null)
             {
                 tslPLCStatus.Text = $"PLC: 未连接";
                 tslPLCStatus.BackColor = Color.Red;
             }
             else
             {
-                tslPLCStatus.Text = $"PLC:{(_inovanceHelper.IsConnect ? "已连接" : "未连接")}";
-                tslPLCStatus.BackColor = _inovanceHelper.IsConnect ? Color.Green : Color.Red;
+                tslPLCStatus.Text = $"PLC:{(_plcHelper.IsConnect() ? "已连接" : "未连接")}";
+                tslPLCStatus.BackColor = _plcHelper.IsConnect() ? Color.Green : Color.Red;
             }
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append($"流道1子RFID:{(_RFIDChannel1 != null && _RFIDChannel1.IsConnect ? "已连接" : "未连接")}; ");
@@ -89,6 +90,10 @@ namespace EC0403HB焊接
             tabPage2.Controls.Clear();
             tabPage3.Controls.Clear();
             var zhanbi = 1.00 / DataContent.SystemConfig.ScannerCode;
+            TableLayoutPanel tableLayoutPanel = new TableLayoutPanel();
+            tableLayoutPanel.RowCount = DataContent.SystemConfig.ScannerCode % 2 > 0 ? DataContent.SystemConfig.ScannerCode / 2 + 1 : DataContent.SystemConfig.ScannerCode / 2;
+            tableLayoutPanel.ColumnCount = DataContent.SystemConfig.ScannerCode > 1 ? 2 : 1;
+            tableLayoutPanel.Dock = DockStyle.Fill;
             ///动态加载人工扫码位显示界面
             for (int i = 0; i < DataContent.SystemConfig.ScannerCode; i++)
             {
@@ -111,17 +116,25 @@ namespace EC0403HB焊接
                 {
                     frmcode = new FrmFixture((fixture, cable1, cable2) => ScannerCodeByPeople(fixture, new List<string> { cable1, cable2 }), _fixtureCableBindService);
                 }
+                tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100 / DataContent.SystemConfig.ScannerCode > 1 ? 2 : 1));
+                tableLayoutPanel.RowStyles.Add(new ColumnStyle(SizeType.Percent, 100 / DataContent.SystemConfig.ScannerCode % 2 > 0 ? DataContent.SystemConfig.ScannerCode / 2 + 1 : DataContent.SystemConfig.ScannerCode / 2));
+
+                var panel = new Panel();
+                panel.Dock = DockStyle.Fill;
                 frmcode.TopLevel = false;
-                frmcode.Dock = DockStyle.Top;
+                frmcode.Dock = DockStyle.Fill;
                 frmcode.Width = tabPage1.Width;
                 frmcode.FormBorderStyle = FormBorderStyle.None;
 
-                frmcode.Height = Convert.ToInt32(tabPage1.Height * zhanbi);
-                var y = Convert.ToInt32(tabPage1.Height * zhanbi * i);
-                frmcode.Location = new Point(0, y);
-                tabPage1.Controls.Add(frmcode);
+                //frmcode.Height = Convert.ToInt32(tabPage1.Height * zhanbi);
+                //var y = Convert.ToInt32(tabPage1.Height * zhanbi * i);
+                //frmcode.Location = new Point(0, y);
+                //tabPage1.Controls.Add(frmcode);
+                panel.Controls.Add(frmcode);
                 frmcode.Show();
+                tableLayoutPanel.Controls.Add(panel, i % 2, i / 2);
             }
+            tabPage1.Controls.Add(tableLayoutPanel);
 
             Form frmRunFixture;
             frmRunFixture = new FrmRunFixture();
@@ -146,7 +159,7 @@ namespace EC0403HB焊接
                 var fixtureCableBindService = WCFHelper.CreateClient();
                 while (true)
                 {
-                    if (_inovanceHelper.read_D_Address(2500) == 1)
+                    if (_plcHelper.Read(2500) == 1)
                     {
                         LogManager.Info($"读取到启动信号：{{D2500:1}}");
                         try
@@ -156,22 +169,22 @@ namespace EC0403HB焊接
                             try
                             {
                                 content = _RFIDChannel1.Read();
-                                _inovanceHelper.WriteAddressByD(2500, 2);
+                                _plcHelper.Write(2500, 2);
                             }
                             catch (Exception ex)
                             {
                                 LogManager.Error(ex);
-                                _inovanceHelper.WriteAddressByD(2500, 3);
+                                _plcHelper.Write(2500, 3);
                             }
                             try
                             {
                                 contentP = _RFIDChannel1P.Read();
-                                _inovanceHelper.WriteAddressByD(2502, 2);
+                                _plcHelper.Write(2502, 2);
                             }
                             catch (Exception ex)
                             {
                                 LogManager.Error(ex);
-                                _inovanceHelper.WriteAddressByD(2502, 3);
+                                _plcHelper.Write(2502, 3);
                             }
 
                             if (string.IsNullOrWhiteSpace(content))
@@ -181,8 +194,8 @@ namespace EC0403HB焊接
                         catch (Exception ex)
                         {
                             LogManager.Error(ex);
-                            _inovanceHelper.WriteAddressByD(2500, 3);
-                            _inovanceHelper.WriteAddressByD(2502, 3);
+                            _plcHelper.Write(2500, 3);
+                            _plcHelper.Write(2502, 3);
                         }
                     }
                     await Task.Delay(100);
@@ -193,7 +206,7 @@ namespace EC0403HB焊接
                 var fixtureCableBindService = WCFHelper.CreateClient();
                 while (true)
                 {
-                    if (_inovanceHelper.read_D_Address(2600) == 1)
+                    if (_plcHelper.Read(2600) == 1)
                     {
                         LogManager.Info($"读取到启动信号：{{D2600:1}}");
                         try
@@ -203,30 +216,30 @@ namespace EC0403HB焊接
                             try
                             {
                                 content = _RFIDChannel2.Read();
-                                _inovanceHelper.WriteAddressByD(2600, 2);
+                                _plcHelper.Write(2600, 2);
                             }
                             catch (Exception ex)
                             {
                                 LogManager.Error(ex);
-                                _inovanceHelper.WriteAddressByD(2600, 3);
+                                _plcHelper.Write(2600, 3);
                             }
                             try
                             {
                                 contentP = _RFIDChannel2P.Read();
-                                _inovanceHelper.WriteAddressByD(2602, 2);
+                                _plcHelper.Write(2602, 2);
                             }
                             catch (Exception ex)
                             {
                                 LogManager.Error(ex);
-                                _inovanceHelper.WriteAddressByD(2602, 3);
+                                _plcHelper.Write(2602, 3);
                             }
                             fixtureCableBindService.FixtureBind(content, contentP);
                         }
                         catch (Exception ex)
                         {
                             LogManager.Error(ex);
-                            _inovanceHelper.WriteAddressByD(2600, 3);
-                            _inovanceHelper.WriteAddressByD(2602, 3);
+                            _plcHelper.Write(2600, 3);
+                            _plcHelper.Write(2602, 3);
                         }
                     }
                     await Task.Delay(100);

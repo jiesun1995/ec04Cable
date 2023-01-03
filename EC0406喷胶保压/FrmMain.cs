@@ -16,7 +16,7 @@ namespace EC0406喷胶保压
     public partial class FrmMain : Form
     {
         private Stopwatch _stopwatch;
-        private readonly InovanceHelper _inovanceHelper;
+        private readonly IPLCReadWrite _plcHelper;
         private readonly RFIDChannel _RFIDChannel1;
         private readonly RFIDChannel _RFIDChannel1P;
         private readonly RFIDChannel _RFIDChannel2;
@@ -33,7 +33,8 @@ namespace EC0406喷胶保压
 
             try
             {
-                _inovanceHelper = new InovanceHelper(DataContent.SystemConfig.PLCIp, DataContent.SystemConfig.PLCPort);
+                //_plcHelper = new InovanceHelper(DataContent.SystemConfig.PLCIp, DataContent.SystemConfig.PLCPort);
+                _plcHelper = PLCFactory.Instance(DataContent.SystemConfig.PLCConfigs[0].IP, DataContent.SystemConfig.PLCConfigs[0].Port, DataContent.SystemConfig.PLCConfigs[0].Type);
                 _RFIDChannel1 = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[0].IP, DataContent.SystemConfig.RFIDConfigs[0].Channel, DataContent.SystemConfig.RFIDConfigs[0].Port);
                 _RFIDChannel1P = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[1].IP, DataContent.SystemConfig.RFIDConfigs[1].Channel, DataContent.SystemConfig.RFIDConfigs[1].Port);
                 _RFIDChannel2 = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[2].IP, DataContent.SystemConfig.RFIDConfigs[2].Channel, DataContent.SystemConfig.RFIDConfigs[2].Port);
@@ -50,15 +51,15 @@ namespace EC0406喷胶保压
         {
             tslSysTime.Text = $"系统时间:{DateTime.Now.ToString("yyyyMMdd HH:mm:ss")}";
             tslRunTime.Text = $"运行时间:{_stopwatch.Elapsed}";
-            if (_inovanceHelper == null)
+            if (_plcHelper == null)
             {
                 tslPLCStatus.Text = $"PLC: 连接失败";
                 tslPLCStatus.BackColor = Color.Red;
             }
             else
             {
-                tslPLCStatus.Text = $"PLC:{(_inovanceHelper.IsConnect ? "已连接" : "连接失败")}";
-                tslPLCStatus.BackColor = _inovanceHelper.IsConnect ? Color.Green : Color.Red;
+                tslPLCStatus.Text = $"PLC:{(_plcHelper.IsConnect() ? "已连接" : "连接失败")}";
+                tslPLCStatus.BackColor = _plcHelper.IsConnect() ? Color.Green : Color.Red;
             }
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append($"前段线材RFID:{(_RFIDChannel1 != null && _RFIDChannel1.IsConnect ? "已连接" : "未连接")}; ");
@@ -106,8 +107,8 @@ namespace EC0406喷胶保压
                 var fixtureCableBindService = WCFHelper.CreateClient();
                 while (true)
                 {
-                    if (_inovanceHelper == null) { await Task.Delay(1000); continue; }
-                    if (_inovanceHelper.ReadAddressByD(5100) == 1)
+                    if (_plcHelper == null) { await Task.Delay(1000); continue; }
+                    if (_plcHelper.Read(5100) == 1)
                     {
                         LogManager.Info($"读取到启动信号：{{D5100:1}}");
                         try
@@ -143,12 +144,12 @@ namespace EC0406喷胶保压
                                 };
                                 fixtureCableBindService.FixtureCableBind(new List<Cable> { cable });
                             }
-                            _inovanceHelper.WriteAddressByD(5100, 2);
+                            _plcHelper.Write(5100, 2);
                         }
                         catch (Exception ex)
                         {
                             LogManager.Error(ex);
-                            _inovanceHelper.WriteAddressByD(5100, 3);
+                            _plcHelper.Write(5100, 3);
                         }
                     }
                     await Task.Delay(10);
@@ -159,8 +160,8 @@ namespace EC0406喷胶保压
                 var fixtureCableBindService = WCFHelper.CreateClient();
                 while (true)
                 {
-                    if (_inovanceHelper == null) { await Task.Delay(1000); continue; }
-                    if (_inovanceHelper.ReadAddressByD(5102) == 1)
+                    if (_plcHelper == null) { await Task.Delay(1000); continue; }
+                    if (_plcHelper.Read(5102) == 1)
                     {
                         LogManager.Info($"读取到启动信号：{{D5102:1}}");
                         try
@@ -180,12 +181,12 @@ namespace EC0406喷胶保压
                             {
                                 fixtureCableBindService.FixtureBind(val, "NG", valR);
                             }
-                            _inovanceHelper.WriteAddressByD(5102, 2);
+                            _plcHelper.Write(5102, 2);
                         }
                         catch (Exception ex)
                         {
                             LogManager.Error(ex);
-                            _inovanceHelper.WriteAddressByD(5102, 3);
+                            _plcHelper.Write(5102, 3);
                         }
                     }
                     await Task.Delay(10);

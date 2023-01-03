@@ -26,12 +26,12 @@ namespace EC0404铁壳熔接焊
         private readonly RFIDChannel _RFIDChannelL;
         private readonly RFIDChannel _RFIDChannelR;
         private readonly RFIDChannel _RFIDChannelCable;
-        private readonly OMRHelper _omrHelper;
-        private readonly string _address = "D4035";
+        private readonly IPLCReadWrite _plcHelper;
+        private readonly int _address = 4035;
 
-        public FrmFixture(RFIDChannel RFIDChannelL, RFIDChannel RFIDChannelR, RFIDChannel RFIDChannelCable, MesService mesService, OMRHelper omrHelper, Func<string, string, string, bool> codeCallBack)
+        public FrmFixture(RFIDChannel RFIDChannelL, RFIDChannel RFIDChannelR, RFIDChannel RFIDChannelCable, MesService mesService, IPLCReadWrite plcHelper, Func<string, string, string, bool> codeCallBack)
         {
-            _omrHelper = omrHelper;
+            _plcHelper = plcHelper;
             _mesService = mesService;
             _codeCallBack = codeCallBack;
             InitializeComponent();
@@ -41,17 +41,18 @@ namespace EC0404铁壳熔接焊
         }
         private void FrmFixture_Load(object sender, EventArgs e)
         {
+            if (_RFIDChannelL == null || _RFIDChannelR == null || _RFIDChannelCable == null) return;
             Task.Factory.StartNew(() =>
             {
                 while (true)
                 {
-                    if (_omrHelper.Read(_address) == 1)
+                    if (_plcHelper.Read(_address) == 1)
                     {
-                        LogManager.Info($"读取地址【{_address}:1】");
+                        LogManager.Info($"读取地址【D{_address}:1】");
                         try
                         {
 
-                            _omrHelper.Write(_address, 9);
+                            _plcHelper.Write(_address, 9);
                             _codeFixtrueL = _RFIDChannelL.Read();
                             _codeFixtrueR = _RFIDChannelR.Read();
                             Invoke((EventHandler)delegate
@@ -67,7 +68,7 @@ namespace EC0404铁壳熔接焊
                         catch (Exception ex)
                         {
                             LogManager.Error(ex);
-                            _omrHelper.Write(_address, 3);
+                            _plcHelper.Write(_address, 3);
                         }
                     }
 
@@ -192,7 +193,7 @@ namespace EC0404铁壳熔接焊
             {
                 if (!string.IsNullOrWhiteSpace(_codeFixtrueL) && !string.IsNullOrWhiteSpace(_codeFixtrueR) && !string.IsNullOrWhiteSpace(_codeCable))
                 {
-                    _omrHelper.Write(_address, 2);
+                    _plcHelper.Write(_address, 2);
 
                     var result = _codeCallBack(_codeFixtrueL, _codeFixtrueR, _codeCable);
                     if (result)

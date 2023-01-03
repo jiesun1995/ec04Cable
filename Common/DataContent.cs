@@ -29,15 +29,23 @@ namespace Common
                 var config = JsonConvert.DeserializeObject<SystemConfig>(result);
                 if (config.RFIDConfigs.Count < 5)
                 {
-                    for (int i = config.RFIDConfigs.Count -1; i < 5; i++)
+                    for (int i = config.RFIDConfigs.Count ; i < 5; i++)
                     {
                         config.RFIDConfigs.Add(new RFIDConfig());
+                    }
+                }
+                if (config.PLCConfigs.Count < 2)
+                {
+                    for (int i = config.PLCConfigs.Count ; i < 2; i++)
+                    {
+                        config.PLCConfigs.Add(new PLCConfig());
                     }
                 }
                 DataContent.SetConfig(config);
             }
             else
             {
+                
                 SystemConfig = new SystemConfig
                 {
                     RFIDConfigs = new List<RFIDConfig>
@@ -47,6 +55,11 @@ namespace Common
                         new RFIDConfig{ },
                         new RFIDConfig{ },
                         new RFIDConfig{ },
+                    },
+                    PLCConfigs=new List<PLCConfig>
+                    {
+                        new PLCConfig{},
+                        new PLCConfig{ },
                     }
                 };
             }
@@ -67,14 +80,23 @@ namespace Common
         public string ConfirmStation { set; get; }
         public string MESUrl { set; get; } = "http://192.168.16.30/Bobcat/sfc_response.aspx";
 
-        public string PLCIp { get; set; }
-        public int PLCPort { get; set; }
+        //public string PLCIp { get; set; }
+        //public int PLCPort { get; set; }
+        public List<PLCConfig> PLCConfigs { get; set; } = new List<PLCConfig>();
 
         public string WCFSeverIp { set; get; } = "0.0.0.0";
         public string WCFSeverPort { set; get; } = "4000";
         public string WCFClinetIp { set; get; } = "127.0.0.1";
         public string WCFClinetPort { set; get; } = "4000";
     }
+
+    public class PLCConfig
+    {
+        public string IP { get; set; }
+        public int Port { get; set; }
+        public PLCType Type { get; set; }
+    }
+
 
     public class RFIDConfig
     {

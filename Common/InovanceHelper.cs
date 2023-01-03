@@ -39,7 +39,7 @@ namespace Common
         REGI_H5U_R = 0x36,       //R字元件的定义
 
     }
-    public class InovanceHelper
+    public class InovanceHelper :IPLCReadWrite
     {
         #region //标准库
         [DllImport("StandardModbusApi.dll", EntryPoint = "Init_ETH_String", CallingConvention = CallingConvention.Cdecl)]
@@ -110,7 +110,7 @@ namespace Common
             return _isConnect;
         }
 
-        public bool IsConnect { get;  }
+       // public bool IsConnect { get;  }
 
         public bool connect_H5U(string ip, int port , int netId=0)
         {
@@ -118,17 +118,17 @@ namespace Common
             return _isConnect;
         }
 
-        public int ReadAddressByD(int nStartAddr)
-        {
-            var result = read_D_Address(nStartAddr);
-            return result;
-        }
-        public bool WriteAddressByD(int nStartAddr, int value)
-        {
-            var result = write_D_Address(nStartAddr, value);
-            LogManager.Info($"PLC中写入：{{{nStartAddr}:{value}}}");
-            return result;
-        }
+        //public int ReadAddressByD(int nStartAddr)
+        //{
+        //    var result = read_D_Address(nStartAddr);
+        //    return result;
+        //}
+        //public bool WriteAddressByD(int nStartAddr, int value)
+        //{
+        //    var result = write_D_Address(nStartAddr, value);
+        //    LogManager.Info($"PLC中写入：{{{nStartAddr}:{value}}}");
+        //    return result;
+        //}
         /// <summary>
         /// 读D区一个值
         /// </summary>
@@ -261,6 +261,24 @@ namespace Common
         {
             int nNetId = 0;
             return Exit_ETH(nNetId);
+        }
+
+        bool IPLCReadWrite.IsConnect()
+        {
+            return _isConnect;
+        }
+
+        public int Read(int address)
+        {
+            var result = read_D_Address(address);
+            return result;
+        }
+
+        public bool Write(int address, int value)
+        {
+            var result = write_D_Address(address, value);
+            LogManager.Info($"PLC中写入：{{{address}:{value}}}");
+            return result;
         }
     }
 }
