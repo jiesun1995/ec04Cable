@@ -133,13 +133,14 @@ namespace EC0402低压成型
         {
             if (!string.IsNullOrEmpty(DataContent.User))
             {
-                Common.FrmSetting frmSetting = new Common.FrmSetting((gbxRFID1, gbxRFID2, gbxRFID3, gbxRFID4, gbxRFID5, gbxStation, gbxPLC, gbxWCF) =>
+                Common.FrmSetting frmSetting = new Common.FrmSetting((gbxRFID1, gbxRFID2, gbxRFID3, gbxRFID4, gbxRFID5, gbxRFID6, gbxStation, gbxPLC, gbxWCF) =>
                 {
-                    gbxRFID1.Visible = true;
-                    gbxRFID2.Visible = false;
-                    gbxRFID3.Visible = false;
-                    gbxRFID4.Visible = false;
+                    gbxRFID1.Text = "RFID配置1";
+                    gbxRFID2.Text = "RFID配置2";
+                    gbxRFID3.Text = "RFID配置3";
+                    gbxRFID4.Text = "RFID配置4";
                     gbxRFID5.Visible = false;
+                    gbxRFID6.Visible = false;
                     gbxPLC.Visible = false;
                     gbxWCF.Visible = false;
                 });

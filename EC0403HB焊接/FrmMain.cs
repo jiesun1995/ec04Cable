@@ -271,13 +271,27 @@ namespace EC0403HB焊接
         {
             if (!string.IsNullOrEmpty(DataContent.User))
             {
-                FrmSetting frmSetting = new FrmSetting((gbxRFID1, gbxRFID2, gbxRFID3, gbxRFID4, gbxRFID5, gbxStation, gbxPLC, gbxWCF) =>
+                FrmSetting frmSetting = new FrmSetting((gbxRFID1, gbxRFID2, gbxRFID3, gbxRFID4, gbxRFID5, gbxRFID6, gbxStation, gbxPLC, gbxWCF) =>
                 {
-                    gbxRFID1.Text = "流道1子载具RFID";
-                    gbxRFID2.Text = "流道1母载具RFID";
-                    gbxRFID3.Text = "流道2子载具RFID";
-                    gbxRFID4.Text = "流道2母载具RFID";
-                    gbxRFID5.Visible = false;
+                    if (DataContent.SystemConfig.ScannerCode > 0)
+                    {
+                        gbxRFID1.Text = "感应区读写RFID1";
+                        gbxRFID2.Text = "感应区读写RFID2";
+                        gbxRFID3.Text = "感应区读写RFID3";
+                        gbxRFID4.Text = "感应区读写RFID4";
+                        gbxRFID5.Text = "感应区读写RFID5";
+                        gbxRFID6.Text = "感应区读写RFID6";
+                    }
+                    else
+                    {
+                        gbxRFID1.Text = "流道1子载具RFID";
+                        gbxRFID2.Text = "流道1母载具RFID";
+                        gbxRFID3.Text = "流道2子载具RFID";
+                        gbxRFID4.Text = "流道2母载具RFID";
+                        gbxRFID5.Visible = false;
+                        gbxRFID6.Visible= false;
+                    }
+                    
                 });
                 frmSetting.ShowDialog();
             }

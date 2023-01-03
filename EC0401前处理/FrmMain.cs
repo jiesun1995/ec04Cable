@@ -6,6 +6,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Remoting.Channels;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -91,13 +92,14 @@ namespace EC0401前处理
         {
             if (!string.IsNullOrEmpty(DataContent.User))
             {
-                Common.FrmSetting frmSetting = new Common.FrmSetting((gbxRFID1, gbxRFID2, gbxRFID3, gbxRFID4, gbxRFID5, gbxStation, gbxPLC, gbxWCF) =>
+                Common.FrmSetting frmSetting = new Common.FrmSetting((gbxRFID1, gbxRFID2, gbxRFID3, gbxRFID4, gbxRFID5, gbxRFID6, gbxStation, gbxPLC, gbxWCF) =>
                 {
-                    gbxRFID1.Text = "感应区读写RFID";
-                    gbxRFID2.Text = "感应区读写RFID";
-                    gbxRFID3.Text = "感应区读写RFID";
-                    gbxRFID4.Text = "感应区读写RFID";
-                    gbxRFID5.Text = "感应区读写RFID";
+                    gbxRFID1.Text = "感应区读写RFID1";
+                    gbxRFID2.Text = "感应区读写RFID2";
+                    gbxRFID3.Visible = false;
+                    gbxRFID4.Visible = false;
+                    gbxRFID5.Visible = false;
+                    gbxRFID6.Visible = false;
                     gbxStation.Visible= true;
                     gbxPLC.Visible= false;
                     gbxWCF.Visible= false;

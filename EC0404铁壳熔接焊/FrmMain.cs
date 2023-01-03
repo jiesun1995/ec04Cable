@@ -64,9 +64,9 @@ namespace EC0404铁壳熔接焊
             {
                 try
                 {
-                    _RFIDChannelL = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[0].IP, DataContent.SystemConfig.RFIDConfigs[0].Channel, DataContent.SystemConfig.RFIDConfigs[0].Port);
-                    _RFIDChannelR = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[1].IP, DataContent.SystemConfig.RFIDConfigs[1].Channel, DataContent.SystemConfig.RFIDConfigs[1].Port);
-                    _RFIDChannelCable = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[2].IP, DataContent.SystemConfig.RFIDConfigs[2].Channel, DataContent.SystemConfig.RFIDConfigs[2].Port);
+                    _RFIDChannelL = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[i / 3 + 0].IP, DataContent.SystemConfig.RFIDConfigs[i / 3 + 0].Channel, DataContent.SystemConfig.RFIDConfigs[i / 3 + 0].Port);
+                    _RFIDChannelR = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[i / 3 + 1].IP, DataContent.SystemConfig.RFIDConfigs[i / 3 + 1].Channel, DataContent.SystemConfig.RFIDConfigs[i / 3 + 1].Port);
+                    _RFIDChannelCable = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[i / 3 + 2].IP, DataContent.SystemConfig.RFIDConfigs[i / 3 + 2].Channel, DataContent.SystemConfig.RFIDConfigs[i / 3 + 2].Port);
                     MesService mesService = new MesService();
                     //OMRHelper omrHelper = new OMRHelper(DataContent.SystemConfig.PLCIp, DataContent.SystemConfig.PLCPort);
                     var _plcHelper = PLCFactory.Instance(DataContent.SystemConfig.PLCConfigs[i].IP, DataContent.SystemConfig.PLCConfigs[i].Port, DataContent.SystemConfig.PLCConfigs[i].Type);
@@ -131,13 +131,14 @@ namespace EC0404铁壳熔接焊
         {
             if (!string.IsNullOrEmpty(DataContent.User))
             {
-                Common.FrmSetting frmSetting = new Common.FrmSetting((gbxRFID1, gbxRFID2, gbxRFID3, gbxRFID4, gbxRFID5, gbxStation, gbxPLC, gbxWCF) =>
+                Common.FrmSetting frmSetting = new Common.FrmSetting((gbxRFID1, gbxRFID2, gbxRFID3, gbxRFID4, gbxRFID5, gbxRFID6, gbxStation, gbxPLC, gbxWCF) =>
                 {
-                    gbxRFID1.Text = "左治具RFID";
-                    gbxRFID2.Text = "右治具RFID";
-                    gbxRFID3.Text = "线材RFID";
-                    gbxRFID4.Visible= false;
-                    gbxRFID5.Visible = false;
+                    gbxRFID1.Text = "左治具RFID1";
+                    gbxRFID2.Text = "右治具RFID1";
+                    gbxRFID3.Text = "线材RFID1";
+                    gbxRFID4.Text = "左治具RFID2";
+                    gbxRFID5.Text = "右治具RFID2";
+                    gbxRFID6.Text = "线材RFID2";
                     gbxWCF.Visible = false;
                     gbxPLC.Visible = true;
                 });

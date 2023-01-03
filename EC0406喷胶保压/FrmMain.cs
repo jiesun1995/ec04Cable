@@ -198,13 +198,14 @@ namespace EC0406喷胶保压
         {
             if (!string.IsNullOrEmpty(DataContent.User))
             {
-                Common.FrmSetting frmSetting = new Common.FrmSetting((gbxRFID1, gbxRFID2, gbxRFID3, gbxRFID4, gbxRFID5, gbxStation, gbxPLC, gbxWCF) =>
+                Common.FrmSetting frmSetting = new Common.FrmSetting((gbxRFID1, gbxRFID2, gbxRFID3, gbxRFID4, gbxRFID5, gbxRFID6, gbxStation, gbxPLC, gbxWCF) =>
                 {
                     gbxRFID1.Text = "前段线材RFID";
                     gbxRFID2.Text = "前段载具RFID";
                     gbxRFID3.Text = "后段载具RFID";
                     gbxRFID4.Text = "后段保压块RFID左";
                     gbxRFID5.Text = "后段保压块RFID右";
+                    gbxRFID6.Visible= false;
                     gbxWCF.Visible = false;
                 });
                 frmSetting.ShowDialog();

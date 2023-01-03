@@ -112,13 +112,14 @@ namespace EC0405编织喷胶
         {
             if (!string.IsNullOrEmpty(DataContent.User))
             {
-                Common.FrmSetting frmSetting = new Common.FrmSetting((gbxRFID1, gbxRFID2, gbxRFID3, gbxRFID4, gbxRFID5, gbxStation, gbxPLC, gbxWCF) =>
+                Common.FrmSetting frmSetting = new Common.FrmSetting((gbxRFID1, gbxRFID2, gbxRFID3, gbxRFID4, gbxRFID5, gbxRFID6, gbxStation, gbxPLC, gbxWCF) =>
                 {
                     gbxRFID1.Text = "前工站载具扫码RFID";
                     gbxRFID2.Text = "前工站线材扫码RFID";
                     gbxRFID3.Text = "后工站载具扫码RFID";
                     gbxRFID4.Text = "后工站线材扫码RFID";
                     gbxRFID5.Visible = false;
+                    gbxRFID6.Visible = false;
                     gbxPLC.Visible = true;
                     gbxWCF.Visible = false;
                 });
