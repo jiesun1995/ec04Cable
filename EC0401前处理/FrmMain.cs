@@ -43,6 +43,10 @@ namespace EC0401前处理
             LogManager.Init(lvLogs);
             tabPage1.Controls.Clear();
             var zhanbi = 1.00 / DataContent.SystemConfig.ScannerCode;
+            TableLayoutPanel tableLayoutPanel = new TableLayoutPanel();
+            tableLayoutPanel.RowCount = DataContent.SystemConfig.ScannerCode % 2 > 0 ? DataContent.SystemConfig.ScannerCode / 2 + 1 : DataContent.SystemConfig.ScannerCode / 2;
+            tableLayoutPanel.ColumnCount = DataContent.SystemConfig.ScannerCode > 1 ? 2 : 1;
+            tableLayoutPanel.Dock = DockStyle.Fill;
             ///动态加载人工扫码位显示界面
             for (int i = 0; i < DataContent.SystemConfig.ScannerCode; i++)
             {
@@ -58,18 +62,30 @@ namespace EC0401前处理
                     frmcode.Width = tabPage1.Width;
                     frmcode.FormBorderStyle = FormBorderStyle.None;
 
-                    var a = Convert.ToInt32((tabPage1.Height * zhanbi));
-                    frmcode.Height = Convert.ToInt32(tabPage1.Height * zhanbi);
-                    var y = Convert.ToInt32(tabPage1.Height * zhanbi * i);
-                    frmcode.Location = new Point(0, y);
-                    tabPage1.Controls.Add(frmcode);
+                    tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100 / DataContent.SystemConfig.ScannerCode > 1 ? 2 : 1));
+                    tableLayoutPanel.RowStyles.Add(new ColumnStyle(SizeType.Percent, 100 / DataContent.SystemConfig.ScannerCode % 2 > 0 ? DataContent.SystemConfig.ScannerCode / 2 + 1 : DataContent.SystemConfig.ScannerCode / 2));
+
+                    var panel = new Panel();
+                    panel.Dock = DockStyle.Fill;
+                    frmcode.TopLevel = false;
+                    frmcode.Dock = DockStyle.Fill;
+                    frmcode.Width = tabPage1.Width;
+                    frmcode.FormBorderStyle = FormBorderStyle.None;
+
+                    //frmcode.Height = Convert.ToInt32(tabPage1.Height * zhanbi);
+                    //var y = Convert.ToInt32(tabPage1.Height * zhanbi * i);
+                    //frmcode.Location = new Point(0, y);
+                    //tabPage1.Controls.Add(frmcode);
+                    panel.Controls.Add(frmcode);
                     frmcode.Show();
+                    tableLayoutPanel.Controls.Add(panel, i % 2, i / 2);
                 }
                 catch (Exception ex)
                 {
                     LogManager.Error(ex);
                 }
             }
+            tabPage1.Controls.Add(tableLayoutPanel);
         }
         private void button1_Click(object sender, EventArgs e)
         {

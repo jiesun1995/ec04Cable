@@ -136,6 +136,7 @@
     <Compile Include="RFIDHelper.cs" />
     <Compile Include="SpeechHelper.cs" />
     <Compile Include="SqlHelper.cs" />
+    <Compile Include="SystemHelper.cs" />
     <Compile Include="WCFHelper.cs" />
   </ItemGroup>
   <ItemGroup>

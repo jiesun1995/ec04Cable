@@ -55,6 +55,10 @@ namespace EC0404铁壳熔接焊
             LogManager.Init(lvLogs);
             tabPage1.Controls.Clear();
             var zhanbi = 1.00 / DataContent.SystemConfig.ScannerCode;
+            TableLayoutPanel tableLayoutPanel = new TableLayoutPanel();
+            tableLayoutPanel.RowCount = DataContent.SystemConfig.ScannerCode % 2 > 0 ? DataContent.SystemConfig.ScannerCode / 2 + 1 : DataContent.SystemConfig.ScannerCode / 2;
+            tableLayoutPanel.ColumnCount = DataContent.SystemConfig.ScannerCode > 1 ? 2 : 1;
+            tableLayoutPanel.Dock = DockStyle.Fill;
             ///动态加载人工扫码位显示界面
             for (int i = 0; i < DataContent.SystemConfig.ScannerCode; i++)
             {
@@ -65,26 +69,34 @@ namespace EC0404铁壳熔接焊
                     _RFIDChannelCable = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[2].IP, DataContent.SystemConfig.RFIDConfigs[2].Channel, DataContent.SystemConfig.RFIDConfigs[2].Port);
                     MesService mesService = new MesService();
                     //OMRHelper omrHelper = new OMRHelper(DataContent.SystemConfig.PLCIp, DataContent.SystemConfig.PLCPort);
-                    var _plcHelper = PLCFactory.Instance(DataContent.SystemConfig.PLCConfigs[0].IP, DataContent.SystemConfig.PLCConfigs[0].Port, DataContent.SystemConfig.PLCConfigs[0].Type);
+                    var _plcHelper = PLCFactory.Instance(DataContent.SystemConfig.PLCConfigs[i].IP, DataContent.SystemConfig.PLCConfigs[i].Port, DataContent.SystemConfig.PLCConfigs[i].Type);
                     Form frmcode;
                     frmcode = new FrmFixture(_RFIDChannelL, _RFIDChannelR, _RFIDChannelCable, mesService, _plcHelper,
                         (fixtureL, fixtureR, cable) => ScannerCodeByPeopleSaveCSV(fixtureL, fixtureR, cable));
+                    tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100 / DataContent.SystemConfig.ScannerCode > 1 ? 2 : 1));
+                    tableLayoutPanel.RowStyles.Add(new ColumnStyle(SizeType.Percent, 100 / DataContent.SystemConfig.ScannerCode % 2 > 0 ? DataContent.SystemConfig.ScannerCode / 2 + 1 : DataContent.SystemConfig.ScannerCode / 2));
+
+                    var panel = new Panel();
+                    panel.Dock = DockStyle.Fill;
                     frmcode.TopLevel = false;
-                    frmcode.Dock = DockStyle.Top;
+                    frmcode.Dock = DockStyle.Fill;
                     frmcode.Width = tabPage1.Width;
                     frmcode.FormBorderStyle = FormBorderStyle.None;
 
-                    frmcode.Height = Convert.ToInt32(tabPage1.Height * zhanbi);
-                    var y = Convert.ToInt32(tabPage1.Height * zhanbi * i);
-                    frmcode.Location = new Point(0, y);
-                    tabPage1.Controls.Add(frmcode);
+                    //frmcode.Height = Convert.ToInt32(tabPage1.Height * zhanbi);
+                    //var y = Convert.ToInt32(tabPage1.Height * zhanbi * i);
+                    //frmcode.Location = new Point(0, y);
+                    //tabPage1.Controls.Add(frmcode);
+                    panel.Controls.Add(frmcode);
                     frmcode.Show();
+                    tableLayoutPanel.Controls.Add(panel, i % 2, i / 2);
                 }
                 catch (Exception ex)
                 {
                     LogManager.Error(ex);
                 }
             }
+            tabPage1.Controls.Add(tableLayoutPanel);
         }
 
         private bool ScannerCodeByPeopleSaveCSV(string fixtureL, string fixtureR, string cableSn)
