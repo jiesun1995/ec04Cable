@@ -101,5 +101,10 @@ namespace EC0402低压成型
 
             });
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ClearUI();
+        }
     }
 }

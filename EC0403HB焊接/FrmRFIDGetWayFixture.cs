@@ -99,5 +99,10 @@ namespace EC0403HB焊接
 
             });
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ClearUI();
+        }
     }
 }
