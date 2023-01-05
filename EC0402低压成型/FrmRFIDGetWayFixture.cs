@@ -16,6 +16,7 @@ namespace EC0402低压成型
         private string _fixture = string.Empty;
         private string _cable1 = string.Empty;
         private string _cable2 = string.Empty;
+        private string _code = string.Empty;
         private Func<string, string, string, bool> _codeCallBack;
         private readonly MesService _mesService;
         private readonly RFIDChannel _RFIDChannel;
@@ -56,18 +57,28 @@ namespace EC0402低压成型
                     if (state)
                     {
                         groupBox1.BackColor = SystemColors.Control;
+                        var code= _RFIDChannel.Read();
+                        if (_code != code)
+                        {
+                            _code = code;
+                        }
+                        else
+                        {
+                            LogManager.Info($"重复数据，{code}");
+                            return;
+                        }
                         switch (_indnex)
                         {
                             case 0:
                                 {
                                     tbxCable1.Text = _cable1;
                                     tbxCable2.Text = _cable2;
-                                    _fixture = _RFIDChannel.Read();
+                                    _fixture = _code;
                                     tbxFixture.Text = _fixture;
                                 }
                                  break;
-                            case 1: _cable1 = _RFIDChannel.Read(); tbxCable1.Text = _cable1; break;
-                            case 2: _cable2 = _RFIDChannel.Read(); tbxCable2.Text = _cable2; break;
+                            case 1: _cable1 = _code; tbxCable1.Text = _cable1; break;
+                            case 2: _cable2 = _code; tbxCable2.Text = _cable2; break;
                             default:
                                 break;
                         }

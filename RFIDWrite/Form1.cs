@@ -21,7 +21,11 @@ namespace RFIDWrite
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            LogManager.Init(null);
             plFixture.Enabled = false;
+            lblOldCode.Text = string.Empty;
+            tbxFixture.Enabled = false;
+            btnWrite.Enabled = false;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -54,6 +58,7 @@ namespace RFIDWrite
                         }
                     }));
                 });
+                lblOldCode.Text = "请放入rfid;";
             }
             else
             {

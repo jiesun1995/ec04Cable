@@ -16,6 +16,7 @@ namespace EC0402低压成型
         private string _fixture = string.Empty;
         private string _cable1 = string.Empty;
         private string _cable2 = string.Empty;
+        private string code = string.Empty;
         private Func<string, string, string, bool> _codeCallBack;
         private readonly MesService _mesService;
 
