@@ -48,7 +48,7 @@
             this.tbxFixture.Font = new System.Drawing.Font("宋体", 14F);
             this.tbxFixture.Location = new System.Drawing.Point(101, 3);
             this.tbxFixture.Name = "tbxFixture";
-            this.tbxFixture.Size = new System.Drawing.Size(881, 34);
+            this.tbxFixture.Size = new System.Drawing.Size(879, 34);
             this.tbxFixture.TabIndex = 1;
             // 
             // groupBox1
@@ -67,7 +67,7 @@
             this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 90F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 202F));
             this.tableLayoutPanel1.Controls.Add(this.tbxCable2, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.tbxCable1, 1, 1);
@@ -92,7 +92,7 @@
             this.tbxCable2.Font = new System.Drawing.Font("宋体", 14F);
             this.tbxCable2.Location = new System.Drawing.Point(101, 93);
             this.tbxCable2.Name = "tbxCable2";
-            this.tbxCable2.Size = new System.Drawing.Size(881, 34);
+            this.tbxCable2.Size = new System.Drawing.Size(879, 34);
             this.tbxCable2.TabIndex = 6;
             // 
             // label3
@@ -114,7 +114,7 @@
             this.tbxCable1.Font = new System.Drawing.Font("宋体", 14F);
             this.tbxCable1.Location = new System.Drawing.Point(101, 48);
             this.tbxCable1.Name = "tbxCable1";
-            this.tbxCable1.Size = new System.Drawing.Size(881, 34);
+            this.tbxCable1.Size = new System.Drawing.Size(879, 34);
             this.tbxCable1.TabIndex = 3;
             // 
             // label2
@@ -144,9 +144,9 @@
             // button1
             // 
             this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button1.Location = new System.Drawing.Point(988, 3);
+            this.button1.Location = new System.Drawing.Point(986, 3);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(195, 39);
+            this.button1.Size = new System.Drawing.Size(197, 39);
             this.button1.TabIndex = 7;
             this.button1.Text = "清 除";
             this.button1.UseVisualStyleBackColor = true;

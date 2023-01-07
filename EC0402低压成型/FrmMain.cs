@@ -50,7 +50,7 @@ namespace EC0402低压成型
                     RFIDChannel channel=null;
                     try
                     {
-                        channel = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[0].IP, DataContent.SystemConfig.RFIDConfigs[0].Channel, DataContent.SystemConfig.RFIDConfigs[0].Port);
+                        channel = RFIDFactory.Instance(DataContent.SystemConfig.RFIDConfigs[i].IP, DataContent.SystemConfig.RFIDConfigs[i].Channel, DataContent.SystemConfig.RFIDConfigs[i].Port);
                     }
                     catch (Exception ex)
                     {

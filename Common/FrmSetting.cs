@@ -138,6 +138,8 @@ namespace Common
                 systemConfig.ScannerCode = Convert.ToInt32(nudScannerCode.Value);
                 systemConfig.ConfirmStation = tbxConfirmStation.Text;
                 systemConfig.MESUrl = tbxMesUrl.Text;
+                systemConfig.CableStr = tbxCable.Text;
+                systemConfig.FixtureStr = tbxFixture.Text;
 
                 systemConfig.PLCConfigs[0].IP = tbxPLCIp.Text;
                 systemConfig.PLCConfigs[0].Port = ValidateDataByInt(tbxPLCPort.Text, "端口号不能为字符");

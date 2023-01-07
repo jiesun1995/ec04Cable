@@ -45,6 +45,7 @@ namespace EC0401前处理
                             groupBox1.BackColor = System.Drawing.Color.Yellow;
                             var content = _RFIDChannel.Read();
                             tbxCable.Text = content;
+                           
                             if (code == content)
                             {
                                 groupBox1.BackColor = System.Drawing.Color.Green;
@@ -54,6 +55,10 @@ namespace EC0401前处理
                             }
                             if (!string.IsNullOrWhiteSpace(content))
                             {
+                                if (!string.IsNullOrWhiteSpace(DataContent.SystemConfig.CableStr) && content.IndexOf(DataContent.SystemConfig.CableStr) <= 0)
+                                {
+                                    throw new Exception($"请输入正确的线材码：{content}");
+                                }
                                 var station = _mesService.GetCurrStation(content);
                                 if (string.IsNullOrEmpty(station))
                                 {

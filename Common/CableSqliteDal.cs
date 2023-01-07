@@ -87,6 +87,22 @@ namespace Common
             return cables;
         }
 
+        private Cable QueryByCable(string cable)
+        {
+            Cable cables = new Cable();
+            var sql = new StringBuilder("select * from Cables where 1=1");
+            if (!string.IsNullOrWhiteSpace(cable))
+            {
+                sql.Append(" and Sn = @cable ");
+            }
+            using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+            {
+                cables = connection.QueryFirstOrDefault<Cable>(sql.ToString(), new { cable });
+            }
+            //var cables = SqlHelper.Query<Cable>(sql.ToString(), new {  });
+            return cables;
+        }
+
         //private IEnumerable<Cable> Delete(string id)
         //{
         //    var sql = new StringBuilder("select * from Cables where 1=1");
@@ -109,6 +125,12 @@ namespace Common
                     {
                         connection.Delete<Cable>(cable);
                     }
+                }
+                foreach (var cable in Cables)
+                {
+                    var cables = QueryByCable(cable.Sn);
+                    if (cables != null)
+                        connection.Delete<Cable>(cables);
                 }
                 foreach (var cable in Cables)
                 {

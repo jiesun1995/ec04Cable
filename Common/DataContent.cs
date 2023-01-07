@@ -27,9 +27,9 @@ namespace Common
             {
                 var result = File.ReadAllText("System.Config");
                 var config = JsonConvert.DeserializeObject<SystemConfig>(result);
-                if (config.RFIDConfigs.Count < 5)
+                if (config.RFIDConfigs.Count < 6)
                 {
-                    for (int i = config.RFIDConfigs.Count ; i < 5; i++)
+                    for (int i = config.RFIDConfigs.Count ; i < 6; i++)
                     {
                         config.RFIDConfigs.Add(new RFIDConfig());
                     }
@@ -50,6 +50,7 @@ namespace Common
                 {
                     RFIDConfigs = new List<RFIDConfig>
                     {
+                        new RFIDConfig{ },
                         new RFIDConfig{ },
                         new RFIDConfig{ },
                         new RFIDConfig{ },
@@ -83,7 +84,8 @@ namespace Common
         //public string PLCIp { get; set; }
         //public int PLCPort { get; set; }
         public List<PLCConfig> PLCConfigs { get; set; } = new List<PLCConfig>();
-
+        public string CableStr { get; set; }
+        public string FixtureStr { get; set; }
         public string WCFSeverIp { set; get; } = "0.0.0.0";
         public string WCFSeverPort { set; get; } = "4000";
         public string WCFClinetIp { set; get; } = "127.0.0.1";

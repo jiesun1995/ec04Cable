@@ -76,60 +76,6 @@ namespace EC0404铁壳熔接焊
                 }
             },TaskCreationOptions.LongRunning);
 
-
-
-            //_RFIDChannelL.SetChannelState(state =>
-            //{
-            //    Invoke((EventHandler)delegate
-            //    {
-            //        if (state)
-            //        {
-            //            tbxFixtureL.BackColor = System.Drawing.Color.Yellow;
-            //            var content = _RFIDChannelL.Read();
-            //            if (_codeFixtrueL == content)
-            //            {
-            //                tbxFixtureL.BackColor = System.Drawing.Color.Green;
-            //            }
-            //            else
-            //            {
-            //                tbxFixtureL.Text = content;
-            //                tbxFixtureL.BackColor = System.Drawing.Color.Green;
-            //                _codeFixtrueL = content;
-            //            }
-            //            SaveData();
-            //        }
-            //        else
-            //        {
-            //            tbxFixtureL.BackColor = SystemColors.Control;
-            //        }
-            //    });
-            //});
-            //_RFIDChannelR.SetChannelState(state =>
-            //{
-            //    Invoke((EventHandler)delegate
-            //    {
-            //        if (state)
-            //        {
-            //            tbxFixtureR.BackColor = System.Drawing.Color.Yellow;
-            //            var content = _RFIDChannelR.Read();
-            //            if (_codeFixtrueR == content)
-            //            {
-            //                tbxFixtureR.BackColor = System.Drawing.Color.Green;
-            //            }
-            //            else
-            //            {
-            //                tbxFixtureR.Text = content;
-            //                tbxFixtureR.BackColor = System.Drawing.Color.Green;
-            //                _codeFixtrueR = content;
-            //            }
-            //            SaveData();
-            //        }
-            //        else
-            //        {
-            //            tbxFixtureR.BackColor = SystemColors.Control;
-            //        }
-            //    });
-            //});
             _RFIDChannelCable.SetChannelState(state =>
             {
                 Invoke((EventHandler)delegate
@@ -147,6 +93,11 @@ namespace EC0404铁壳熔接焊
                         catch (Exception ex)
                         {
                             LogManager.Error(ex);
+                        }
+                        if (!string.IsNullOrWhiteSpace(DataContent.SystemConfig.CableStr) && content.IndexOf(DataContent.SystemConfig.CableStr) <= 0)
+                        {
+                            LogManager.Error($"请输入正确的线材码：{content}");
+                            return;
                         }
                         if (_codeCable == content)
                         {

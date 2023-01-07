@@ -82,6 +82,10 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.tbxCable = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.tbxFixture = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.gbxPLC.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -439,6 +443,10 @@
             // 
             // gbxStation
             // 
+            this.gbxStation.Controls.Add(this.tbxFixture);
+            this.gbxStation.Controls.Add(this.label8);
+            this.gbxStation.Controls.Add(this.tbxCable);
+            this.gbxStation.Controls.Add(this.label7);
             this.gbxStation.Controls.Add(this.tbxMesUrl);
             this.gbxStation.Controls.Add(this.label2);
             this.gbxStation.Controls.Add(this.tbxConfirmStation);
@@ -464,16 +472,16 @@
             // 
             // tbxMesUrl
             // 
-            this.tbxMesUrl.Location = new System.Drawing.Point(42, 252);
+            this.tbxMesUrl.Location = new System.Drawing.Point(41, 189);
             this.tbxMesUrl.Name = "tbxMesUrl";
-            this.tbxMesUrl.Size = new System.Drawing.Size(213, 25);
+            this.tbxMesUrl.Size = new System.Drawing.Size(225, 25);
             this.tbxMesUrl.TabIndex = 24;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("宋体", 7F);
-            this.label2.Location = new System.Drawing.Point(5, 255);
+            this.label2.Location = new System.Drawing.Point(6, 195);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(29, 12);
             this.label2.TabIndex = 23;
@@ -481,27 +489,27 @@
             // 
             // tbxConfirmStation
             // 
-            this.tbxConfirmStation.Location = new System.Drawing.Point(107, 209);
+            this.tbxConfirmStation.Location = new System.Drawing.Point(89, 155);
             this.tbxConfirmStation.Name = "tbxConfirmStation";
-            this.tbxConfirmStation.Size = new System.Drawing.Size(148, 25);
+            this.tbxConfirmStation.Size = new System.Drawing.Size(177, 25);
             this.tbxConfirmStation.TabIndex = 22;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("宋体", 7F);
-            this.label1.Location = new System.Drawing.Point(6, 212);
+            this.label1.Location = new System.Drawing.Point(1, 161);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(95, 12);
+            this.label1.Size = new System.Drawing.Size(71, 12);
             this.label1.TabIndex = 21;
-            this.label1.Text = "ConfirmStation:";
+            this.label1.Text = "上一个工站:";
             // 
             // label31
             // 
             this.label31.AutoSize = true;
             this.label31.Font = new System.Drawing.Font("宋体", 7F);
             this.label31.ForeColor = System.Drawing.Color.Brown;
-            this.label31.Location = new System.Drawing.Point(90, 327);
+            this.label31.Location = new System.Drawing.Point(87, 310);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(179, 12);
             this.label31.TabIndex = 20;
@@ -509,14 +517,14 @@
             // 
             // nudScannerCode
             // 
-            this.nudScannerCode.Location = new System.Drawing.Point(92, 299);
+            this.nudScannerCode.Location = new System.Drawing.Point(89, 282);
             this.nudScannerCode.Maximum = new decimal(new int[] {
             4,
             0,
             0,
             0});
             this.nudScannerCode.Name = "nudScannerCode";
-            this.nudScannerCode.Size = new System.Drawing.Size(163, 25);
+            this.nudScannerCode.Size = new System.Drawing.Size(177, 25);
             this.nudScannerCode.TabIndex = 19;
             this.nudScannerCode.Value = new decimal(new int[] {
             1,
@@ -528,7 +536,7 @@
             // 
             this.label30.AutoSize = true;
             this.label30.Font = new System.Drawing.Font("宋体", 7F);
-            this.label30.Location = new System.Drawing.Point(9, 312);
+            this.label30.Location = new System.Drawing.Point(6, 287);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(77, 12);
             this.label30.TabIndex = 18;
@@ -536,33 +544,33 @@
             // 
             // tbxCSVPath
             // 
-            this.tbxCSVPath.Location = new System.Drawing.Point(107, 166);
+            this.tbxCSVPath.Location = new System.Drawing.Point(89, 116);
             this.tbxCSVPath.Name = "tbxCSVPath";
-            this.tbxCSVPath.Size = new System.Drawing.Size(148, 25);
+            this.tbxCSVPath.Size = new System.Drawing.Size(177, 25);
             this.tbxCSVPath.TabIndex = 17;
             // 
             // label22
             // 
             this.label22.AutoSize = true;
             this.label22.Font = new System.Drawing.Font("宋体", 7F);
-            this.label22.Location = new System.Drawing.Point(6, 169);
+            this.label22.Location = new System.Drawing.Point(2, 122);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(101, 12);
+            this.label22.Size = new System.Drawing.Size(77, 12);
             this.label22.TabIndex = 16;
-            this.label22.Text = "MES CSV保存地址:";
+            this.label22.Text = "MES CSV地址:";
             // 
             // tbxTestStation
             // 
-            this.tbxTestStation.Location = new System.Drawing.Point(107, 126);
+            this.tbxTestStation.Location = new System.Drawing.Point(89, 86);
             this.tbxTestStation.Name = "tbxTestStation";
-            this.tbxTestStation.Size = new System.Drawing.Size(148, 25);
+            this.tbxTestStation.Size = new System.Drawing.Size(177, 25);
             this.tbxTestStation.TabIndex = 15;
             // 
             // label23
             // 
             this.label23.AutoSize = true;
             this.label23.Font = new System.Drawing.Font("宋体", 7F);
-            this.label23.Location = new System.Drawing.Point(6, 129);
+            this.label23.Location = new System.Drawing.Point(3, 92);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(77, 12);
             this.label23.TabIndex = 14;
@@ -570,16 +578,16 @@
             // 
             // tbxFixtureId
             // 
-            this.tbxFixtureId.Location = new System.Drawing.Point(107, 86);
+            this.tbxFixtureId.Location = new System.Drawing.Point(89, 54);
             this.tbxFixtureId.Name = "tbxFixtureId";
-            this.tbxFixtureId.Size = new System.Drawing.Size(148, 25);
+            this.tbxFixtureId.Size = new System.Drawing.Size(177, 25);
             this.tbxFixtureId.TabIndex = 13;
             // 
             // label40
             // 
             this.label40.AutoSize = true;
             this.label40.Font = new System.Drawing.Font("宋体", 7F);
-            this.label40.Location = new System.Drawing.Point(6, 89);
+            this.label40.Location = new System.Drawing.Point(0, 60);
             this.label40.Name = "label40";
             this.label40.Size = new System.Drawing.Size(65, 12);
             this.label40.TabIndex = 12;
@@ -587,16 +595,16 @@
             // 
             // tbxModel
             // 
-            this.tbxModel.Location = new System.Drawing.Point(107, 46);
+            this.tbxModel.Location = new System.Drawing.Point(89, 23);
             this.tbxModel.Name = "tbxModel";
-            this.tbxModel.Size = new System.Drawing.Size(148, 25);
+            this.tbxModel.Size = new System.Drawing.Size(177, 25);
             this.tbxModel.TabIndex = 11;
             // 
             // label25
             // 
             this.label25.AutoSize = true;
             this.label25.Font = new System.Drawing.Font("宋体", 7F);
-            this.label25.Location = new System.Drawing.Point(6, 49);
+            this.label25.Location = new System.Drawing.Point(3, 29);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(41, 12);
             this.label25.TabIndex = 10;
@@ -643,6 +651,40 @@
             this.button1.Text = "保  存";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // tbxCable
+            // 
+            this.tbxCable.Location = new System.Drawing.Point(89, 220);
+            this.tbxCable.Name = "tbxCable";
+            this.tbxCable.Size = new System.Drawing.Size(177, 25);
+            this.tbxCable.TabIndex = 26;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("宋体", 7F);
+            this.label7.Location = new System.Drawing.Point(1, 226);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(71, 12);
+            this.label7.TabIndex = 25;
+            this.label7.Text = "线材SN包含:";
+            // 
+            // tbxFixture
+            // 
+            this.tbxFixture.Location = new System.Drawing.Point(89, 251);
+            this.tbxFixture.Name = "tbxFixture";
+            this.tbxFixture.Size = new System.Drawing.Size(177, 25);
+            this.tbxFixture.TabIndex = 28;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("宋体", 7F);
+            this.label8.Location = new System.Drawing.Point(1, 257);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(71, 12);
+            this.label8.TabIndex = 27;
+            this.label8.Text = "治具SN包含:";
             // 
             // FrmSetting
             // 
@@ -729,5 +771,9 @@
         private System.Windows.Forms.Label label40;
         private System.Windows.Forms.TextBox tbxModel;
         private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.TextBox tbxFixture;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox tbxCable;
+        private System.Windows.Forms.Label label7;
     }
 }

@@ -113,6 +113,11 @@ namespace EC0405编织喷胶
                         {
                             LogManager.Error(ex);
                         }
+                        if (!string.IsNullOrWhiteSpace(DataContent.SystemConfig.CableStr) && content.IndexOf(DataContent.SystemConfig.CableStr) <= 0)
+                        {
+                            LogManager.Error($"请输入正确的线材码：{content}");
+                            return;
+                        }
                         if (_codeCable == content)
                         {
                             tbxCable.BackColor = result ? System.Drawing.Color.Yellow : Color.Yellow;

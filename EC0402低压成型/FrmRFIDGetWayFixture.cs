@@ -58,27 +58,52 @@ namespace EC0402低压成型
                     {
                         groupBox1.BackColor = SystemColors.Control;
                         var code= _RFIDChannel.Read();
-                        if (_code != code)
+                        if (_code != code && string.IsNullOrWhiteSpace(code))
                         {
                             _code = code;
                         }
                         else
                         {
-                            LogManager.Info($"重复数据，{code}");
+                            LogManager.Info($"重复数据或者空数据：{code}");
                             return;
                         }
                         switch (_indnex)
                         {
                             case 0:
                                 {
+                                    if (!string.IsNullOrWhiteSpace(DataContent.SystemConfig.FixtureStr) && _code.IndexOf(DataContent.SystemConfig.FixtureStr) <= 0)
+                                    {
+                                        LogManager.Error($"请输入正确的载具码：{_code}");
+                                        return;
+                                    }
                                     tbxCable1.Text = _cable1;
                                     tbxCable2.Text = _cable2;
                                     _fixture = _code;
                                     tbxFixture.Text = _fixture;
                                 }
                                  break;
-                            case 1: _cable1 = _code; tbxCable1.Text = _cable1; break;
-                            case 2: _cable2 = _code; tbxCable2.Text = _cable2; break;
+                            case 1:
+                                {
+                                    if (!string.IsNullOrWhiteSpace(DataContent.SystemConfig.CableStr) && _code.IndexOf(DataContent.SystemConfig.CableStr) <= 0)
+                                    {
+                                        LogManager.Error($"请输入正确的线材码：{_code}");
+                                        return;
+                                    }
+                                    _cable1 = _code; 
+                                    tbxCable1.Text = _cable1;
+                                }
+                                break;
+                            case 2:
+                                {
+                                    if (!string.IsNullOrWhiteSpace(DataContent.SystemConfig.CableStr) && _code.IndexOf(DataContent.SystemConfig.CableStr) <= 0)
+                                    {
+                                        LogManager.Error($"请输入正确的线材码：{_code}");
+                                        return;
+                                    }
+                                    _cable2 = _code; 
+                                    tbxCable2.Text = _cable2;
+                                }
+                                break;
                             default:
                                 break;
                         }
